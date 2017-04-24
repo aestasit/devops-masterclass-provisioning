@@ -1,0 +1,12 @@
+
+task setHostname { doLast {
+  remoteSession {
+    exec "sudo -- sh -c 'echo ${serverHostName} > /etc/hostname'"
+    exec "sudo sed -i 's/^127.0.0.1.*\$/127.0.0.1 ${serverHostName} localhost/' /etc/hosts"
+    exec "sudo hostname ${serverHostName}"
+  }
+}}
+
+task generateKittySessions { doLast {
+  // TODO: implement
+}}

@@ -1,0 +1,9 @@
+
+node default {
+
+  include '::setup'
+
+}
+
+
+

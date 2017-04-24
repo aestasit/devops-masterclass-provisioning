@@ -1,0 +1,30 @@
+
+task zipPuppet(type: Zip) {
+  from 'puppet'
+  archiveName = 'puppet.zip'
+  destinationDir = projectDir
+}
+
+task provisionPuppet(dependsOn: zipPuppet) { doLast {
+  remoteSession {
+    if (project.hasProperty('puppetClean')) {
+      exec 'sudo rm -rf /tmp/deploy-puppet'
+    }
+    exec 'mkdir -p /tmp/deploy-puppet'
+    sshOptions.verbose = false
+    scp {
+      from { localDir "puppet.zip" }
+      into { remoteDir "/tmp/deploy-puppet" }
+    }
+    sshOptions.verbose = true
+    exec 'sudo unzip -q -o /tmp/deploy-puppet/puppet.zip -d /tmp/deploy-puppet'
+    exec 'sudo -E /opt/puppetlabs/bin/r10k puppetfile install -v --puppetfile /tmp/deploy-puppet/Puppetfile --moduledir /tmp/deploy-puppet/environments/deploy/modules'
+    def result = exec(
+      command: "sudo -E /opt/puppetlabs/bin/puppet apply --detailed-exitcodes --hiera_config=/tmp/deploy-puppet/hiera.yaml --environmentpath /tmp/deploy-puppet/environments/ --environment deploy /tmp/deploy-puppet/environments/deploy/manifests",
+      failOnError: false  
+    )
+    if ((result.exitStatus == 1) || (result.exitStatus > 2)) {
+      throw new GradleException('Puppet finished with failures!')
+    }
+  }
+}}

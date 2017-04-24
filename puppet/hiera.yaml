@@ -1,0 +1,10 @@
+---
+:backends:
+  - yaml
+:yaml:
+  :datadir: /tmp/deploy-puppet/environments/%{environment}/hieradata
+:hierarchy:
+  - "%{::hostname}"
+  - common
+:logger: puppet
+

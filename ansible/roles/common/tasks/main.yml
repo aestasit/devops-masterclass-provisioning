@@ -1,0 +1,13 @@
+---
+
+- apt: name=zip state=latest
+- apt: name=curl state=latest
+- apt: name=wget state=latest
+- apt: name=build-essential state=latest
+- apt: name=tree state=latest
+- apt: name=links state=latest
+- apt: name=mc state=latest
+- apt: name=sysstat state=latest
+- apt: name=nmap state=latest
+- apt: name=whois state=latest
+

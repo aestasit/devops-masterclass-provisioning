@@ -1,0 +1,14 @@
+node {
+  stage('Create') {
+
+  }
+  stage('Provision') {
+
+  }
+  stage('Test') {
+
+  }
+  stage('Destroy') {
+
+  }
+}

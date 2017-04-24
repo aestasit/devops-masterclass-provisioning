@@ -1,0 +1,44 @@
+
+task terraformApply(type: Exec) {
+  commandLine 'terraform apply'
+  workingDir 'terraform'
+}
+
+task terraformDestroy(type: Exec) {
+  commandLine 'terraform', 'destroy -force'
+  workingDir 'terraform'
+}
+
+task listIps {  
+  doLast {
+
+    println "\nLinux Machines:"
+    println "name,ip"
+    project.getTerraformState().modules[0].resources.findAll { it.key.startsWith 'aws_instance.test_machine_linux.' }.each { println "${it.value.primary.attributes.'tags.Name'},${it.value.primary.attributes.public_ip}" }
+
+    println "\nWindows Machines:"
+    println "name,ip"
+    project.getTerraformState().modules[0].resources.findAll { it.key.startsWith 'aws_instance.test_machine_windows.' }.each { println "${it.value.primary.attributes.'tags.Name'},${it.value.primary.attributes.public_ip}" }
+
+    println "\nDevOps Server:"
+    project.getTerraformState().modules[0].resources.findAll { it.key.startsWith 'aws_instance.devops_server' }.each { println it.value.primary.attributes.public_ip }
+
+  }
+}
+
+task listKeys {
+  doLast {
+    println "\nStudent Access Keys:"
+    println "username,accessKeyId,secretAccessKey"
+    project.getTerraformState().modules[0].resources.findAll { it.key.startsWith 'aws_iam_access_key.' }.each { println "${it.value.primary.attributes.user},${it.value.primary.id},${it.value.primary.attributes.secret}" }
+  }
+}
+
+task listNetwork {
+  doLast {
+    println "AMI ID: ${project.getTerraformState().modules[0].resources.'data.aws_ami.devops_ubuntu'.primary.id}"
+    println "Subnet ID: ${project.getTerraformState().modules[0].resources.'aws_subnet.devops_subnet'.primary.id}"
+    println "Security Group ID: ${project.getTerraformState().modules[0].resources.'aws_security_group.devops_security'.primary.id}"
+  }
+}
+

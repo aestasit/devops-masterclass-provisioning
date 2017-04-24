@@ -1,0 +1,62 @@
+
+import groovyx.gpars.GParsPool
+
+buildscript {
+  repositories { mavenCentral() }
+  dependencies { 
+    classpath "org.codehaus.gpars:gpars:1.2.1" 
+  }
+}
+
+task downloadTools { doLast {
+  getDownloadDir(project).mkdirs()
+  GParsPool.withPool(getDownloadThreads(project)) {
+    file("tools.txt").readLines().eachParallel { String link ->
+      if (link.trim() && !link.startsWith('#')) {
+        def mapping = link.split('<-|->', 3)
+        def url = new URL(mapping[1])        
+        def fileName = mapping.size() > 2 ? mapping[2] : new File(url.path).name
+        println "Downloading '${fileName}'..."
+        def dir = new File(getDownloadDir(project), mapping[0])
+        dir.mkdirs()
+        def file = new File(dir, fileName)
+        if (!file.exists() || file.length() == 0) {
+          try {
+            redirectFollowingDownload("${url}", file.absolutePath)
+            println "Done downloading '${file.name}'."
+          } catch (Exception e) {
+            println "Failed downloading '${file.name}': ${e.message}"
+          }
+        } else {
+          println "File '${file.name}' already exists!"
+        }
+      }
+    }
+  }
+}}
+
+int getDownloadThreads(Project project) {
+  (project.hasProperty('downloadThreads') ? project.downloadThreads : '0').toInteger()
+}
+
+File getDownloadDir(Project project) {
+  file(project.hasProperty('downloadDir') ? project.downloadDir : 'tools')
+}
+
+def redirectFollowingDownload(String url, String filename) {
+  while(url) {
+    new URL(url).openConnection().with { conn ->
+      conn.instanceFollowRedirects = false
+      url = conn.getHeaderField( "Location" )      
+      if( !url ) {
+        new File( filename ).withOutputStream { out ->
+          conn.inputStream.with { inp ->
+            out << inp
+            inp.close()
+          }
+        }
+      }
+    }
+  }
+}
+
