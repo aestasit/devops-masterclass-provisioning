@@ -18,6 +18,7 @@ task provisionAnsible(dependsOn: zipAnsible) { doLast {
     }
     sshOptions.verbose = true
     exec 'sudo unzip -q -o /tmp/deploy-ansible/ansible.zip -d /tmp/deploy-ansible'
+    exec 'cd /tmp/deploy-ansible ; sudo ansible-galaxy install -r requirements.yml'
     exec 'cd /tmp/deploy-ansible ; sudo ansible-playbook site.yml'
   }
 }}
