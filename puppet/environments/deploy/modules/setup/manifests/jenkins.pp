@@ -1,83 +1,9 @@
 
 class setup::jenkins {
 
-  include git
-  include apt
+  contain '::setup::java'
 
-  class { 'groovy':
-    version => '2.4.1'
-  }
-
-  vcsrepo { '/var/lib/bats':
-    ensure   => present,
-    provider => git,
-    source   => 'git://github.com/sstephenson/bats.git',
-    notify   => Exec['install bats']
-  }
-
-  package { 'python-dev':
-    ensure => installed
-  }
-
-  package { 'python-pip':
-    ensure => installed
-  }
-
-  package { 'paramiko':
-    ensure => installed,
-    provider => pip,
-    require => [ Package['python-pip'], Package['python-dev'] ]
-  }
-
-  package { 'ecdsa':
-    ensure => installed,
-    provider => pip,
-    require => [ Package['python-pip'], Package['python-dev'] ]
-  }
-
-  package { 'pycrypto':
-    ensure => installed,
-    provider => pip,
-    require => [ Package['python-pip'], Package['python-dev'] ]
-  }
-
-  package { 'fabric':
-    ensure => installed,
-    provider => pip,
-    require => [ Package['python-pip'], Package['pycrypto'], Package['python-dev'] ]
-  }
-
-  package { 'awscli':
-    ensure => installed,
-    provider => pip,
-    require => Package['python-pip']
-  }
-                       
-  $base_url         = 'https://releases.hashicorp.com/terraform'
-  $target_dir       = '/usr/local/bin'
-  $bin_name         = 'terraform'
-  $_arch            = 'amd64'
-  $_os              = 'linux'
-  $_version         = '0.7.10'
-  $archive_filename = "terraform_${_version}_${_os}_${_arch}"
-
-  archive { "/tmp/${archive_filename}.zip":
-    ensure        => present,
-    extract       => true,
-    extract_path  => '/usr/local/bin',
-    source        => "${base_url}/${_version}/${archive_filename}.zip",
-    checksum      => 'a6da76d6228349855f7c503b769fb231e6b1009add5e5b2586ecb7624e9ecf15',
-    checksum_type => 'sha256',
-    creates       => '/usr/local/bin/terraform',
-    cleanup       => true,
-  }
-
-  exec { 'install bats':
-    command     => '/var/lib/bats/install.sh /usr/local/bats',
-    refreshonly => true
-  }
-
-  $jenkins_version = '2.46.1'                      
+  $jenkins_version = '2.46.2'
   $jenkins_package = "https://pkg.jenkins.io/debian-stable/binary/jenkins_${jenkins_version}_all.deb"
 
   archive { "/tmp/jenkins_${jenkins_version}_all.deb":
@@ -87,57 +13,60 @@ class setup::jenkins {
     cleanup          => false
   }
 
-  package { [ 'openjdk-7-jre-headless', 'daemon' ]: 
+  package { [ 'openjdk-7-jre-headless', 'daemon' ]:
     ensure          => installed,
-    before          => Class['::setup::java'] 
   }
-
-  package { 'jenkins':
-    ensure          => latest,
-    provider        => dpkg,
-    source          => "/tmp/jenkins_${jenkins_version}_all.deb",
+  
+  exec { 'jenkins':
+    unless          => "dpkg -s jenkins",
+    command         => "/usr/bin/dpkg -i /tmp/jenkins_${jenkins_version}_all.deb",
     notify          => Service['jenkins'],
-    install_options => '--force-depends',
-    require         => [ 
-      Class['::setup::java'],
+    require         => [
       Archive["/tmp/jenkins_${jenkins_version}_all.deb"],
       Package['daemon'],
       Package['openjdk-7-jre-headless'],
+      Class['::setup::java']
     ]
   }
 
   file { '/var/lib/jenkins/config.xml':
     content => template('setup/config.xml.erb'),
-    require => Package['jenkins'],
-    notify => Service['jenkins']
+    require => Exec['jenkins'],
+    notify  => Service['jenkins']
+  }
+
+  file { '/var/lib/jenkins/jenkins.CLI.xml':
+    content => template('setup/jenkins.CLI.xml.erb'),
+    require => Exec['jenkins'],
+    notify  => Service['jenkins']
   }
 
   file { '/var/lib/jenkins/secrets/initialAdminPassword':
-    ensure => absent,
-    notify => Service['jenkins']
+    ensure  => absent,
+    notify  => Service['jenkins']
   }
 
   file { '/var/lib/jenkins/jenkins.install.InstallUtil.lastExecVersion':
-    ensure => present,
+    ensure  => present,
     content => $jenkins_version,
-    notify => Service['jenkins']
+    notify  => Service['jenkins']
   }
 
   service { 'jenkins':
     ensure     => 'running',
     enable     => true,
     hasrestart => true,
-    require    => Package['jenkins']
+    require    => Exec['jenkins']
   }
 
   group { 'jenkins':
     ensure  => present,
-    require => Package['jenkins'],
+    require => Exec['jenkins'],
   }
 
   user { 'jenkins':
     ensure     => present,
-    require    => Package['jenkins'],
+    require    => Exec['jenkins'],
   }
 
   setup::jenkins::plugin {
@@ -173,8 +102,6 @@ class setup::jenkins {
     'tasks': ;
     'htmlpublisher': ;
     'build-pipeline-plugin': ;
-    'build-flow-plugin': ;
-    'buildgraph-view': ;
     'build-timeout': ;
     'clone-workspace-scm': ;
     'join': ;
@@ -196,7 +123,6 @@ class setup::jenkins {
     'sectioned-view': ;
     'nested-view': ;
     'rebuild': ;
-    'grails': ;
     'shelve-project-plugin': ;
     'extended-choice-parameter': ;
     'extensible-choice-parameter': ;

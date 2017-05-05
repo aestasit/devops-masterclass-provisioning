@@ -1,0 +1,109 @@
+
+jenkins {
+
+  servers {
+    build_server {                                   
+      url      "http://${project.getServerIp()}:8080"
+      username ""
+      password ""
+    }
+  }             
+
+  defaultServer servers.build_server
+
+  templates {
+    student_build { xml file('sources/setup/files/student_build.xml') }
+  }
+
+  jobs {      
+
+    project.users.each { student ->
+      def jobNamePrefix = student.username.toUpperCase()
+      "${jobNamePrefix}_BUILD" {
+        definition {     
+          name "${jobNamePrefix}_BUILD"
+          xml templates.student_build.override { job ->
+            job.description = "Build for '${student.username}' infrastructure."
+            job.definition.scm.userRemoteConfigs.'hudson.plugins.git.UserRemoteConfig'.url = "https://aestas.repositoryhosting.com/git/aestas/${student.username}-repo.git"
+          }
+        }
+      }
+    }
+                                                     
+  }
+
+}
+
+dumpJenkinsJobs {
+  prettyPrint = false
+}
+
+task addJenkinsCredentials << {
+  withBrowser("http://${project.getServerIp()}:8080") {
+    go '/credentials/store/system/domain/_/'
+    def currentUsers = currentUsers()
+    users.each { user ->
+      if (!currentUsers.containsKey(user.username)) {
+        go "/credentials/store/system/domain/_/newCredentials"
+        waitFor(30) { $('input', name: '_.username').size() > 0 }
+        $('input', name: '_.username') << user.username
+        $('input', name: '_.password') << user.accessKeyId
+        $('input', name: '_.description') << user.username
+        $('button', text: 'OK').click()
+        waitFor(30) { $('div', text: 'Credentials that should be available irrespective of domain specification to requirements matching.').size() > 0 }
+      }
+    }
+  }
+}
+
+task addJenkinsCredentialsToJobs << {
+  withBrowser("http://${project.getServerIp()}:8080") {
+    users.each { user ->
+      go "/job/${user.username.toUpperCase()}_BUILD/configure"
+      waitFor(30) { $('select', name: '_.credentialsId').size() > 0 }
+      driver.executeScript("scroll(0,400)")
+      $('select', name: '_.credentialsId').click()
+      $('select', name: '_.credentialsId').$('option').find { it.text().contains(user.username) }.click()
+      $('button', text: 'Save').click()
+      waitFor(30) { $('a', text: 'Build Now').size() > 0 }
+    }
+  }
+}
+
+
+
+task extractJenkinsCredentials << {
+  withBrowser("http://${project.getServerIp()}:8080") {
+    go '/credential-store/domain/_/'
+    def currentUsers = currentUsers()
+    file("${buildDir}").mkdirs()
+    file("${buildDir}/jenkins_users.csv").text = currentUsers.collect { "${it.key}:${it.value}" }.join('\n')
+  }
+}
+
+task deleteJenkinsCredentials << {
+  withBrowser("http://${project.getServerIp()}:8080") {
+    go '/credential-store/domain/_/'
+    def currentUsers = currentUsers()
+    currentUsers.each { user, id ->
+      go "/credential-store/domain/_/credential/${id}/delete"
+      waitFor(30) { $('button', text: 'Yes').size() > 0 }
+      $('button', text: 'Yes').click()
+      waitFor(30) { $('div', text: 'All credentials that are not bound to a specific domain.').size() > 0 }
+    }
+  }
+}
+
+def currentUsers() {
+  project.browser.with {
+    $('a', text: ~/^student.*$/).findAll().collectEntries {
+      [
+        it.text().split('/')[0],
+        it.@href.split('/')[-1]
+      ]
+    }
+  }
+}
+
+
+

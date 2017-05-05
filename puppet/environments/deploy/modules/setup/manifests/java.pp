@@ -1,6 +1,6 @@
-class setup::java {
 
-  include ::archive
+
+class setup::java {
 
   file { "/usr/lib/jvm":
     ensure              => directory
@@ -13,8 +13,8 @@ class setup::java {
     extract_path => '/usr/lib/jvm',
     extract      => true,
     cleanup      => true,
-    creates      => '/usr/lib/jvm/jdk1.8.0_111'  
-  } 
+    creates      => '/usr/lib/jvm/jdk1.8.0_111'
+  }
 
   file { "/usr/bin/java":
     ensure       => link,

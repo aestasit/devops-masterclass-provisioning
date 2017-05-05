@@ -1,10 +1,12 @@
 ---
-:backends:
-  - yaml
-:yaml:
-  :datadir: /tmp/deploy-puppet/environments/%{environment}/hieradata
-:hierarchy:
-  - "%{::hostname}"
-  - common
-:logger: puppet
-
+version: 5
+defaults:
+  datadir: hieradata
+  data_hash: yaml_data
+hierarchy:
+  - name: "YAML hierarchy levels"
+    paths: # Can specify an array of paths instead of a single one.
+      - "/tmp/deploy-puppet/environments/%{environment}/hieradata"
+      - "groups/%{facts.group}.yaml"
+      - "os/%{facts.os.family}.yaml"
+      - "common.yaml"

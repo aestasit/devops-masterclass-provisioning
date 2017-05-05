@@ -1,11 +1,11 @@
 
 task terraformApply(type: Exec) {
-  commandLine 'terraform apply'
+  commandLine 'terraform', 'apply'
   workingDir 'terraform'
 }
 
 task terraformDestroy(type: Exec) {
-  commandLine 'terraform', 'destroy -force'
+  commandLine 'terraform', 'destroy', '-force'
   workingDir 'terraform'
 }
 
