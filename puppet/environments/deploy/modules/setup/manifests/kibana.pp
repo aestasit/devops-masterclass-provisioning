@@ -3,6 +3,8 @@ class setup::kibana {
 
   # TODO: launch kibana through docker
 
+  # TODO: add virtual host
+
   #
   #  archive { "/tmp/kibana-5.3.0-linux-x86_64.tar.gz":
   #     ensure        => present,

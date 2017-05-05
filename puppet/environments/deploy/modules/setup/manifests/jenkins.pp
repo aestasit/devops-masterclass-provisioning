@@ -1,9 +1,12 @@
 
-class setup::jenkins {
+class setup::jenkins(
+  $jenkins_version = '2.46.2'
+) {
 
   contain '::setup::java'
 
-  $jenkins_version = '2.46.2'
+  # TODO: add virtual host
+
   $jenkins_package = "https://pkg.jenkins.io/debian-stable/binary/jenkins_${jenkins_version}_all.deb"
 
   archive { "/tmp/jenkins_${jenkins_version}_all.deb":

@@ -3,6 +3,8 @@ class setup {
 
   Exec { path => [ "/bin/", "/sbin/" , "/usr/bin/", "/usr/sbin/" ] }
 
+  include setup::common
+
   include setup::docker
   include setup::java
 

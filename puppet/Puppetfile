@@ -11,12 +11,12 @@ mod "puppet-yum", "1.0.0"
 mod "puppet-archive", "1.1.2"
 mod "puppet-nginx", "0.5.0"
 
-mod "willdurand-nodejs", "1.8.5"
-mod "bashtoni-timezone", "1.0.0"
-
 mod "maestrodev-wget", "1.7.3"
 mod "maestrodev-maven", "1.4.0"
 
+mod "willdurand-nodejs", "1.8.5"
+mod "bashtoni-timezone", "1.0.0"
+mod "vshn-gitlab", "1.13.3"
 mod "garethr-docker", "5.3.0"
 mod "richardc-datacat", "0.6.2"
 mod "jsok-vault", "1.2.1"
@@ -27,4 +27,3 @@ mod "elasticsearch",
     :tag => "5.1.1"
 
 mod "setup", :local => true
-
