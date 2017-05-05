@@ -1,5 +1,7 @@
 
-class setup::common {
+class setup::common(
+
+) {
 
   package { [
     "zip",

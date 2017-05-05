@@ -1,6 +1,7 @@
 
+class setup::java(
 
-class setup::java {
+) {
 
   file { "/usr/lib/jvm":
     ensure              => directory

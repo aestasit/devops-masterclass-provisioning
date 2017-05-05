@@ -3,6 +3,8 @@ class setup {
 
   Exec { path => [ "/bin/", "/sbin/" , "/usr/bin/", "/usr/sbin/" ] }
 
+  include nginx
+
   include setup::common
 
   include setup::docker
@@ -17,10 +19,11 @@ class setup {
   include setup::beats
 
   include setup::vault
-  include setup::sysdig
 
-  include setup::swarm
+  include setup::sysdig
+  include setup::grafana
+  include setup::prometheus
+
   include setup::rancher
-  include setup::kubernetes
 
 }

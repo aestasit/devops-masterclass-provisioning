@@ -32,6 +32,8 @@ class setup::beats(
     require    => Exec['filebeat']
   }
 
+  # TODO: add yaml config
+
   #
   # Metricbeat
   #
@@ -61,6 +63,8 @@ class setup::beats(
     require    => Exec['metricbeat']
   }
 
+  # TODO: add yaml config
+
   #
   # Packetbeat
   #
@@ -89,5 +93,7 @@ class setup::beats(
     hasrestart => true,
     require    => Exec['packetbeat']
   }
+
+  # TODO: add yaml config
 
 }

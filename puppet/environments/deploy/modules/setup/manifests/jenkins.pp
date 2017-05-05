@@ -5,8 +5,6 @@ class setup::jenkins(
 
   contain '::setup::java'
 
-  # TODO: add virtual host
-
   $jenkins_package = "https://pkg.jenkins.io/debian-stable/binary/jenkins_${jenkins_version}_all.deb"
 
   archive { "/tmp/jenkins_${jenkins_version}_all.deb":
@@ -215,6 +213,11 @@ class setup::jenkins(
       Group['jenkins'],
       User['jenkins']
     ],
+  }
+
+  nginx::resource::server { 'jenkins.extremeautomation.io':
+    listen_port => 80,
+    proxy       => 'http://localhost:8080',
   }
 
 }

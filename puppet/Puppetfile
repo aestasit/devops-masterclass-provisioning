@@ -9,7 +9,7 @@ mod "puppetlabs-java", "1.6.0"
 
 mod "puppet-yum", "1.0.0"
 mod "puppet-archive", "1.1.2"
-mod "puppet-nginx", "0.5.0"
+mod "puppet-nginx", "0.6.0"
 
 mod "maestrodev-wget", "1.7.3"
 mod "maestrodev-maven", "1.4.0"

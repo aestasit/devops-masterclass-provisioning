@@ -1,5 +1,7 @@
 
-class setup::elasticsearch {
+class setup::elasticsearch(
+  $elasticsearch_version = '5.3.1'
+) {
 
   contain '::setup::java'
 
@@ -26,7 +28,7 @@ class setup::elasticsearch {
   class { 'elasticsearch':
     java_install      => false,
     repo_version      => '5.x',
-    version           => '5.3.1',
+    version           => $elasticsearch_version,
     restart_on_change => true,
     manage_repo       => false,
     autoupgrade       => true,

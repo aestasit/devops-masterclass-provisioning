@@ -1,8 +1,16 @@
 
-class setup::gitlab {
+class setup::gitlab(
 
-  class { 'gitlab':
-    external_url => 'http://gitlab.extremeautmation.io',
-  }
+) {
+
+  #
+  # TODO: implement
+  #
+  # class { 'gitlab':
+  #   external_url => 'http://gitlab.extremeautmation.io',
+  # }
+  #
+
+  # TODO: add virtual host
 
 }
