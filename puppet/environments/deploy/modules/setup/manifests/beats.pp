@@ -25,14 +25,18 @@ class setup::beats(
     ]
   }
 
+  file { '/etc/filebeat/filebeat.yml':
+    content         => template('setup/filebeat.yml.erb'),
+    notify          => Service['filebeat'],
+    require         => Exec['filebeat']
+  }
+
   service { 'filebeat':
     ensure     => 'running',
     enable     => true,
     hasrestart => true,
     require    => Exec['filebeat']
   }
-
-  # TODO: add yaml config
 
   #
   # Metricbeat
@@ -63,7 +67,11 @@ class setup::beats(
     require    => Exec['metricbeat']
   }
 
-  # TODO: add yaml config
+  file { '/etc/metricbeat/metricbeat.yml':
+    content         => template('setup/metricbeat.yml.erb'),
+    notify          => Service['metricbeat'],
+    require         => Exec['metricbeat']
+  }
 
   #
   # Packetbeat
@@ -94,6 +102,10 @@ class setup::beats(
     require    => Exec['packetbeat']
   }
 
-  # TODO: add yaml config
+  file { '/etc/packetbeat/packetbeat.yml':
+    content         => template('setup/packetbeat.yml.erb'),
+    notify          => Service['packetbeat'],
+    require         => Exec['packetbeat']
+  }
 
 }

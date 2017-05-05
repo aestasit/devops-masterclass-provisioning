@@ -11,6 +11,9 @@ class setup::gitlab(
   # }
   #
 
-  # TODO: add virtual host
+  nginx::resource::server { 'gitlab.extremeautomation.io':
+    listen_port => 80,
+    proxy       => 'http://localhost:8081',
+  }
 
 }

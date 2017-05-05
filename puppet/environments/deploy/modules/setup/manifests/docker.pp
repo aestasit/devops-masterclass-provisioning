@@ -6,6 +6,10 @@ class setup::docker {
     use_upstream_package_source => false
   }
 
+  # docker::swarm { 'cluster_manager':
+  #   init           => true,
+  # }
+
   # TODO: docker registry
 
   # TODO: add virtual host for registry??
