@@ -1,0 +1,31 @@
+
+task updateDNSRecords {
+  // TODO: implement DNS record updates through namecheap API
+}
+
+task generateSSLCertificate { doLast {
+  remoteSession {
+    def hostNames = [
+        "registry.extremeautomation.io",
+        "gitlab.extremeautomation.io",
+        "grafana.extremeautomation.io",
+        "jenkins.extremeautomation.io",
+        "kibana.extremeautomation.io",
+        "rancher.extremeautomation.io",
+        "vault.extremeautomation.io",
+        "prometheus.extremeautomation.io",
+        "logs.extremeautomation.io",
+        "kube.extremeautomation.io",
+        "swarm.extremeautomation.io",
+    ]
+    if (fail("certbot --help")) {
+      exec "sudo add-apt-repository -y ppa:certbot/certbot"
+      exec "sudo apt-get -y -q update"
+      exec "sudo apt-get -y -q install certbot"
+    }
+    String certBotParams = hostNames.collect { "-d $it"}.join(" ")
+    // TODO: the below command does not work since it needs all the hosts to have valid DNS records and the hosts need to respnd on HTTP with authorized token
+    exec "sudo /usr/bin/certbot certonly --webroot -w /etc/ssl -n --agree-tos -m andrey@aestasit.com ${certBotParams}"
+  }
+}}
+
