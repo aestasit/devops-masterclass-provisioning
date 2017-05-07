@@ -1,4 +1,10 @@
 
+task updateApt { doLast {
+  remoteSession {
+    exec "sudo apt-get update -y"
+  }
+}}
+
 task setHostname { doLast {
   remoteSession {
     exec "sudo -- sh -c 'echo ${serverHostName} > /etc/hostname'"
@@ -35,7 +41,7 @@ task initializeKibanaConfiguration { doLast {
 
 task initializeRancher { doLast {
   remoteSession {
-    def result = exec(command: "curl -s http://localhost:8088/v1/registrationtokens | jq -r .data[0].command")
+    def result = exec(command: "curl -s http://localhost:8700/v1/registrationtokens | jq -r .data[0].command")
     String rancherInitCommand = result.output.trim()
     exec(command: rancherInitCommand)
   }

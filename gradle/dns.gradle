@@ -1,23 +1,36 @@
 
+ext {
+  hostNames = [
+      "registry.extremeautomation.io",
+      "gitlab.extremeautomation.io",
+      "grafana.extremeautomation.io",
+      "jenkins.extremeautomation.io",
+      "kibana.extremeautomation.io",
+      "rancher.extremeautomation.io",
+      "vault.extremeautomation.io",
+      "prometheus.extremeautomation.io",
+      "logs.extremeautomation.io",
+      "kube.extremeautomation.io",
+      "swarm.extremeautomation.io",
+  ]
+}
+
+task generateHostEntries { doLast {
+  println "${project.getServerIp()} ${hostNames.join(' ')}"
+}}
+
+task updateHosts { doLast {
+  remoteSession {
+    exec "sudo bash -c 'echo ${project.getServerIp()} ${hostNames.join(' ')} >> /etc/hosts'"
+  }
+}}
+
 task updateDNSRecords {
   // TODO: implement DNS record updates through namecheap API
 }
 
 task generateSSLCertificate { doLast {
   remoteSession {
-    def hostNames = [
-        "registry.extremeautomation.io",
-        "gitlab.extremeautomation.io",
-        "grafana.extremeautomation.io",
-        "jenkins.extremeautomation.io",
-        "kibana.extremeautomation.io",
-        "rancher.extremeautomation.io",
-        "vault.extremeautomation.io",
-        "prometheus.extremeautomation.io",
-        "logs.extremeautomation.io",
-        "kube.extremeautomation.io",
-        "swarm.extremeautomation.io",
-    ]
     // TODO: use cerbot docker container instead because package installation removes httpie
     if (fail("certbot --help")) {
       exec "sudo add-apt-repository -y ppa:certbot/certbot"
