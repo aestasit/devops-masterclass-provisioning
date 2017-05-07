@@ -4,3 +4,6 @@ secrets/*
 .gradle/
 .vagrant/
 *.zip
+*.iml
+*.ipr
+*.iws
