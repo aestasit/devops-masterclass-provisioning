@@ -36,7 +36,7 @@ task listKeys {
 
 task listNetwork {
   doLast {
-    println "AMI ID: ${project.getTerraformState().modules[0].resources.'data.aws_ami.devops_ubuntu'.primary.id}"
+    println "AMI ID: ${project.getTerraformState().modules[0].resources.'data.aws_ami.devops_ubuntu_trusty'.primary.id}"
     println "Subnet ID: ${project.getTerraformState().modules[0].resources.'aws_subnet.devops_subnet'.primary.id}"
     println "Security Group ID: ${project.getTerraformState().modules[0].resources.'aws_security_group.devops_security'.primary.id}"
   }
