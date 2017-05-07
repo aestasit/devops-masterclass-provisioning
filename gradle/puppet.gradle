@@ -18,7 +18,9 @@ task provisionPuppet(dependsOn: zipPuppet) { doLast {
     }
     sshOptions.verbose = true
     exec 'sudo unzip -q -o /tmp/deploy-puppet/puppet.zip -d /tmp/deploy-puppet'
-    exec 'sudo -E /opt/puppetlabs/bin/r10k puppetfile install -v --puppetfile /tmp/deploy-puppet/Puppetfile --moduledir /tmp/deploy-puppet/environments/deploy/modules'
+    if (!project.hasProperty('puppetSkipModuleInstall')) {
+      exec 'sudo -E /opt/puppetlabs/bin/r10k puppetfile install -v --puppetfile /tmp/deploy-puppet/Puppetfile --moduledir /tmp/deploy-puppet/environments/deploy/modules'
+    }
     def result = exec(
       command: "sudo -E /opt/puppetlabs/bin/puppet apply --detailed-exitcodes --hiera_config=/tmp/deploy-puppet/hiera.yaml --environmentpath /tmp/deploy-puppet/environments/ --environment deploy /tmp/deploy-puppet/environments/deploy/manifests",
       failOnError: false  
