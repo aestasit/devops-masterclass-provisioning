@@ -2,7 +2,7 @@
 import groovy.json.JsonSlurper
 import groovy.json.JsonBuilder
 
-task updateGitLabConfiguration { doLast {
+task initializeGitLab { doLast {
   remoteSession {
 
     String gitlabToken = exec("curl -s http://localhost:8480/api/v4/session --data 'login=root&password=${gitlabPassword}' | jq -r .private_token").output.trim()
@@ -52,6 +52,31 @@ task updateGitLabConfiguration { doLast {
       )
 
       exec(command: "${curl} -XPOST http://localhost:8480/api/v4/projects/user/${it.id} -d '${projectCreate}'".toString())
+
+    }
+
+    // Fetch new projects
+    projects = new JsonSlurper().parse(exec(command: "${curl} http://localhost:8480/api/v4/projects").output.bytes)
+
+    // Make initial commit
+    projects.each {
+
+      String rootId = users.find { it.username == 'root' }.id
+      JsonBuilder givePermission = new JsonBuilder(
+          "user_id": rootId,
+          "access_level": 40,
+      )
+
+      exec(command: "${curl} -XPOST http://localhost:8480/api/v4/projects/${it.id}/members -d '${givePermission}'".toString())
+
+      JsonBuilder commitCreate = new JsonBuilder(
+          "branch": "master",
+          "author": "automator@extremeautomation.io",
+          "content": file("jenkins/Jenkinsfile").text.replaceAll('"', '\\"'),
+          "commit_message": "pipeline as code"
+      )
+
+      exec(command: "${curl} -XPOST http://localhost:8480/api/v4/projects/${it.id}/repository/files/Jenkinsfile -d '${commitCreate}'".toString())
 
     }
 
