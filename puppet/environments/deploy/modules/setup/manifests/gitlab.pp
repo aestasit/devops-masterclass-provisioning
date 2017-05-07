@@ -1,6 +1,7 @@
 
 class setup::gitlab(
-  $gitlab_version = '9.1.2-ce.0'
+  $gitlab_version = '9.1.2-ce.0',
+  $gitlab_password = 'QNQiur1dmOUcKAX'
 ) {
 
   file { [
@@ -18,6 +19,9 @@ class setup::gitlab(
       '8443:443',
       '8480:80',
       '8422:22'
+    ],
+    env              => [
+      "GITLAB_OMNIBUS_CONFIG=\"external_url 'http://gitlab.extremeautomation.io/'; gitlab_rails['initial_root_password'] = '${gitlab_password}';\""
     ],
     restart_service  => true,
     volumes          => [

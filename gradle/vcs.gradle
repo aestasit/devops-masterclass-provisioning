@@ -1,13 +1,61 @@
 
-task listVcsUsers << {
-}
+import groovy.json.JsonSlurper
+import groovy.json.JsonBuilder
 
-task listVcsProjects << {
-}
+task updateGitLabConfiguration { doLast {
+  remoteSession {
 
-task addVcsUsers << {
-}
+    String gitlabToken = exec("curl -s http://localhost:8480/api/v4/session --data 'login=root&password=${gitlabPassword}' | jq -r .private_token").output.trim()
+    String curl = "curl -s --header \"Content-Type: application/json\" --header \"PRIVATE-TOKEN: ${gitlabToken}\" ".toString()
 
-task deleteVcsUsers << {
-}
+    // Fetch existing projects
+    def projects = new JsonSlurper().parse(exec(command: "${curl} http://localhost:8480/api/v4/projects").output.bytes)
+
+    // Delete existing users
+    projects.each {
+      exec(command: "${curl} -XDELETE http://localhost:8480/api/v4/projects/${it.id}")
+    }
+
+    // Fetch existing users
+    def users = new JsonSlurper().parse(exec(command: "${curl} http://localhost:8480/api/v4/users").output.bytes)
+
+    // Delete existing users
+    users.findAll{ it.username != 'root' && it.username != 'ghost' }.each {
+      exec(command: "${curl} -XDELETE http://localhost:8480/api/v4/users/${it.id}")
+    }
+
+    // Create users
+    for (int i = 1; i <= studentCount.toInteger(); i++) {
+
+      String studentN =  i.toString().padLeft(2, '0')
+
+      JsonBuilder studentCreate = new JsonBuilder(
+          "email": "student${studentN}@extremeautomation.io",
+          "name": "student${studentN}",
+          "username": "student${studentN}",
+          "password": gitlabStudentPassword
+      )
+
+      exec(command: "${curl} -XPOST http://localhost:8480/api/v4/users -d '${studentCreate}'".toString())
+
+    }
+
+    // Fetch new users
+    users = new JsonSlurper().parse(exec(command: "${curl} http://localhost:8480/api/v4/users").output.bytes)
+
+    // Add projects
+    users.findAll{ it.username != 'root' && it.username != 'ghost' }.each {
+
+      JsonBuilder projectCreate = new JsonBuilder(
+          "name": "${it.username}-code",
+          "visibility": "public"
+      )
+
+      exec(command: "${curl} -XPOST http://localhost:8480/api/v4/projects/user/${it.id} -d '${projectCreate}'".toString())
+
+    }
+
+  }
+}}
+
 
