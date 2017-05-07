@@ -44,6 +44,10 @@ class setup::elasticsearch(
   elasticsearch::instance { "es-01":
     config            => {
       'cluster.name'                         => 'ExtremeCluster',
+      'transport.host'                       => 'localhost',
+      'transport.tcp.port'                   => 9300,
+      'http.port'                            => 9200,
+      'network.host'                         => '0.0.0.0'
     },
     init_defaults     => {
       'JAVA_HOME'                            => '/usr/lib/jvm/jdk1.8.0_111/',
