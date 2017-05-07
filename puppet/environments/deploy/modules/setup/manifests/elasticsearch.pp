@@ -36,8 +36,9 @@ class setup::elasticsearch(
     require           => [
       Package['wget'],
       Apt::Source['elasticsearch'],
-      Class['::setup::java']
-    ]
+      Class['::setup::java'],
+      Exec['apt_update']
+    ],
   }
 
   elasticsearch::instance { "es-01":

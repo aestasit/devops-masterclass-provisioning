@@ -12,6 +12,10 @@ class setup::logstash(
     ensure           => directory
   }
 
+  file { '/etc/logstash/logstash.conf':
+    content          => template('setup/logstash.conf.erb')
+  }
+
   docker::run { 'logstash':
     image            => "docker.elastic.co/logstash/logstash:$logstash_version",
     net              => 'host',
@@ -22,7 +26,5 @@ class setup::logstash(
       '--add-host elasticsearch:127.0.0.1'
     ],
   }
-
-  # TODO: configure pipeline for beats server and syslog
 
 }

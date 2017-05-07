@@ -35,41 +35,4 @@ class setup::kibana(
     proxy       => 'http://localhost:5601',
   }
 
-  # TODO: add index templates
-
-  # TODO: add dashboards
-
-#
-#   # Run a short-lived container to import the default dashboards for the Beats.
-#   import_dashboards:
-#   # Any Beats image will do. We'll use Metricbeat.
-#   image: docker.elastic.co/beats/metricbeat:$ELASTIC_VERSION
-#   networks: ['stack']
-#   command: >-
-#     /usr/share/metricbeat/scripts/import_dashboards
-#   -beat ""
-#     -file /usr/share/metricbeat/beats-dashboards-$ELASTIC_VERSION.zip
-#     -es http://elasticsearch:9200
-#     -user elastic
-#   -pass changeme
-#   depends_on: {kibana: {condition: service_healthy}}
-#
-# # Another short-lived container to create a Kibana index pattern for Logstash.
-# create_logstash_index_pattern:
-# # The image just needs curl, and we know that Metricbeat has that.
-# image: docker.elastic.co/beats/metricbeat:$ELASTIC_VERSION
-# networks: ['stack']
-# # There's currently no API for creating index patterns, so this is a bit hackish.
-# command: >-
-#   curl -XPUT http://elastic:changeme@elasticsearch:9200/.kibana/index-pattern/logstash-*
-#   -d '{"title" : "logstash-*",  "timeFieldName": "@timestamp"}'
-# depends_on: {kibana: {condition: service_healthy}}
-#
-# set_default_index_pattern:
-# image: docker.elastic.co/beats/metricbeat:$ELASTIC_VERSION
-# networks: ['stack']
-# command: >-
-#   curl -XPUT http://elasticsearch:9200/.kibana/config/$ELASTIC_VERSION -d '{"defaultIndex" : "metricbeat-*"}'
-# depends_on: {kibana: {condition: service_healthy}}
-
 }
