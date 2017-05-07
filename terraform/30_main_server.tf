@@ -13,7 +13,6 @@ resource "aws_instance" "devops_server" {
   root_block_device {
     volume_size = "${var.main_server_disk_gb}"
   }
-  # TODO: enable termination differently disable_api_termination = true
   key_name = "${aws_key_pair.devops_key.key_name}"
   subnet_id = "${aws_subnet.devops_subnet.id}"
   vpc_security_group_ids = [ "${aws_security_group.devops_security.id}" ]
