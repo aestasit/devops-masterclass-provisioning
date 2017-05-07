@@ -38,7 +38,7 @@ Terraform sets up
 
 ## Provisioning
 
-Provisioning of the central server has been implemented with Ansible and Puppet. Both tools produce equivalent setup featuring the following components:
+Provisioning of the central server has been implemented with Ansible (WIP) and Puppet. Both tools produce equivalent setup featuring the following components:
 
 - ELK
 - Rancher
