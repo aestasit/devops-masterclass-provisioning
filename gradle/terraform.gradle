@@ -14,7 +14,7 @@ task listIps {
 
     println "\nLinux Machines:"
     println "name,ip"
-    project.getTerraformState().modules[0].resources.findAll { it.key.startsWith 'aws_instance.test_machine_linux.' }.each { println "${it.value.primary.attributes.'tags.Name'},${it.value.primary.attributes.public_ip}" }
+    project.getTerraformState().modules[0].resources.findAll { it.key.startsWith 'aws_instance.test_machine_linux.' }.sort { it.value.primary.attributes.'tags.Name' }.each { println "${it.value.primary.attributes.'tags.Name'},${it.value.primary.attributes.public_ip}" }
 
     println "\nWindows Machines:"
     println "name,ip"
