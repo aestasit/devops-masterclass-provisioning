@@ -60,6 +60,6 @@ apply from: 'gradle/operations.gradle'
 apply from: 'gradle/puppet.gradle'
 apply from: 'gradle/ansible.gradle'
 
-// apply from: 'gradle/vcs.gradle'
-// apply from: 'gradle/jenkins.gradle'
+// TODO: apply from: 'gradle/vcs.gradle'
+// TODO: apply from: 'gradle/jenkins.gradle'
 

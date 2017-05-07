@@ -26,7 +26,7 @@ task initializeKibanaConfiguration { doLast {
     exec "curl -XPUT 'http://127.0.0.1:9200/.kibana/index-pattern/metricbeat-*' -d '{\"title\" : \"metricbeat-*\",  \"timeFieldName\": \"@timestamp\"}'"
     exec "curl -XPUT 'http://127.0.0.1:9200/.kibana/index-pattern/packetbeat-*' -d '{\"title\" : \"packetbeat-*\",  \"timeFieldName\": \"@timestamp\"}'"
     exec "curl -XPUT 'http://127.0.0.1:9200/.kibana/index-pattern/filebeat-*' -d '{\"title\" : \"filebeat-*\",  \"timeFieldName\": \"@timestamp\"}'"
-    // exec "curl -XPUT 'http://127.0.0.1:9200/.kibana/index-pattern/logstash-*' -d '{\"title\" : \"logstash-*\",  \"timeFieldName\": \"@timestamp\"}'"
+    exec "curl -XPUT 'http://127.0.0.1:9200/.kibana/index-pattern/logstash-*' -d '{\"title\" : \"logstash-*\",  \"timeFieldName\": \"@timestamp\"}'"
     exec "curl -XPUT http://127.0.0.1:9200/.kibana/config/5.3.1 -d '{\"defaultIndex\" : \"metricbeat-*\"}'"
     exec "sudo curl -Lso /usr/share/metricbeat/beats-dashboards.zip https://artifacts.elastic.co/downloads/beats/beats-dashboards/beats-dashboards-5.3.1.zip"
     exec "/usr/share/metricbeat/scripts/import_dashboards -beat \"\" -file /usr/share/metricbeat/beats-dashboards.zip -es http://localhost:9200"
@@ -35,6 +35,8 @@ task initializeKibanaConfiguration { doLast {
 
 task initializeRancher { doLast {
   remoteSession {
-    // TODO: implement
+    def result = exec(command: "curl -s http://localhost:8088/v1/registrationtokens | jq -r .data[0].command")
+    String rancherInitCommand = result.output.trim()
+    exec(command: rancherInitCommand)
   }
 }}
