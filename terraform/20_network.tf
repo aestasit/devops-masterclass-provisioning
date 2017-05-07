@@ -55,6 +55,17 @@ resource "aws_security_group" "devops_security" {
   }
 
   #
+  # jenkins
+  #
+
+  ingress {
+    from_port = 8800
+    to_port = 8800
+    protocol = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  #
   # rancher
   #
 
