@@ -27,7 +27,7 @@ task deleteKibanaConfiguration { doLast {
   }
 }}
 
-task initializeKibanaConfiguration { doLast {
+task initializeKibana { doLast {
   remoteSession {
     exec "curl -XPUT 'http://127.0.0.1:9200/.kibana/index-pattern/metricbeat-*' -d '{\"title\" : \"metricbeat-*\",  \"timeFieldName\": \"@timestamp\"}'"
     exec "curl -XPUT 'http://127.0.0.1:9200/.kibana/index-pattern/packetbeat-*' -d '{\"title\" : \"packetbeat-*\",  \"timeFieldName\": \"@timestamp\"}'"

@@ -5,12 +5,15 @@ Setup steps:
 - `gradlew activateTerminationProtection`
 - `gradlew setHostname`
 - `gradlew updateApt`
-- `gradlew provisionPuppet`
-- `gradlew initializeKibanaConfiguration`
+- `gradlew updateHosts`
+- `gradlew provisionPuppet` or `gradlew provisionAnsible`  
+- `gradlew initializeKibana`
 - `gradlew initializeRancher`
 - `gradlew initializeGitlab`
-- `gradlew updateHosts`
 - `gradlew updateJenkinsItems`
+- `gradlew listIps`
+- `gradlew listKeys`
+- `gradlew listNetwork`
 
 Tear-down steps:
 
