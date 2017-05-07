@@ -16,6 +16,7 @@ class setup::jenkins(
 
   package { [ 'openjdk-7-jre-headless', 'daemon' ]:
     ensure          => installed,
+    before          => Class['::setup::java']
   }
   
   exec { 'jenkins':
@@ -26,7 +27,8 @@ class setup::jenkins(
       Archive["/tmp/jenkins_${jenkins_version}_all.deb"],
       Package['daemon'],
       Package['openjdk-7-jre-headless'],
-      Class['::setup::java']
+      Class['::setup::java'],
+      Exec['apt_update']
     ]
   }
 
