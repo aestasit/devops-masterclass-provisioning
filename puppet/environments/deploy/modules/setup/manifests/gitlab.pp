@@ -21,7 +21,7 @@ class setup::gitlab(
       '8422:22'
     ],
     env              => [
-      "GITLAB_OMNIBUS_CONFIG=\"external_url 'http://gitlab.extremeautomation.io/'; gitlab_rails['initial_root_password'] = '${gitlab_password}';\""
+      "GITLAB_OMNIBUS_CONFIG=\"external_url 'http://gitlab.extremeautomation.io/'; gitlab_rails['initial_root_password'] = '${gitlab_password}'; gitlab_rails['rack_attack_git_basic_auth'] = { 'enabled' => false };\""
     ],
     restart_service  => true,
     volumes          => [
