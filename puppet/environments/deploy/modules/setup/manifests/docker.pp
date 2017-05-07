@@ -48,6 +48,4 @@ class setup::docker {
     ]
   }
 
-  # TODO: add virtual host for registry??
-
 }

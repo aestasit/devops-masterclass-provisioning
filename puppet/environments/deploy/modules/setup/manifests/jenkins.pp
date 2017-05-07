@@ -32,6 +32,12 @@ class setup::jenkins(
     ]
   }
 
+  file { '/etc/default/jenkins':
+    content => template('setup/jenkins.default.erb'),
+    require => Exec['jenkins'],
+    notify  => Service['jenkins']
+  }
+
   file { '/var/lib/jenkins/config.xml':
     content => template('setup/config.xml.erb'),
     require => Exec['jenkins'],
@@ -219,7 +225,7 @@ class setup::jenkins(
 
   nginx::resource::server { 'jenkins.extremeautomation.io':
     listen_port => 80,
-    proxy       => 'http://localhost:8080',
+    proxy       => 'http://localhost:8800',
   }
 
 }

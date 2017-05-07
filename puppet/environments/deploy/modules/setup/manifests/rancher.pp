@@ -40,7 +40,7 @@ class setup::rancher(
   docker::run { 'rancher':
     image            => 'rancher/server:v1.6.0',
     net              => 'rancher_net',
-    ports            => [ '8088:8080' ],
+    ports            => [ '8700:8080' ],
     restart_service  => true,
     command          => "--db-host rancher-db --db-port 3306 --db-user ${db_user} --db-pass ${db_password} --db-name ${db_name}",
     extra_parameters => [
@@ -53,7 +53,7 @@ class setup::rancher(
 
   nginx::resource::server { 'rancher.extremeautomation.io':
     listen_port => 80,
-    proxy       => 'http://localhost:8088',
+    proxy       => 'http://localhost:8700',
   }
 
 }

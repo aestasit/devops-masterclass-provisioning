@@ -26,4 +26,9 @@ class setup::prometheus (
     ]
   }
 
+  nginx::resource::server { 'prometheus.extremeautomation.io':
+    listen_port => 80,
+    proxy       => 'http://localhost:9090',
+  }
+
 }

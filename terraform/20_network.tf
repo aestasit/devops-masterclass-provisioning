@@ -19,15 +19,14 @@ resource "aws_security_group" "devops_security" {
   name = "devops_security"
   description = "DevOps Masterclass port openings"
   vpc_id = "${aws_vpc.devops_vpc.id}"
+
+  #
+  # common ports
+  #
+
   ingress {
     from_port = 80
     to_port = 80
-    protocol = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-  ingress {
-    from_port = 8001
-    to_port = 8099
     protocol = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
@@ -38,40 +37,82 @@ resource "aws_security_group" "devops_security" {
     cidr_blocks = ["0.0.0.0/0"]
   }
   ingress {
-    from_port = 5985
-    to_port = 5986
-    protocol = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-  ingress {
-    from_port = 5601
-    to_port = 5601
-    protocol = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-  ingress {
-    from_port = 6782
-    to_port = 6782
-    protocol = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-  ingress {
-    from_port = 2375
-    to_port = 2375
-    protocol = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-  ingress {
     from_port = 443
     to_port = 443
     protocol = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
+
+  #
+  # students
+  #
+
   ingress {
-    from_port = 3389 
-    to_port = 3389 
+    from_port = 8001
+    to_port = 8099
     protocol = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  #
+  # rancher
+  #
+
+  ingress {
+    from_port = 8700
+    to_port = 8700
+    protocol = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  #
+  # docker registry
+  #
+
+  ingress {
+    from_port = 5000
+    to_port = 5000
+    protocol = "tcp"
+    cidr_blocks = ["10.0.0.0/16"]
+  }
+
+  #
+  # vault
+  #
+
+  ingress {
+    from_port = 8200
+    to_port = 8200
+    protocol = "tcp"
+    cidr_blocks = ["10.0.0.0/16"]
+  }
+
+  #
+  # elasticsearch
+  #
+
+  ingress {
+    from_port = 9200
+    to_port = 9200
+    protocol = "tcp"
+    cidr_blocks = ["10.0.0.0/16"]
+  }
+  ingress {
+    from_port = 9300
+    to_port = 9300
+    protocol = "tcp"
+    cidr_blocks = ["10.0.0.0/16"]
+  }
+
+  #
+  # docker api & swarm
+  #
+
+  ingress {
+    from_port = 2375
+    to_port = 2375
+    protocol = "tcp"
+    cidr_blocks = ["10.0.0.0/16"]
   }
   ingress {
     from_port = 2377 
@@ -97,12 +138,18 @@ resource "aws_security_group" "devops_security" {
     protocol = "udp"
     cidr_blocks = ["10.0.0.0/16"]
   }
+
+  #
+  # outgoing traffic
+  #
+
   egress {
     from_port = 0
     to_port = 0
     protocol = "-1"
     cidr_blocks = ["0.0.0.0/0"]
   }
+
 }
 
 resource "aws_internet_gateway" "devops_igw" {
