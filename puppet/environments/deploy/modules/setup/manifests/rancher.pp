@@ -52,8 +52,13 @@ class setup::rancher(
   }
 
   nginx::resource::server { 'rancher.extremeautomation.io':
-    listen_port => 80,
-    proxy       => 'http://localhost:8700',
+    listen_port            => 80,
+    proxy                  => 'http://localhost:8700',
+    location_raw_append    => [
+      'proxy_http_version 1.1;',
+      'proxy_set_header Upgrade $http_upgrade;',
+      'proxy_set_header Connection "upgrade";',
+    ],
   }
 
 }
