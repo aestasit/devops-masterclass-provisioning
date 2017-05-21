@@ -38,7 +38,7 @@ task generateSSLCertificate { doLast {
       exec "sudo apt-get -y -q install certbot"
     }
     String certBotParams = hostNames.collect { "-d $it"}.join(" ")
-    // TODO: the below command does not work since it needs all the hosts to have valid DNS records and the hosts need to respnd on HTTP with authorized token
+    // TODO: the below command does not work since it needs all the hosts to have valid DNS records and the hosts need to respond on HTTP with authorized token
     exec "sudo /usr/bin/certbot certonly --webroot -w /etc/ssl -n --agree-tos -m andrey@aestasit.com ${certBotParams}"
   }
 }}
