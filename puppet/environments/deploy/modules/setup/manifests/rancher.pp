@@ -31,6 +31,7 @@ class setup::rancher(
     notify           => Docker::Run["rancher"],
     extra_parameters => [
       '--restart=always',
+      "--add-host rancher.extremeautomation.io:${ipaddress}"
     ],
     require          => [
       Docker_network["rancher_net"]
@@ -45,6 +46,7 @@ class setup::rancher(
     command          => "--db-host rancher-db --db-port 3306 --db-user ${db_user} --db-pass ${db_password} --db-name ${db_name}",
     extra_parameters => [
       '--restart=always',
+      "--add-host rancher.extremeautomation.io:${ipaddress}"
     ],
     require          => [
       Docker_network["rancher_net"]
