@@ -1,1 +1,9 @@
 ---
+
+- name: download foo.conf
+  get_url:
+    url: http://example.com/path/file.conf
+    dest: /etc/foo.conf
+    mode: 0440
+  with_items:
+    https://artifacts.elastic.co/downloads/beats/filebeat/filebeat-{{beats_version}}-amd64.deb
