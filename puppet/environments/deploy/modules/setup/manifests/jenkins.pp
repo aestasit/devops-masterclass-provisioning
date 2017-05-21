@@ -5,7 +5,7 @@ class setup::jenkins(
 
   contain '::setup::java'
 
-  $jenkins_package = "https://pkg.jenkins.io/debian-stable/binary/jenkins_${jenkins_version}_all.deb"
+  $jenkins_package = "https://pkg.jenkins.io/debian/binary/jenkins_${jenkins_version}_all.deb"
 
   archive { "/tmp/jenkins_${jenkins_version}_all.deb":
     ensure           => present,
@@ -149,7 +149,7 @@ class setup::jenkins(
     'workflow-cps': ;
     'workflow-cps-global-lib': ;
     'workflow-durable-task-step': ;
-    'workflow-job': ;
+    'workflow-job': version => '2.11';
     'workflow-multibranch': ;
     'workflow-remote-loader': ;
     'workflow-scm-step': ;
@@ -207,8 +207,8 @@ class setup::jenkins(
     'github-organization-folder': ;
     'sse-gateway': ;
     'gitlab-plugin': ;
-    'pipeline-github-lib':; 
-    'pubsub-light':; 
+    'pipeline-github-lib': ;
+    'pubsub-light': ;
   }
 
   file { [
