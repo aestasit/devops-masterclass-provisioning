@@ -21,6 +21,10 @@ task disableTerminationProtection (type: Exec) {
   commandLine "aws", "ec2", "modify-instance-attribute", "--instance-id", project.getServerInstanceId(), "--no-disable-api-termination"
 }
 
+task deleteNonTerraformAwsResources(type:  Exec) {
+  // TODO: implement deletion of machines and keys that are not defined by terraform
+}
+
 task deleteKibanaConfiguration { doLast {
   remoteSession {
     exec "curl -XDELETE 'http://127.0.0.1:9200/.kibana'"
