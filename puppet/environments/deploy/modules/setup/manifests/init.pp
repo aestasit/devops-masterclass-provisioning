@@ -10,8 +10,8 @@ class setup {
   include setup::docker
   include setup::java
 
-  # include setup::jenkins
-  # include setup::gitlab
+  include setup::jenkins
+  include setup::gitlab
 
   include setup::elasticsearch
   include setup::logstash

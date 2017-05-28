@@ -1,6 +1,6 @@
 
 class setup::jenkins(
-  $jenkins_version = '2.46.2'
+  $jenkins_version = '2.46'
 ) {
 
   contain '::setup::java'
