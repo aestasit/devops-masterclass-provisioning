@@ -56,9 +56,12 @@ sshOptions {
 
 apply from: 'gradle/download.gradle'
 apply from: 'gradle/terraform.gradle'
-apply from: 'gradle/operations.gradle'
 apply from: 'gradle/dns.gradle'
 apply from: 'gradle/puppet.gradle'
 apply from: 'gradle/ansible.gradle'
 apply from: 'gradle/gitlab.gradle'
 apply from: 'gradle/jenkins.gradle'
+
+apply from: 'gradle/setupOperations.gradle'
+apply from: 'gradle/supportOperations.gradle'
+apply from: 'gradle/teardownOperations.gradle'

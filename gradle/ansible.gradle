@@ -1,11 +1,11 @@
 
-task zipAnsible(type: Zip) {
+task zipAnsible(type: Zip, group: 'Infrastructure preparation') {
   from 'ansible'
   archiveName = 'ansible.zip'
   destinationDir = projectDir
 }
 
-task provisionAnsible(dependsOn: zipAnsible) { doLast {
+task provisionAnsible(dependsOn: zipAnsible, group: 'Infrastructure preparation') { doLast {
   remoteSession {
     if (project.hasProperty('ansibleClean')) {
       exec 'sudo rm -rf /tmp/deploy-ansible'

@@ -2,7 +2,7 @@
 import groovy.json.JsonSlurper
 import groovy.json.JsonBuilder
 
-task initializeGitLab { doLast {
+task initializeGitLab(group: 'Infrastructure preparation') { doLast {
   remoteSession {
 
     String gitlabToken = exec("curl -s http://localhost:8480/api/v4/session --data 'login=root&password=${gitlabPassword}' | jq -r .private_token").output.trim()

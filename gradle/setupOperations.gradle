@@ -1,11 +1,11 @@
 
-task updateApt { doLast {
+task updateApt(group: 'Infrastructure preparation') { doLast {
   remoteSession {
     exec "sudo apt-get update -y"
   }
 }}
 
-task setHostname { doLast {
+task setHostname(group: 'Infrastructure preparation') { doLast {
   remoteSession {
     exec "sudo -- sh -c 'echo ${serverHostName} > /etc/hostname'"
     exec "sudo sed -i 's/^127.0.0.1.*\$/127.0.0.1 ${serverHostName} localhost/' /etc/hosts"
@@ -13,37 +13,23 @@ task setHostname { doLast {
   }
 }}
 
-task activateTerminationProtection(type: Exec) {
+task activateTerminationProtection(type: Exec, group: 'Infrastructure preparation') {
   commandLine "aws", "ec2", "modify-instance-attribute", "--instance-id", project.getServerInstanceId(), "--disable-api-termination"
 }
 
-task disableTerminationProtection (type: Exec) {
-  commandLine "aws", "ec2", "modify-instance-attribute", "--instance-id", project.getServerInstanceId(), "--no-disable-api-termination"
-}
-
-task deleteNonTerraformAwsResources(type:  Exec) {
-  // TODO: implement deletion of machines and keys that are not defined by terraform
-}
-
-task deleteKibanaConfiguration { doLast {
-  remoteSession {
-    exec "curl -XDELETE 'http://127.0.0.1:9200/.kibana'"
-  }
-}}
-
-task initializeKibana { doLast {
+task initializeKibana(group: 'Infrastructure preparation') { doLast {
   remoteSession {
     exec "curl -XPUT 'http://127.0.0.1:9200/.kibana/index-pattern/metricbeat-*' -d '{\"title\" : \"metricbeat-*\",  \"timeFieldName\": \"@timestamp\"}'"
     exec "curl -XPUT 'http://127.0.0.1:9200/.kibana/index-pattern/packetbeat-*' -d '{\"title\" : \"packetbeat-*\",  \"timeFieldName\": \"@timestamp\"}'"
     exec "curl -XPUT 'http://127.0.0.1:9200/.kibana/index-pattern/filebeat-*' -d '{\"title\" : \"filebeat-*\",  \"timeFieldName\": \"@timestamp\"}'"
     exec "curl -XPUT 'http://127.0.0.1:9200/.kibana/index-pattern/logstash-*' -d '{\"title\" : \"logstash-*\",  \"timeFieldName\": \"@timestamp\"}'"
-    exec "curl -XPUT http://127.0.0.1:9200/.kibana/config/5.3.1 -d '{\"defaultIndex\" : \"metricbeat-*\"}'"
-    exec "sudo curl -Lso /usr/share/metricbeat/beats-dashboards.zip https://artifacts.elastic.co/downloads/beats/beats-dashboards/beats-dashboards-5.3.1.zip"
+    exec "curl -XPUT http://127.0.0.1:9200/.kibana/config/${kibanaVersion} -d '{\"defaultIndex\" : \"metricbeat-*\"}'"
+    exec "sudo curl -Lso /usr/share/metricbeat/beats-dashboards.zip https://artifacts.elastic.co/downloads/beats/beats-dashboards/beats-dashboards-${kibanaVersion}.zip"
     exec "/usr/share/metricbeat/scripts/import_dashboards -beat \"\" -file /usr/share/metricbeat/beats-dashboards.zip -es http://localhost:9200"
   }
 }}
 
-task initializeRancher { doLast {
+task initializeRancher(group: 'Infrastructure preparation') { doLast {
   remoteSession {
     // TODO: initialize rancher (currently manual step)
     def result = exec(command: "curl -s http://localhost:8700/v1/registrationtokens | jq -r .data[0].command")

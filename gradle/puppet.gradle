@@ -1,11 +1,11 @@
 
-task zipPuppet(type: Zip) {
+task zipPuppet(type: Zip, group: 'Infrastructure preparation') {
   from 'puppet'
   archiveName = 'puppet.zip'
   destinationDir = projectDir
 }
 
-task provisionPuppet(dependsOn: zipPuppet) { doLast {
+task provisionPuppet(dependsOn: zipPuppet, group: 'Infrastructure preparation') { doLast {
   remoteSession {
     if (project.hasProperty('puppetClean')) {
       exec 'sudo rm -rf /tmp/deploy-puppet'

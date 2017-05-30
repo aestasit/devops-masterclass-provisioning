@@ -15,21 +15,21 @@ ext {
   ]
 }
 
-task generateHostEntries { doLast {
+task generateHostEntries(group: 'Infrastructure preparation') { doLast {
   println "${project.getServerIp()} ${hostNames.join(' ')}"
 }}
 
-task updateHosts { doLast {
+task updateHosts(group: 'Infrastructure preparation') { doLast {
   remoteSession {
     exec "sudo bash -c 'echo ${project.getServerIp()} ${hostNames.join(' ')} >> /etc/hosts'"
   }
 }}
 
-task updateDNSRecords {
+task updateDNSRecords(group: 'Infrastructure preparation') {
   // TODO: implement DNS record updates through namecheap API
 }
 
-task generateSSLCertificate { doLast {
+task generateSSLCertificate(group: 'Infrastructure preparation') { doLast {
   remoteSession {
     // TODO: use cerbot docker container instead because package installation removes httpie
     if (fail("certbot --help")) {

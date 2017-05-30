@@ -1,15 +1,15 @@
 
-task terraformApply(type: Exec) {
+task terraformApply(type: Exec, group: 'Infrastructure preparation') {
   commandLine 'terraform', 'apply'
   workingDir 'terraform'
 }
 
-task terraformDestroy(type: Exec) {
+task terraformDestroy(type: Exec, group: 'Infrastructure shutdown') {
   commandLine 'terraform', 'destroy', '-force'
   workingDir 'terraform'
 }
 
-task listIps {  
+task listIps(group: 'Infrastructure support') {
   doLast {
 
     println "\nLinux Machines:"
@@ -26,7 +26,7 @@ task listIps {
   }
 }
 
-task listKeys {
+task listKeys(group: 'Infrastructure support') {
   doLast {
     println "\nStudent Access Keys:"
     println "username,accessKeyId,secretAccessKey"
@@ -34,7 +34,7 @@ task listKeys {
   }
 }
 
-task listNetwork {
+task listNetwork(group: 'Infrastructure support') {
   doLast {
     println "AMI ID: ${project.getTerraformState().modules[0].resources.'data.aws_ami.devops_ubuntu_trusty'.primary.id}"
     println "Subnet ID: ${project.getTerraformState().modules[0].resources.'aws_subnet.devops_subnet'.primary.id}"

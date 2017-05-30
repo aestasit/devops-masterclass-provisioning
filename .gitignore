@@ -7,3 +7,6 @@ secrets/*
 *.iml
 *.ipr
 *.iws
+.idea/
+instances.json
+keypairs.json

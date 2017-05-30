@@ -1,0 +1,20 @@
+
+task deleteKibanaConfiguration(group: 'Infrastructure support') { doLast {
+  remoteSession {
+    exec "curl -XDELETE 'http://127.0.0.1:9200/.kibana'"
+  }
+}}
+
+task describeInstances(type: Exec, group: 'Infrastructure support') {
+  commandLine "aws", "ec2", "describe-instances", "--output", "json"
+  doFirst {
+    standardOutput = new FileOutputStream(file('instances.json'))
+  }
+}
+
+task describeKeypairs(type: Exec, group: 'Infrastructure support') {
+  commandLine "aws", "ec2", "describe-key-pairs", "--output", "json"
+  doFirst {
+    standardOutput = new FileOutputStream(file('keypairs.json'))
+  }
+}

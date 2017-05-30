@@ -1,0 +1,21 @@
+import groovy.json.JsonSlurper
+
+task disableTerminationProtection (type: Exec, group: 'Infrastructure shutdown') {
+  commandLine "aws", "ec2", "modify-instance-attribute", "--instance-id", project.getServerInstanceId(), "--no-disable-api-termination"
+}
+
+task terminateAllServers(dependsOn: [describeInstances, disableTerminationProtection], group: 'Infrastructure shutdown') {
+  doLast {
+    def instances = new JsonSlurper().parse(file('instances.json'))
+    instances.Reservations.each { reservation ->
+      reservation.Instances.each { instance ->
+        if (instance.State.Name == 'running') {
+          exec {
+            commandLine "aws", "ec2", "terminate-instances", "--instance-ids", instance.InstanceId
+          }
+        }
+      }
+    }
+  }
+}
+
