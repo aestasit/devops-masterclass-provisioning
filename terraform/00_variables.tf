@@ -1,6 +1,6 @@
 
 variable "student_count" {
-  default = "15"
+  default = "20"
 }
 
 variable "admin_password" {

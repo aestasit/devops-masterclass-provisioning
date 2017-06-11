@@ -1,7 +1,6 @@
 node {
   stage("Create") {
     checkout scm
-    sh "terraform apply"
   }
   stage("Provision") {
 
@@ -10,6 +9,5 @@ node {
 
   }
   stage("Destroy") {
-    sh "terraform destroy"
   }
 }

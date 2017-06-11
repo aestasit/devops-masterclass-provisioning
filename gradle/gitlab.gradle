@@ -41,7 +41,7 @@ task initializeGitLab(group: 'Infrastructure preparation') { doLast {
     }
 
     // Fetch new users
-    users = new JsonSlurper().parse(exec(command: "${curl} http://localhost:8480/api/v4/users").output.bytes)
+    users = new JsonSlurper().parse(exec(command: "${curl} http://localhost:8480/api/v4/users?per_page=100").output.bytes)
 
     // Add projects
     users.findAll{ it.username != 'root' && it.username != 'ghost' }.each {
