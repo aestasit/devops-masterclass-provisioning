@@ -84,3 +84,22 @@ task initializeGitLab(group: 'Infrastructure preparation') { doLast {
 }}
 
 
+task addSlackToGitLab(group: 'Infrastructure preparation') { doLast {
+  remoteSession {
+
+    String gitlabToken = exec("curl -s http://localhost:8480/api/v4/session --data 'login=root&password=${gitlabPassword}' | jq -r .private_token").output.trim()
+    String curl = "curl -s --header \"Content-Type: application/json\" --header \"PRIVATE-TOKEN: ${gitlabToken}\" ".toString()
+
+    def projects = new JsonSlurper().parse(exec(command: "${curl} http://localhost:8480/api/v4/projects").output.bytes)
+
+    JsonBuilder hookCreate = new JsonBuilder(
+        "webhook": file("${projectDir}/secrets/slack.webhook.url").text.trim(),
+        "channel": "#operations",
+    )
+
+    projects.each {
+      exec(command: "${curl} -XPUT http://localhost:8480/api/v4/projects/${it.id}/services/slack -d '${hookCreate}'".toString())
+    }
+
+  }
+}}
