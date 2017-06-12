@@ -28,7 +28,7 @@ jenkins {
           name "${jobNamePrefix}_BUILD"
           xml templates.student_build.override { job ->
             job.description = "Build for '${studentUser}' infrastructure."
-            job.definition.scm.userRemoteConfigs.'hudson.plugins.git.UserRemoteConfig'.url = "http://gitlab.extremeautomation.io/${studentUser}/${studentUser}-code.git"
+            job.sources.data."jenkins.branch.BranchSource".source.remote = "http://gitlab.extremeautomation.io/${studentUser}/${studentUser}-code.git"
           }
         }
       }

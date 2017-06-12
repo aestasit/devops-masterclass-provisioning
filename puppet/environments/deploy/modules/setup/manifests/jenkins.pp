@@ -1,6 +1,6 @@
 
 class setup::jenkins(
-  $jenkins_version = '2.46'
+  $jenkins_version = '2.64'
 ) {
 
   contain '::setup::java'
@@ -14,20 +14,25 @@ class setup::jenkins(
     cleanup          => false
   }
 
-  package { [ 'openjdk-7-jre-headless', 'daemon' ]:
+  apt::ppa { 'ppa:jonathonf/openjdk': }
+
+  package { [ 'openjdk-8-jdk', 'daemon' ]:  # TODO: we do not need this package in fact, it's only to satisfy apt-get/dpkg; actual java is setup by setup::java class
     ensure          => installed,
     before          => Class['::setup::java'],
-    require         => Exec['apt_update']
+    require         => [
+      Apt::Ppa['ppa:jonathonf/openjdk'],
+      Exec['apt_update']
+    ]
   }
   
   exec { 'jenkins':
-    unless          => "dpkg -s jenkins",
-    command         => "/usr/bin/dpkg -i /tmp/jenkins_${jenkins_version}_all.deb",
+    unless          => "dpkg -s jenkins", # TODO: this does not work for upgrades
+    command         => "/usr/bin/dpkg --force-all -i /tmp/jenkins_${jenkins_version}_all.deb",
     notify          => Service['jenkins'],
     require         => [
       Archive["/tmp/jenkins_${jenkins_version}_all.deb"],
       Package['daemon'],
-      Package['openjdk-7-jre-headless'],
+      Package['openjdk-8-jdk'],
       Class['::setup::java'],
       Exec['apt_update']
     ]
@@ -149,7 +154,7 @@ class setup::jenkins(
     'workflow-cps': ;
     'workflow-cps-global-lib': ;
     'workflow-durable-task-step': ;
-    'workflow-job': version => '2.11';
+    'workflow-job': ;
     'workflow-multibranch': ;
     'workflow-remote-loader': ;
     'workflow-scm-step': ;

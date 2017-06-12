@@ -1,49 +1,52 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<flow-definition plugin="workflow-job@2.7">
+<org.jenkinsci.plugins.workflow.multibranch.WorkflowMultiBranchProject plugin="workflow-multibranch@2.15">
     <actions/>
     <description></description>
-    <keepDependencies>false</keepDependencies>
     <properties>
-        <com.sonyericsson.rebuild.RebuildSettings plugin="rebuild@1.25">
-            <autoRebuild>false</autoRebuild>
-            <rebuildDisabled>false</rebuildDisabled>
-        </com.sonyericsson.rebuild.RebuildSettings>
-        <hudson.plugins.throttleconcurrents.ThrottleJobProperty plugin="throttle-concurrents@1.9.0">
-            <maxConcurrentPerNode>0</maxConcurrentPerNode>
-            <maxConcurrentTotal>0</maxConcurrentTotal>
-            <categories class="java.util.concurrent.CopyOnWriteArrayList"/>
-            <throttleEnabled>false</throttleEnabled>
-            <throttleOption>project</throttleOption>
-            <limitOneJobWithMatchingParams>false</limitOneJobWithMatchingParams>
-            <paramsToUseForLimit></paramsToUseForLimit>
-        </hudson.plugins.throttleconcurrents.ThrottleJobProperty>
-        <org.jenkinsci.plugins.workflow.job.properties.PipelineTriggersJobProperty>
-            <triggers/>
-        </org.jenkinsci.plugins.workflow.job.properties.PipelineTriggersJobProperty>
+        <org.jenkinsci.plugins.pipeline.modeldefinition.config.FolderConfig plugin="pipeline-model-definition@1.1.6">
+            <dockerLabel></dockerLabel>
+            <registry plugin="docker-commons@1.6"/>
+        </org.jenkinsci.plugins.pipeline.modeldefinition.config.FolderConfig>
     </properties>
-    <definition class="org.jenkinsci.plugins.workflow.cps.CpsScmFlowDefinition" plugin="workflow-cps@2.18">
-        <scm class="hudson.plugins.git.GitSCM" plugin="git@3.0.0">
-            <configVersion>2</configVersion>
-            <userRemoteConfigs>
-                <hudson.plugins.git.UserRemoteConfig>
-                    <url>https://aestas.repositoryhosting.com/git/aestas/student01-repo.git</url>
-                </hudson.plugins.git.UserRemoteConfig>
-            </userRemoteConfigs>
-            <branches>
-                <hudson.plugins.git.BranchSpec>
-                    <name>*/master</name>
-                </hudson.plugins.git.BranchSpec>
-            </branches>
-            <doGenerateSubmoduleConfigurations>false</doGenerateSubmoduleConfigurations>
-            <submoduleCfg class="list"/>
-            <extensions/>
-        </scm>
+    <folderViews class="jenkins.branch.MultiBranchProjectViewHolder" plugin="branch-api@2.0.10">
+        <owner class="org.jenkinsci.plugins.workflow.multibranch.WorkflowMultiBranchProject" reference="../.."/>
+    </folderViews>
+    <healthMetrics>
+        <com.cloudbees.hudson.plugins.folder.health.WorstChildHealthMetric plugin="cloudbees-folder@6.0.4">
+            <nonRecursive>false</nonRecursive>
+        </com.cloudbees.hudson.plugins.folder.health.WorstChildHealthMetric>
+    </healthMetrics>
+    <icon class="jenkins.branch.MetadataActionFolderIcon" plugin="branch-api@2.0.10">
+        <owner class="org.jenkinsci.plugins.workflow.multibranch.WorkflowMultiBranchProject" reference="../.."/>
+    </icon>
+    <orphanedItemStrategy class="com.cloudbees.hudson.plugins.folder.computed.DefaultOrphanedItemStrategy" plugin="cloudbees-folder@6.0.4">
+        <pruneDeadBranches>true</pruneDeadBranches>
+        <daysToKeep>0</daysToKeep>
+        <numToKeep>0</numToKeep>
+    </orphanedItemStrategy>
+    <triggers/>
+    <sources class="jenkins.branch.MultiBranchProject$BranchSourceList" plugin="branch-api@2.0.10">
+        <data>
+            <jenkins.branch.BranchSource>
+                <source class="jenkins.plugins.git.GitSCMSource" plugin="git@3.3.0">
+                    <id>3e60b90f-0961-4262-91ea-eec9f17911ab</id>
+                    <remote>http://gitlab.extremeautomation.io/student01/student01-code.git</remote>
+                    <credentialsId></credentialsId>
+                    <remoteName>origin</remoteName>
+                    <rawRefSpecs>+refs/heads/*:refs/remotes/origin/*</rawRefSpecs>
+                    <includes>*</includes>
+                    <excludes></excludes>
+                    <ignoreOnPushNotifications>false</ignoreOnPushNotifications>
+                </source>
+                <strategy class="jenkins.branch.DefaultBranchPropertyStrategy">
+                    <properties class="empty-list"/>
+                </strategy>
+            </jenkins.branch.BranchSource>
+        </data>
+        <owner class="org.jenkinsci.plugins.workflow.multibranch.WorkflowMultiBranchProject" reference="../.."/>
+    </sources>
+    <factory class="org.jenkinsci.plugins.workflow.multibranch.WorkflowBranchProjectFactory">
+        <owner class="org.jenkinsci.plugins.workflow.multibranch.WorkflowMultiBranchProject" reference="../.."/>
         <scriptPath>Jenkinsfile</scriptPath>
-    </definition>
-    <triggers>
-        <hudson.triggers.SCMTrigger>
-            <spec>* * * * *</spec>
-            <ignorePostCommitHooks>false</ignorePostCommitHooks>
-        </hudson.triggers.SCMTrigger>
-    </triggers>
-</flow-definition>
+    </factory>
+</org.jenkinsci.plugins.workflow.multibranch.WorkflowMultiBranchProject>
