@@ -1,8 +1,26 @@
 
 filebeat.prospectors:
 - input_type: log
+  fields:
+    source_type: system
   paths:
-    - /var/log/*
+    - /var/log/syslog
+    - /var/log/auth.log
+- input_type: log
+  fields:
+    source_type: jenkins_build
+  paths:
+    - /var/lib/jenkins/jobs/*/builds/*/log
+    - /var/lib/jenkins/jobs/*/branches/*/builds/*/log
+- input_type: log
+  fields:
+    source_type: jenkins_master
+  multiline.pattern: '^[A-Za-z]{3} [0-9]{1,2}, [0-9]{4}'
+  multiline.negate: true
+  multiline.match: after
+  paths:
+    - /var/log/jenkins/jenkins.log
+
 
 output.elasticsearch:
   hosts: ["localhost:9200"]
