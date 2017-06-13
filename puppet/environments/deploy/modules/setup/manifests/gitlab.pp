@@ -38,6 +38,9 @@ class setup::gitlab(
   nginx::resource::server { 'gitlab.extremeautomation.io':
     listen_port => 80,
     proxy       => 'http://localhost:8480',
+    server_cfg_append    => {
+      'client_max_body_size' => '100m',
+    }
   }
 
 }
