@@ -30,7 +30,7 @@ task listKeys(group: 'Infrastructure support') {
   doLast {
     println "\nStudent Access Keys:"
     println "username,accessKeyId,secretAccessKey"
-    project.getTerraformState().modules[0].resources.findAll { it.key.startsWith 'aws_iam_access_key.' }.each { println "${it.value.primary.attributes.user},${it.value.primary.id},${it.value.primary.attributes.secret}" }
+    project.getTerraformState().modules[0].resources.findAll { it.key.startsWith 'aws_iam_access_key.' }.sort { it.value.primary.attributes.user }.each { println "${it.value.primary.attributes.user},${it.value.primary.id},${it.value.primary.attributes.secret}" }
   }
 }
 
