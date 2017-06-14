@@ -22,4 +22,5 @@ Setup steps:
 Tear-down steps:
 
 - `gradlew disableTerminationProtection`
+- `gradlew terminateAllServers`
 - `gradlew terraformDestroy`
