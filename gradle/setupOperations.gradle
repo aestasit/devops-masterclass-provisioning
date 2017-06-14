@@ -33,8 +33,7 @@ task initializeRancher(group: 'Infrastructure preparation') { doLast {
   remoteSession {
     // TODO: initialize rancher (currently manual step)
     def result = exec(command: "curl -s http://localhost:8700/v1/registrationtokens | jq -r .data[0].command")
-    // TODO: --add-host rancher.extremeautomation.io:NN.NN.NN.NN
-    String rancherInitCommand = result.output.trim()
+    String rancherInitCommand = result.output.trim().replaceAll('docker run', "docker run --add-host rancher.extremeautomation.io:${project.getServerIp()}")
     exec(command: rancherInitCommand)
   }
 }}
