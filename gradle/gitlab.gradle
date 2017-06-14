@@ -131,7 +131,10 @@ task pushCodeToGitLabProjects(dependsOn: [getGitLabApiToken, getGitLabProjects],
           "commit_message": "pipeline as code"
       )
 
-      exec(command: project.gitLabCurlCommand("-XPOST http://localhost:8480/api/v4/projects/${it.id}/repository/files/Jenkinsfile -d '${commitCreate}'"))
+      String output = exec(command: project.gitLabCurlCommand("-XPOST http://localhost:8480/api/v4/projects/${it.id}/repository/files/Jenkinsfile -d '${commitCreate}'")).output
+      if (output.contains('already exists')) {
+        exec(command: project.gitLabCurlCommand("-XPUT http://localhost:8480/api/v4/projects/${it.id}/repository/files/Jenkinsfile -d '${commitCreate}'"))
+      }
 
     }
   }
