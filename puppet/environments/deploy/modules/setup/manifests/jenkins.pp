@@ -1,6 +1,6 @@
 
 class setup::jenkins(
-  $jenkins_version = '2.64'
+  $jenkins_version = '2.65'
 ) {
 
   contain '::setup::java'
@@ -26,7 +26,7 @@ class setup::jenkins(
   }
   
   exec { 'jenkins':
-    unless          => "dpkg -s jenkins", # TODO: this does not work for upgrades
+    unless          => "dpkg -s jenkins | grep 'Version: ${jenkins_version}'",
     command         => "/usr/bin/dpkg --force-all -i /tmp/jenkins_${jenkins_version}_all.deb",
     notify          => Service['jenkins'],
     require         => [
@@ -203,6 +203,7 @@ class setup::jenkins(
     'blueocean-commons': ;
     'blueocean-jwt': ;
     'blueocean-personalization': ;
+    'blueocean-pipeline-scm-api': ;
     'metrics': ;
     'variant': ;
     'blueocean-events': ;
