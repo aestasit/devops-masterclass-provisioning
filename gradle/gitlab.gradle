@@ -157,6 +157,7 @@ task addSlackNotiferToGitLabProjects(dependsOn: [getGitLabApiToken, getGitLabPro
 }}
 
 addSlackNotiferToGitLabProjects.mustRunAfter createGitLabProjects
+addSlackNotiferToGitLabProjects.mustRunAfter pushCodeToGitLabProjects
 
 task initializeGitLab(dependsOn: [
     deleteGitLabProjects,
