@@ -5,7 +5,7 @@ defaults:
   data_hash: yaml_data
 hierarchy:
   - name: "YAML hierarchy levels"
-    paths: # Can specify an array of paths instead of a single one.
+    paths:
       - "/tmp/deploy-puppet/environments/%{environment}/hieradata"
       - "groups/%{facts.group}.yaml"
       - "os/%{facts.os.family}.yaml"
