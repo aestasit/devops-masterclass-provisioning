@@ -2,29 +2,56 @@
 import groovy.json.JsonSlurper
 import groovy.json.JsonBuilder
 
-task initializeGitLab(group: 'Infrastructure preparation') { doLast {
+ext {
+  gitLabTokenFile = file('gitlab.token')
+  gitLabProjectsFile = file('gitlab.projects.json')
+  gitLabUsersFile = file('gitlab.users.json')
+  gitLabCurlCommand = { String suffix ->
+    "curl -s --header \"Content-Type: application/json\" --header \"PRIVATE-TOKEN: ${file('gitlab.token').exists() ? file('gitlab.token').text : ''}\" ${suffix}".toString()
+  }
+}
+
+task getGitLabApiToken(group: 'Infrastructure preparation') { doLast {
+  remoteSession {
+    project.gitLabTokenFile.text = exec("curl -s http://localhost:8480/api/v4/session --data 'login=root&password=${gitlabPassword}' | jq -r .private_token").output.trim()
+  }
+}}
+
+task getGitLabProjects(dependsOn: getGitLabApiToken, group: 'Infrastructure preparation') { doLast {
+  remoteSession {
+    project.gitLabProjectsFile.text = exec(command: project.gitLabCurlCommand("http://localhost:8480/api/v4/projects?per_page=100")).output
+  }
+}}
+
+task deleteGitLabProjects(dependsOn: [getGitLabApiToken, getGitLabProjects], group: 'Infrastructure preparation') { doLast {
+  remoteSession {
+    def projects = new JsonSlurper().parse(project.gitLabProjectsFile)
+    projects.each {
+      exec(command: project.gitLabCurlCommand("-XDELETE http://localhost:8480/api/v4/projects/${it.id}"))
+    }
+  }
+}}
+
+task getGitLabUsers(dependsOn: getGitLabApiToken, group: 'Infrastructure preparation') { doLast {
+  remoteSession {
+    project.gitLabUsersFile.text = exec(command: project.gitLabCurlCommand("http://localhost:8480/api/v4/users?per_page=100")).output
+  }
+}}
+
+task deleteGitLabUsers(dependsOn: [getGitLabApiToken, getGitLabUsers], group: 'Infrastructure preparation') { doLast {
+  remoteSession {
+    def users = new JsonSlurper().parse(project.gitLabUsersFile)
+    users.findAll{ it.username != 'root' && it.username != 'ghost' }.each {
+      exec(command: project.gitLabCurlCommand("-XDELETE http://localhost:8480/api/v4/users/${it.id}"))
+    }
+  }
+}}
+
+deleteGitLabUsers.mustRunAfter deleteGitLabProjects
+
+task createGitLabUsers(dependsOn: [getGitLabApiToken], group: 'Infrastructure preparation') { doLast {
   remoteSession {
 
-    String gitlabToken = exec("curl -s http://localhost:8480/api/v4/session --data 'login=root&password=${gitlabPassword}' | jq -r .private_token").output.trim()
-    String curl = "curl -s --header \"Content-Type: application/json\" --header \"PRIVATE-TOKEN: ${gitlabToken}\" ".toString()
-
-    // Fetch existing projects
-    def projects = new JsonSlurper().parse(exec(command: "${curl} http://localhost:8480/api/v4/projects").output.bytes)
-
-    // Delete existing users
-    projects.each {
-      exec(command: "${curl} -XDELETE http://localhost:8480/api/v4/projects/${it.id}")
-    }
-
-    // Fetch existing users
-    def users = new JsonSlurper().parse(exec(command: "${curl} http://localhost:8480/api/v4/users").output.bytes)
-
-    // Delete existing users
-    users.findAll{ it.username != 'root' && it.username != 'ghost' }.each {
-      exec(command: "${curl} -XDELETE http://localhost:8480/api/v4/users/${it.id}")
-    }
-
-    // Create users
     for (int i = 1; i <= studentCount.toInteger(); i++) {
 
       String studentN =  i.toString().padLeft(2, '0')
@@ -36,14 +63,23 @@ task initializeGitLab(group: 'Infrastructure preparation') { doLast {
           "password": gitlabStudentPassword
       )
 
-      exec(command: "${curl} -XPOST http://localhost:8480/api/v4/users -d '${studentCreate}'".toString())
+      exec(command: project.gitLabCurlCommand("-XPOST http://localhost:8480/api/v4/users -d '${studentCreate}'"))
 
     }
 
     // Fetch new users
-    users = new JsonSlurper().parse(exec(command: "${curl} http://localhost:8480/api/v4/users?per_page=100").output.bytes)
+    project.gitLabUsersFile.text = exec(command: project.gitLabCurlCommand("http://localhost:8480/api/v4/users?per_page=100")).output
 
-    // Add projects
+  }
+}}
+
+createGitLabUsers.mustRunAfter deleteGitLabUsers
+createGitLabUsers.mustRunAfter deleteGitLabProjects
+
+task createGitLabProjects(dependsOn: [getGitLabApiToken], group: 'Infrastructure preparation') { doLast {
+  remoteSession {
+
+    def users = new JsonSlurper().parse(project.gitLabUsersFile)
     users.findAll{ it.username != 'root' && it.username != 'ghost' }.each {
 
       JsonBuilder projectCreate = new JsonBuilder(
@@ -51,14 +87,22 @@ task initializeGitLab(group: 'Infrastructure preparation') { doLast {
           "visibility": "public"
       )
 
-      exec(command: "${curl} -XPOST http://localhost:8480/api/v4/projects/user/${it.id} -d '${projectCreate}'".toString())
+      exec(command: project.gitLabCurlCommand("-XPOST http://localhost:8480/api/v4/projects/user/${it.id} -d '${projectCreate}'"))
 
     }
 
     // Fetch new projects
-    projects = new JsonSlurper().parse(exec(command: "${curl} http://localhost:8480/api/v4/projects").output.bytes)
+    project.gitLabProjectsFile.text = exec(command: project.gitLabCurlCommand("http://localhost:8480/api/v4/projects?per_page=100")).output
 
-    // Make initial commit
+  }
+}}
+
+createGitLabProjects.mustRunAfter createGitLabUsers
+
+task assignGitLabProjectPermissions(dependsOn: [getGitLabApiToken, getGitLabProjects, getGitLabUsers], group: 'Infrastructure preparation') { doLast {
+  remoteSession {
+    def projects = new JsonSlurper().parse(project.gitLabProjectsFile)
+    def users = new JsonSlurper().parse(project.gitLabUsersFile)
     projects.each {
 
       String rootId = users.find { it.username == 'root' }.id
@@ -67,7 +111,18 @@ task initializeGitLab(group: 'Infrastructure preparation') { doLast {
           "access_level": 40,
       )
 
-      exec(command: "${curl} -XPOST http://localhost:8480/api/v4/projects/${it.id}/members -d '${givePermission}'".toString())
+      exec(command: project.gitLabCurlCommand("-XPOST http://localhost:8480/api/v4/projects/${it.id}/members -d '${givePermission}'"))
+
+    }
+  }
+}}
+
+assignGitLabProjectPermissions.mustRunAfter createGitLabProjects
+
+task pushCodeToGitLabProjects(dependsOn: [getGitLabApiToken, getGitLabProjects], group: 'Infrastructure preparation') { doLast {
+  remoteSession {
+    def projects = new JsonSlurper().parse(project.gitLabProjectsFile)
+    projects.each {
 
       JsonBuilder commitCreate = new JsonBuilder(
           "branch": "master",
@@ -76,21 +131,18 @@ task initializeGitLab(group: 'Infrastructure preparation') { doLast {
           "commit_message": "pipeline as code"
       )
 
-      exec(command: "${curl} -XPOST http://localhost:8480/api/v4/projects/${it.id}/repository/files/Jenkinsfile -d '${commitCreate}'".toString())
+      exec(command: project.gitLabCurlCommand("-XPOST http://localhost:8480/api/v4/projects/${it.id}/repository/files/Jenkinsfile -d '${commitCreate}'"))
 
     }
-
   }
 }}
 
+pushCodeToGitLabProjects.mustRunAfter createGitLabProjects
 
-task addSlackToGitLab(group: 'Infrastructure preparation') { doLast {
+task addSlackNotiferToGitLabProjects(dependsOn: [getGitLabApiToken, getGitLabProjects], group: 'Infrastructure preparation') { doLast {
   remoteSession {
 
-    String gitlabToken = exec("curl -s http://localhost:8480/api/v4/session --data 'login=root&password=${gitlabPassword}' | jq -r .private_token").output.trim()
-    String curl = "curl -s --header \"Content-Type: application/json\" --header \"PRIVATE-TOKEN: ${gitlabToken}\" ".toString()
-
-    def projects = new JsonSlurper().parse(exec(command: "${curl} http://localhost:8480/api/v4/projects").output.bytes)
+    def projects = new JsonSlurper().parse(project.gitLabProjectsFile)
 
     JsonBuilder hookCreate = new JsonBuilder(
         "webhook": file("${projectDir}/secrets/slack.webhook.url").text.trim(),
@@ -98,8 +150,22 @@ task addSlackToGitLab(group: 'Infrastructure preparation') { doLast {
     )
 
     projects.each {
-      exec(command: "${curl} -XPUT http://localhost:8480/api/v4/projects/${it.id}/services/slack -d '${hookCreate}'".toString())
+      exec(command: project.gitLabCurlCommand("-XPUT http://localhost:8480/api/v4/projects/${it.id}/services/slack -d '${hookCreate}'"))
     }
 
   }
 }}
+
+addSlackNotiferToGitLabProjects.mustRunAfter createGitLabProjects
+
+task initializeGitLab(dependsOn: [
+    deleteGitLabProjects,
+    deleteGitLabUsers,
+    createGitLabUsers,
+    createGitLabProjects,
+    assignGitLabProjectPermissions,
+    pushCodeToGitLabProjects,
+    addSlackNotiferToGitLabProjects,
+], group: 'Infrastructure preparation')
+
+

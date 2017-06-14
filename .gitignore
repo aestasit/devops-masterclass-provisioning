@@ -10,3 +10,6 @@ secrets/*
 .idea/
 instances.json
 keypairs.json
+gitlab.users.json
+gitlab.projects.json
+gitlab.token
