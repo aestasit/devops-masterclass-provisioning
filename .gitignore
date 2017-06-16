@@ -9,8 +9,8 @@ secrets/*
 *.iws
 .idea/
 build/
-instances.json
-keypairs.json
-gitlab.users.json
-gitlab.projects.json
-gitlab.token
+build/instances.json
+build/keypairs.json
+build/gitlab.users.json
+build/gitlab.projects.json
+build/gitlab.token

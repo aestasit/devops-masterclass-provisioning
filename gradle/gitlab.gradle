@@ -3,9 +3,9 @@ import groovy.json.JsonSlurper
 import groovy.json.JsonBuilder
 
 ext {
-  gitLabTokenFile = file('gitlab.token')
-  gitLabProjectsFile = file('gitlab.projects.json')
-  gitLabUsersFile = file('gitlab.users.json')
+  gitLabTokenFile = file('build/gitlab.token')
+  gitLabProjectsFile = file('build/gitlab.projects.json')
+  gitLabUsersFile = file('build/gitlab.users.json')
   gitLabCurlCommand = { String suffix ->
     "curl -s --header \"Content-Type: application/json\" --header \"PRIVATE-TOKEN: ${file('gitlab.token').exists() ? file('gitlab.token').text : ''}\" ${suffix}".toString()
   }

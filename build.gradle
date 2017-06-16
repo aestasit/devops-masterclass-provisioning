@@ -19,6 +19,7 @@ plugins {
   id "com.terrafolio.jenkins" version "1.3.2"
 }
 
+apply plugin: 'base'
 apply plugin: 'secureShell'
 
 ext {
@@ -53,6 +54,8 @@ sshOptions {
     showOutput      = true
   }
 }
+
+mkdir buildDir
 
 apply from: 'gradle/download.gradle'
 apply from: 'gradle/terraform.gradle'

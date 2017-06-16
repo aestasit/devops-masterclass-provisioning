@@ -2,7 +2,7 @@
 task zipAnsible(type: Zip, group: 'Infrastructure preparation') {
   from 'ansible'
   archiveName = 'ansible.zip'
-  destinationDir = projectDir
+  destinationDir = buildDir
 }
 
 task provisionAnsible(dependsOn: zipAnsible, group: 'Infrastructure preparation') { doLast {

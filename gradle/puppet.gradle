@@ -2,7 +2,7 @@
 task zipPuppet(type: Zip, group: 'Infrastructure preparation') {
   from 'puppet'
   archiveName = 'puppet.zip'
-  destinationDir = projectDir
+  destinationDir = buildDir
 }
 
 task provisionPuppet(dependsOn: zipPuppet, group: 'Infrastructure preparation') { doLast {
