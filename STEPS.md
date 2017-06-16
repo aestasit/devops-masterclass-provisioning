@@ -23,4 +23,5 @@ Tear-down steps:
 
 - `gradlew disableTerminationProtection`
 - `gradlew terminateAllServers`
+- `gradlew deleteAllKeypairs`
 - `gradlew terraformDestroy`

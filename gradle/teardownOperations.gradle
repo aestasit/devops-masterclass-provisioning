@@ -19,3 +19,13 @@ task terminateAllServers(dependsOn: [describeInstances, disableTerminationProtec
   }
 }
 
+task deleteAllKeypairs(dependsOn: [describeKeypairs], group: 'Infrastructure shutdown') {
+  doLast {
+    def instances = new JsonSlurper().parse(file('keypairs.json'))
+    instances.KeyPairs.each { keyPair ->
+      exec {
+        commandLine "aws", "ec2", "delete-key-pair", "--key-name", keyPair.KeyName
+      }
+    }
+  }
+}
