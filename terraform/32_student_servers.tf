@@ -1,7 +1,7 @@
 
 resource "aws_key_pair" "student_test_key" {
   key_name = "student_test_key" 
-  public_key = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDgYuUZ5RUzq6lT/ztjGOWviPh+E8zKUHHIqKMt21myDn9Ta3utwEMBzYvNrHZqeUazL/mRyUi2SUYHGxqakVqB+adJrj9JiNDtEZgcbbVtrtGecQ100Cysju301XvVF9aIMVyZzSTi2bGzcAUsQd/bq+bLr3D8DfWidZQrDvY1xxMGsftOGhesnVIA4cM9p3fv+x7nk5tLp1MygZF2cPgEBXFvS3EJW3ogJMZk2nrI2gEq4Kvdi+UGN9KflFgJN7nvUtZ6hxyvx902EZLvuBPZ/9e0fUXxxyCYMX969W+HxZQPPKq3Zii8kZZtf2lwXCpDyCkRJsD82vYklatpjeM/UFvfSNTYbqjl47mnhq+PxLCYZM3IIUAiL3CqCaseNHp/f62NGbE4U0tbLXyxqU6RAamDTF3zBPWiHPARDRLgWVTZ+lZZo9lLrtNsxovT4gMcNKrVQKXx6tM1DJmWFEah6uSh9j72kswd7iRpmFRyA9DcRoe6ScaWPgnKxUEdKA4hYp5bgra6OPhKB5Ty+G758mHfkZIukkTSrSIw7861mts5Y7lRhzhO7dJ0GZI3ejwY+75lhnabrrj24W9EeHI95ODe1gxbkCZkpa5cXDA7U9lk+zTlqZGFi/J3bEW+4ZFMSC3sstQduY8SqQVL4mIIkncX+NLp+iI1Td3yqlbdbQ== student@extremeautomation.io"
+  public_key = "${file("../secrets/student.pub")}"
 }
 
 resource "aws_instance" "test_machine_linux" {
@@ -17,6 +17,14 @@ resource "aws_instance" "test_machine_linux" {
   key_name = "${aws_key_pair.student_test_key.key_name}"
   subnet_id = "${aws_subnet.devops_subnet.id}"
   vpc_security_group_ids = [ "${aws_security_group.devops_security.id}" ]
+  connection {
+    user = "ubuntu"
+    private_key = "${file("../secrets/student.pem")}"
+  }
+  provisioner "remote-exec" {
+    // TODO: add server to monitoring
+    // TODO: fix any issues with puppet
+  }
 }
 
 # 
