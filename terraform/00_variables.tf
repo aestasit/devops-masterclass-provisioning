@@ -1,6 +1,6 @@
 
 variable "student_count" {
-  default = "20"
+  default = "0"
 }
 
 variable "admin_password" {
@@ -21,6 +21,15 @@ variable "student_server_disk_gb" {
 
 provider "aws" {
   region = "eu-west-1"
+}
+
+provider "dnsimple" {
+  token    = "${file("../secrets/dnsimple.token")}"
+  account  = "${file("../secrets/dnsimple.account.id")}"
+}
+
+variable "dnsimple_domain" {
+  default  = "extremeautomation.io"
 }
 
 data "aws_availability_zones" "available" {

@@ -17,3 +17,29 @@ resource "aws_instance" "devops_server" {
   subnet_id = "${aws_subnet.devops_subnet.id}"
   vpc_security_group_ids = [ "${aws_security_group.devops_security.id}" ]
 }
+
+variable "hostnames" {
+  type    = "list"
+  default = [
+    "gitlab",
+    "jenkins",
+    "kibana",
+    "rancher",
+    "kube",
+    "swarm",
+    "registry",
+    "grafana",
+    "vault",
+    "prometheus",
+    "logs",
+  ]
+}
+
+resource "dnsimple_record" "dns_record" {
+  domain   = "${var.dnsimple_domain}"
+  type     = "A"
+  count    = "${length(var.hostnames)}"
+  name     = "${element(var.hostnames, count.index)}"
+  value    = "${aws_instance.devops_server.public_ip}"
+  ttl      = 60
+}
