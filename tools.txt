@@ -1,30 +1,28 @@
 # Virtual Box
-virtualbox<-http://download.virtualbox.org/virtualbox/5.0.26/VirtualBox-5.0.26-108824-Win.exe
-virtualbox<-http://download.virtualbox.org/virtualbox/5.0.26/VirtualBox-5.0.26-108824-OSX.dmg
-virtualbox<-http://download.virtualbox.org/virtualbox/5.0.26/Oracle_VM_VirtualBox_Extension_Pack-5.0.26-108824.vbox-extpack
-virtualbox<-http://download.virtualbox.org/virtualbox/5.1.20/VirtualBox-5.1.20-114628-Win.exe
-virtualbox<-http://download.virtualbox.org/virtualbox/5.1.20/VirtualBox-5.1.20-114629-OSX.dmg
-virtualbox<-http://download.virtualbox.org/virtualbox/5.1.20/VBoxGuestAdditions_5.1.20.iso
-virtualbox<-http://download.virtualbox.org/virtualbox/5.1.20/Oracle_VM_VirtualBox_Extension_Pack-5.1.20.vbox-extpack
+virtualbox<-http://download.virtualbox.org/virtualbox/5.1.24/VirtualBox-5.1.24-117012-Win.exe
+virtualbox<-http://download.virtualbox.org/virtualbox/5.1.24/VirtualBox-5.1.24-117012-OSX.dmg
+virtualbox<-http://download.virtualbox.org/virtualbox/5.1.24/VBoxGuestAdditions_5.1.24.iso
+virtualbox<-http://download.virtualbox.org/virtualbox/5.1.24/Oracle_VM_VirtualBox_Extension_Pack-5.1.24-117012.vbox-extpack
 
 # Vagrant
-vagrant<-https://releases.hashicorp.com/vagrant/1.8.7/vagrant_1.8.7.msi
-vagrant<-https://releases.hashicorp.com/vagrant/1.8.7/vagrant_1.8.7.dmg
-vagrant<-https://releases.hashicorp.com/vagrant/1.8.7/vagrant_1.8.7_i686.deb
-vagrant<-https://releases.hashicorp.com/vagrant/1.8.7/vagrant_1.8.7_x86_64.deb
-vagrant<-https://releases.hashicorp.com/vagrant/1.8.7/vagrant_1.8.7_i686.rpm
-vagrant<-https://releases.hashicorp.com/vagrant/1.8.7/vagrant_1.8.7_x86_64.rpm
-vagrant<-https://releases.hashicorp.com/vagrant/1.9.3/vagrant_1.9.3.msi
-vagrant<-https://releases.hashicorp.com/vagrant/1.9.3/vagrant_1.9.3_i686.deb
-vagrant<-https://releases.hashicorp.com/vagrant/1.9.3/vagrant_1.9.3_x86_64.deb
-vagrant<-https://releases.hashicorp.com/vagrant/1.9.3/vagrant_1.9.3_i686.rpm
-vagrant<-https://releases.hashicorp.com/vagrant/1.9.3/vagrant_1.9.3_x86_64.rpm
-vagrant<-https://releases.hashicorp.com/vagrant/1.9.3/vagrant_1.9.3_x86_64.dmg
+vagrant<-https://releases.hashicorp.com/vagrant/1.9.7/vagrant_1.9.7.msi
+vagrant<-https://releases.hashicorp.com/vagrant/1.9.7/vagrant_1.9.7_i686.deb
+vagrant<-https://releases.hashicorp.com/vagrant/1.9.7/vagrant_1.9.7_x86_64.deb
+vagrant<-https://releases.hashicorp.com/vagrant/1.9.7/vagrant_1.9.7_i686.rpm
+vagrant<-https://releases.hashicorp.com/vagrant/1.9.7/vagrant_1.9.7_x86_64.rpm
+vagrant<-https://releases.hashicorp.com/vagrant/1.9.7/vagrant_1.9.7_x86_64.dmg
+
+# Java
+java<-http://cdn.azul.com/zulu/bin/zulu8.21.0.1-jdk8.0.131-win_x64.msi
+java<-http://cdn.azul.com/zulu/bin/zulu8.21.0.1-jdk8.0.131-linux.x86_64.rpm
+java<-http://cdn.azul.com/zulu/bin/zulu8.21.0.1-jdk8.0.131-linux_amd64.deb
+java<-http://cdn.azul.com/zulu/bin/zulu8.21.0.1-jdk8.0.131-macosx_x64.dmg
 
 # Gradle
 gradle<-https://services.gradle.org/distributions/gradle-1.12-all.zip
 gradle<-https://services.gradle.org/distributions/gradle-2.14.1-all.zip
 gradle<-https://services.gradle.org/distributions/gradle-3.5-all.zip
+gradle<-https://services.gradle.org/distributions/gradle-4.0.1-all.zip
 
 # Groovy
 groovy<-http://dl.bintray.com/groovy/maven/groovy-binary-2.3.1.zip
@@ -55,27 +53,21 @@ aws<-https://s3.amazonaws.com/aws-cli/AWSCLI64.msi
 aws<-https://s3.amazonaws.com/aws-cli/AWSCLI32.msi
 
 # Packer
-packer<-https://releases.hashicorp.com/packer/1.0.0/packer_1.0.0_darwin_386.zip
-packer<-https://releases.hashicorp.com/packer/1.0.0/packer_1.0.0_darwin_amd64.zip
-packer<-https://releases.hashicorp.com/packer/1.0.0/packer_1.0.0_linux_386.zip
-packer<-https://releases.hashicorp.com/packer/1.0.0/packer_1.0.0_linux_amd64.zip
-packer<-https://releases.hashicorp.com/packer/1.0.0/packer_1.0.0_linux_arm.zip
-packer<-https://releases.hashicorp.com/packer/1.0.0/packer_1.0.0_windows_386.zip
-packer<-https://releases.hashicorp.com/packer/1.0.0/packer_1.0.0_windows_amd64.zip
+packer<-https://releases.hashicorp.com/packer/1.0.3/packer_1.0.3_darwin_386.zip
+packer<-https://releases.hashicorp.com/packer/1.0.3/packer_1.0.3_darwin_amd64.zip
+packer<-https://releases.hashicorp.com/packer/1.0.3/packer_1.0.3_linux_386.zip
+packer<-https://releases.hashicorp.com/packer/1.0.3/packer_1.0.3_linux_amd64.zip
+packer<-https://releases.hashicorp.com/packer/1.0.3/packer_1.0.3_linux_arm.zip
+packer<-https://releases.hashicorp.com/packer/1.0.3/packer_1.0.3_windows_386.zip
+packer<-https://releases.hashicorp.com/packer/1.0.3/packer_1.0.3_windows_amd64.zip
 
 # Terraform
-terraform<-https://releases.hashicorp.com/terraform/0.7.10/terraform_0.7.10_darwin_amd64.zip
-terraform<-https://releases.hashicorp.com/terraform/0.7.10/terraform_0.7.10_darwin_386.zip
-terraform<-https://releases.hashicorp.com/terraform/0.7.10/terraform_0.7.10_linux_amd64.zip
-terraform<-https://releases.hashicorp.com/terraform/0.7.10/terraform_0.7.10_linux_386.zip
-terraform<-https://releases.hashicorp.com/terraform/0.7.10/terraform_0.7.10_windows_amd64.zip
-terraform<-https://releases.hashicorp.com/terraform/0.7.10/terraform_0.7.10_windows_386.zip
-terraform<-https://releases.hashicorp.com/terraform/0.9.3/terraform_0.9.3_darwin_amd64.zip
-terraform<-https://releases.hashicorp.com/terraform/0.9.3/terraform_0.9.3_linux_386.zip
-terraform<-https://releases.hashicorp.com/terraform/0.9.3/terraform_0.9.3_linux_amd64.zip
-terraform<-https://releases.hashicorp.com/terraform/0.9.3/terraform_0.9.3_linux_arm.zip
-terraform<-https://releases.hashicorp.com/terraform/0.9.3/terraform_0.9.3_windows_386.zip
-terraform<-https://releases.hashicorp.com/terraform/0.9.3/terraform_0.9.3_windows_amd64.zip
+terraform<-https://releases.hashicorp.com/terraform/0.9.11/terraform_0.9.11_darwin_amd64.zip
+terraform<-https://releases.hashicorp.com/terraform/0.9.11/terraform_0.9.11_linux_386.zip
+terraform<-https://releases.hashicorp.com/terraform/0.9.11/terraform_0.9.11_linux_amd64.zip
+terraform<-https://releases.hashicorp.com/terraform/0.9.11/terraform_0.9.11_linux_arm.zip
+terraform<-https://releases.hashicorp.com/terraform/0.9.11/terraform_0.9.11_windows_386.zip
+terraform<-https://releases.hashicorp.com/terraform/0.9.11/terraform_0.9.11_windows_amd64.zip
 
 # Git
 git<-https://download.tortoisegit.org/tgit/2.4.0.0/TortoiseGit-2.4.0.2-64bit.msi
@@ -94,8 +86,8 @@ python<-https://www.python.org/ftp/python/2.7.13/python-2.7.13.msi
 python<-https://download.microsoft.com/download/7/9/6/796EF2E4-801B-4FC4-AB28-B59FBF6D907B/VCForPython27.msi
 
 # Boxes
-boxes<-https://atlas.hashicorp.com/aestasit/boxes/devops-ubuntu-16.04/versions/1.0/providers/virtualbox.box->devops-ubuntu-16.04.box
-boxes<-https://atlas.hashicorp.com/aestasit/boxes/devops-ubuntu-14.04/versions/1.0/providers/virtualbox.box->devops-ubuntu-14.04.box
+boxes<-https://vagrantcloud.com/aestasit/boxes/devops-ubuntu-14.04/versions/1.1/providers/virtualbox.box
+boxes<-https://vagrantcloud.com/aestasit/boxes/devops-ubuntu-16.04/versions/1.1/providers/virtualbox.box
 
 # ELK
 elk<-https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-5.3.1.zip
@@ -126,15 +118,15 @@ elk<-https://artifacts.elastic.co/downloads/beats/packetbeat/packetbeat-5.3.1-da
 elk<-https://artifacts.elastic.co/downloads/beats/packetbeat/packetbeat-5.3.1-windows-x86_64.zip
 
 # Vault
-vault<-https://releases.hashicorp.com/vault/0.7.0/vault_0.7.0_darwin_amd64.zip
-vault<-https://releases.hashicorp.com/vault/0.7.0/vault_0.7.0_linux_amd64.zip
-vault<-https://releases.hashicorp.com/vault/0.7.0/vault_0.7.0_windows_amd64.zip
-vault<-https://releases.hashicorp.com/vault/0.7.0/vault_0.7.0_windows_386.zip
+vault<-https://releases.hashicorp.com/vault/0.7.3/vault_0.7.3_darwin_amd64.zip
+vault<-https://releases.hashicorp.com/vault/0.7.3/vault_0.7.3_linux_amd64.zip
+vault<-https://releases.hashicorp.com/vault/0.7.3/vault_0.7.3_windows_amd64.zip
+vault<-https://releases.hashicorp.com/vault/0.7.3/vault_0.7.3_windows_386.zip
 
 # Consul
-consul<-https://releases.hashicorp.com/consul/0.8.1/consul_0.8.1_darwin_amd64.zip
-consul<-https://releases.hashicorp.com/consul/0.8.1/consul_0.8.1_windows_amd64.zip
-consul<-https://releases.hashicorp.com/consul/0.8.1/consul_0.8.1_linux_amd64.zip
+consul<-https://releases.hashicorp.com/consul/0.9.0/consul_0.9.0_darwin_amd64.zip
+consul<-https://releases.hashicorp.com/consul/0.9.0/consul_0.9.0_windows_amd64.zip
+consul<-https://releases.hashicorp.com/consul/0.9.0/consul_0.9.0_linux_amd64.zip
 
 # Nomad
 nomad<-https://releases.hashicorp.com/nomad/0.5.6/nomad_0.5.6_darwin_amd64.zip
