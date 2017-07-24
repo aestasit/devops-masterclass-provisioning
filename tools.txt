@@ -5,7 +5,7 @@ virtualbox<-http://download.virtualbox.org/virtualbox/5.1.24/VBoxGuestAdditions_
 virtualbox<-http://download.virtualbox.org/virtualbox/5.1.24/Oracle_VM_VirtualBox_Extension_Pack-5.1.24-117012.vbox-extpack
 
 # Vagrant
-vagrant<-https://releases.hashicorp.com/vagrant/1.9.7/vagrant_1.9.7.msi
+vagrant<-https://releases.hashicorp.com/vagrant/1.9.7/vagrant_1.9.7_x86_64.msi
 vagrant<-https://releases.hashicorp.com/vagrant/1.9.7/vagrant_1.9.7_i686.deb
 vagrant<-https://releases.hashicorp.com/vagrant/1.9.7/vagrant_1.9.7_x86_64.deb
 vagrant<-https://releases.hashicorp.com/vagrant/1.9.7/vagrant_1.9.7_i686.rpm
@@ -86,8 +86,8 @@ python<-https://www.python.org/ftp/python/2.7.13/python-2.7.13.msi
 python<-https://download.microsoft.com/download/7/9/6/796EF2E4-801B-4FC4-AB28-B59FBF6D907B/VCForPython27.msi
 
 # Boxes
-boxes<-https://vagrantcloud.com/aestasit/boxes/devops-ubuntu-14.04/versions/1.1/providers/virtualbox.box
-boxes<-https://vagrantcloud.com/aestasit/boxes/devops-ubuntu-16.04/versions/1.1/providers/virtualbox.box
+boxes<-https://vagrantcloud.com/aestasit/boxes/devops-ubuntu-14.04/versions/1.1/providers/virtualbox.box->devops-ubuntu-14.04.box
+boxes<-https://vagrantcloud.com/aestasit/boxes/devops-ubuntu-16.04/versions/1.1/providers/virtualbox.box->devops-ubuntu-16.04.box
 
 # ELK
 elk<-https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-5.3.1.zip
