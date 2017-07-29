@@ -13,7 +13,7 @@ task provisionPuppet(dependsOn: zipPuppet, group: 'Infrastructure preparation') 
     exec 'mkdir -p /tmp/deploy-puppet'
     sshOptions.verbose = false
     scp {
-      from { localDir "puppet.zip" }
+      from { localDir "${buildDir}/puppet.zip" }
       into { remoteDir "/tmp/deploy-puppet" }
     }
     sshOptions.verbose = true
