@@ -1,7 +1,9 @@
 
 Setup steps:
 
-- update student count in gradle.propeties and 00_variables.tf
+- update student count in `gradle.propeties` and `00_variables.tf`
+- update GitLab password in `gradle.propeties` and `gitlab.pp`
+
 - `gradlew terraformApply`
 - `gradlew activateTerminationProtection`
 - `gradlew setHostname`

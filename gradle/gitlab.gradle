@@ -7,7 +7,7 @@ ext {
   gitLabProjectsFile = file('build/gitlab.projects.json')
   gitLabUsersFile = file('build/gitlab.users.json')
   gitLabCurlCommand = { String suffix ->
-    "curl -s --header \"Content-Type: application/json\" --header \"PRIVATE-TOKEN: ${file('gitlab.token').exists() ? file('gitlab.token').text : ''}\" ${suffix}".toString()
+    "curl -s --header \"Content-Type: application/json\" --header \"PRIVATE-TOKEN: ${gitLabTokenFile.exists() ? gitLabTokenFile.text : ''}\" ${suffix}".toString()
   }
 }
 

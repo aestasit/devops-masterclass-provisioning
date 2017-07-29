@@ -1,7 +1,7 @@
 
 class setup::gitlab(
   $gitlab_version = '9.1.2-ce.0',
-  $gitlab_password = 'OrangE2017'
+  $gitlab_password = 'LibertY2017'
 ) {
 
   file { [
