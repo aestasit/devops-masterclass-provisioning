@@ -1,6 +1,6 @@
 
 class setup::beats(
-  $beats_version = '5.3.1'
+  $beats_version = '5.5.1'
 ) {
 
   #

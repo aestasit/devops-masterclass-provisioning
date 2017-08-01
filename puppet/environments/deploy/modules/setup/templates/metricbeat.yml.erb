@@ -14,6 +14,12 @@ metricbeat.modules:
   enabled: true
   period: 10s
   processes: ['.*']
+  cgroups: true
+  filters:
+    - drop_event:
+       when:
+         equals:
+           cgroup.memory.kmem.limit.bytes: 18446744073709551615
 
 output.elasticsearch:
   hosts: ["localhost:9200"]
