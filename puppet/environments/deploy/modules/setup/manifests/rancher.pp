@@ -39,7 +39,7 @@ class setup::rancher(
   }
 
   docker::run { 'rancher':
-    image            => 'rancher/server:v1.6.0',
+    image            => 'rancher/server:v1.6.6',
     net              => 'rancher_net',
     ports            => [ '8700:8080' ],
     restart_service  => true,
