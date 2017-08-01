@@ -27,12 +27,14 @@ class setup::kibana(
   }
 
   file { "/tmp/kibana/Dockerfile":
-    content => $dockerfile
+    content => $dockerfile,
+    notify  => Docker::Image['kibana'],
   }
 
   docker::image { 'kibana':
     image_tag   => 'local',
-    docker_file => '/tmp/kibana/Dockerfile'
+    docker_file => '/tmp/kibana/Dockerfile',
+    notify      => Docker::Run['kibana']
   }
 
   docker::run { 'kibana':
@@ -42,7 +44,6 @@ class setup::kibana(
     restart_service  => true,
     volumes          => [ '/etc/kibana:/opt/kibana/config' ],
     command          => "/usr/local/bin/kibana-docker",
-    require          => Docker::Image['kibana'],
     extra_parameters => [
       '--restart=always',
       '--add-host elasticsearch:127.0.0.1'

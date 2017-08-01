@@ -12,7 +12,7 @@ variable "host_name" {
 }
 
 variable "main_server_disk_gb" {
-  default = 80
+  default = 60
 }
 
 variable "student_server_disk_gb" {
