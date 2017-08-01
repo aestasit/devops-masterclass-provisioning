@@ -1,6 +1,6 @@
 
 variable "student_count" {
-  default = "0"
+  default = "13"
 }
 
 variable "admin_password" {
@@ -12,7 +12,7 @@ variable "host_name" {
 }
 
 variable "main_server_disk_gb" {
-  default = 60
+  default = 80
 }
 
 variable "student_server_disk_gb" {
