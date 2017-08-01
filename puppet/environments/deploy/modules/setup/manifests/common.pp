@@ -33,6 +33,7 @@ class setup::common(
 
   nginx::resource::server { "${ipaddress}":
     listen_port => 80,
+    listen_options => 'default_server',
     www_root => '/var/www/default'
   }
 
