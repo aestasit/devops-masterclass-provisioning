@@ -1,15 +1,23 @@
 
-task generateSSLCertificate(group: 'Infrastructure preparation') { doLast {
+task generateSSLCertificates(group: 'Infrastructure preparation') { doLast {
   remoteSession {
-    // TODO: use cerbot docker container instead because package installation removes httpie
-    if (fail("certbot --help")) {
-      exec "sudo add-apt-repository -y ppa:certbot/certbot"
-      exec "sudo apt-get -y -q update"
-      exec "sudo apt-get -y -q install certbot"
-    }
-    String certBotParams = hostNames.collect { "-d $it"}.join(" ")
-    // TODO: the below command does not work since it needs all the hosts to have valid DNS records and the hosts need to respond on HTTP with authorized token
-    exec "sudo /usr/bin/certbot certonly --webroot -w /etc/ssl -n --agree-tos -m andrey@aestasit.com ${certBotParams}"
+    def hostNames = [
+        "course",
+        "gitlab",
+        "jenkins",
+        "kibana",
+        "rancher",
+        "kube",
+        "swarm",
+        "registry",
+        "grafana",
+        "vault",
+        "prometheus",
+        "logs",
+    ]
+    String certBotParams = hostNames.collect { "-d ${it}.extremeautomation.io"}.join(" ")
+    exec "sudo rm -rf /etc/letsencrypt/"
+    exec "sudo docker run --rm -it -p 80:80 -v /etc/letsencrypt:/etc/letsencrypt/ -v /var/log/letsencrypt:/var/log/letsencrypt certbot/certbot certonly --standalone --preferred-challenges http -n --agree-tos --expand -m andrey@aestasit.com ${certBotParams}"
   }
 }}
 

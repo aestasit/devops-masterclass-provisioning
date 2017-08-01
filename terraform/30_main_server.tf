@@ -21,6 +21,7 @@ resource "aws_instance" "devops_server" {
 variable "hostnames" {
   type    = "list"
   default = [
+    "course",
     "gitlab",
     "jenkins",
     "kibana",
