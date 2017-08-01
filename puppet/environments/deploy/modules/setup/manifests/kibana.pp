@@ -17,13 +17,32 @@ class setup::kibana(
     notify           => Docker::Run['kibana']
   }
 
+  $dockerfile = @("EOT")
+     FROM docker.elastic.co/kibana/kibana:${kibana_version}
+     RUN kibana-plugin remove x-pack
+     | EOT
+
+  file { '/tmp/kibana':
+    ensure => directory
+  }
+
+  file { "/tmp/kibana/Dockerfile":
+    content => $dockerfile
+  }
+
+  docker::image { 'kibana':
+    image_tag   => 'local',
+    docker_file => '/tmp/kibana/Dockerfile'
+  }
+
   docker::run { 'kibana':
-    image            => "docker.elastic.co/kibana/kibana:$kibana_version",
+    image            => "kibana:local",
     net              => 'host',
     ports            => [ '5601:5601' ],
     restart_service  => true,
     volumes          => [ '/etc/kibana:/opt/kibana/config' ],
-    command          => "/bin/sh -c 'kibana-plugin remove x-pack && /usr/local/bin/kibana-docker'",
+    command          => "/usr/local/bin/kibana-docker",
+    require          => Docker::Image['kibana'],
     extra_parameters => [
       '--restart=always',
       '--add-host elasticsearch:127.0.0.1'
