@@ -5,6 +5,11 @@ class setup::docker {
     use_upstream_package_source => false
   }
 
+  file { '/etc/docker/daemon.json':
+    content => '{ "insecure-registries" : ["registry.extremeautomation.io"] }',
+    notify  => Service['docker']
+  }
+
   exec { 'docker swarm init':
     command     => "docker swarm init",
     environment => 'HOME=/root',
@@ -46,6 +51,12 @@ class setup::docker {
       File['/var/lib/registry'],
       File['/etc/docker/registry/certs']
     ]
+  }
+
+  nginx::resource::server { 'registry.extremeautomation.io':
+    listen_port          => 80,
+    client_max_body_size => "1024M",
+    proxy                => 'http://localhost:5000',
   }
 
 }
