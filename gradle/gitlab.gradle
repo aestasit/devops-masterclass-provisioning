@@ -60,7 +60,8 @@ task createGitLabUsers(dependsOn: [getGitLabApiToken], group: 'Infrastructure pr
           "email": "student${studentN}@extremeautomation.io",
           "name": "student${studentN}",
           "username": "student${studentN}",
-          "password": gitlabStudentPassword
+          "password": gitlabStudentPassword,
+          "skip_confirmation": true
       )
 
       exec(command: project.gitLabCurlCommand("-XPOST http://localhost:8480/api/v4/users -d '${studentCreate}'"))
