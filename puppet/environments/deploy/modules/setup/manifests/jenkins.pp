@@ -1,6 +1,6 @@
 
 class setup::jenkins(
-  $jenkins_version = '2.65'
+  $jenkins_version = '2.72'
 ) {
 
   contain '::setup::java'
@@ -50,6 +50,15 @@ class setup::jenkins(
     notify  => Service['jenkins']
   }
 
+  file { '/var/lib/jenkins/secrets/slave-to-master-security-kill-switch':
+    content => 'false',
+    mode    => '0644',
+    owner   => 'jenkins',
+    group   => 'jenkins',
+    require => Exec['jenkins'],
+    notify  => Service['jenkins']
+  }
+
   file { '/var/lib/jenkins/jenkins.CLI.xml':
     content => template('setup/jenkins.CLI.xml.erb'),
     require => Exec['jenkins'],
@@ -86,6 +95,7 @@ class setup::jenkins(
 
   setup::jenkins::plugin {
     'git-client': ;
+    'gitlab-hook': ;
     'git': ;
     'plain-credentials': ;
     'tap': ;
@@ -113,6 +123,7 @@ class setup::jenkins(
     'analysis-core': ;
     'maven-plugin': ;
     'ruby': ;
+    'ruby-runtime': ;
     'cobertura': ;
     'tasks': ;
     'htmlpublisher': ;
@@ -200,6 +211,7 @@ class setup::jenkins(
     'blueocean-dashboard': ;
     'blueocean-config': ;
     'blueocean-web': ;
+    'envinject-api': ;
     'blueocean-commons': ;
     'blueocean-jwt': ;
     'blueocean-personalization': ;
