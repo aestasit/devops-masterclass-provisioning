@@ -16,7 +16,6 @@ task generateSSLCertificates(group: 'Infrastructure preparation') { doLast {
         "logs",
     ]
     String certBotParams = hostNames.collect { "-d ${it}.extremeautomation.io"}.join(" ")
-    exec "sudo rm -rf /etc/letsencrypt/"
     exec "sudo docker run --rm -it -p 80:80 -v /etc/letsencrypt:/etc/letsencrypt/ -v /var/log/letsencrypt:/var/log/letsencrypt certbot/certbot certonly --standalone --preferred-challenges http -n --agree-tos --expand -m andrey@aestasit.com ${certBotParams}"
   }
 }}
