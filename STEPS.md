@@ -24,6 +24,7 @@ Setup steps:
 
 Tear-down steps:
 
+- `gradlew pullGitLabProjects`
 - `gradlew disableTerminationProtection`
 - `gradlew terminateAllServers`
 - `gradlew deleteAllKeypairs`
