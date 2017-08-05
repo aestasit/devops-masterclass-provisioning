@@ -163,6 +163,27 @@ task addSlackNotiferToGitLabProjects(dependsOn: [getGitLabApiToken, getGitLabPro
 addSlackNotiferToGitLabProjects.mustRunAfter createGitLabProjects
 addSlackNotiferToGitLabProjects.mustRunAfter pushCodeToGitLabProjects
 
+task pullGitLabProjects(dependsOn: [getGitLabApiToken, getGitLabProjects], group: 'Infrastructure shutdown') { doLast {
+  remoteSession {
+    def projects = new JsonSlurper().parse(project.gitLabProjectsFile)
+    projects.each {
+      exec(command: "mkdir -p /tmp/source/${it.namespace.path}")
+      if (ok("test -d /tmp/source/${it.path_with_namespace}")) {
+        exec(command: "git -C /tmp/source/${it.path_with_namespace} pull --all", failOnError: false)
+      } else {
+        exec(command: "git clone http://localhost:8480/${it.path_with_namespace}.git /tmp/source/${it.path_with_namespace}")
+      }
+    }
+    exec "rm -rf /tmp/source.zip"
+    exec "zip -q -r /tmp/source.zip /tmp/source"
+    scp {
+      from { remoteFile "/tmp/source.zip" }
+      into { localDir buildDir }
+    }
+  }
+}}
+
+
 task initializeGitLab(dependsOn: [
     deleteGitLabProjects,
     deleteGitLabUsers,
