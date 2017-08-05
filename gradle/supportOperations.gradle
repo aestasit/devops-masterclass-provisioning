@@ -8,13 +8,13 @@ task deleteKibanaConfiguration(group: 'Infrastructure support') { doLast {
 task describeInstances(type: Exec, group: 'Infrastructure support') {
   commandLine "aws", "ec2", "describe-instances", "--output", "json"
   doFirst {
-    standardOutput = new FileOutputStream(file('build/instances.json'))
+    standardOutput = new FileOutputStream(file("${buildDir}/instances.json"))
   }
 }
 
 task describeKeypairs(type: Exec, group: 'Infrastructure support') {
   commandLine "aws", "ec2", "describe-key-pairs", "--output", "json"
   doFirst {
-    standardOutput = new FileOutputStream(file('build/keypairs.json'))
+    standardOutput = new FileOutputStream(file("${buildDir}/keypairs.json"))
   }
 }

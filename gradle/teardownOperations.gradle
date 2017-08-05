@@ -6,7 +6,7 @@ task disableTerminationProtection (type: Exec, group: 'Infrastructure shutdown')
 
 task terminateAllServers(dependsOn: [describeInstances, disableTerminationProtection], group: 'Infrastructure shutdown') {
   doLast {
-    def instances = new JsonSlurper().parse(file('instances.json'))
+    def instances = new JsonSlurper().parse(file("${buildDir}/instances.json"))
     instances.Reservations.each { reservation ->
       reservation.Instances.each { instance ->
         if (instance.State.Name == 'running') {
@@ -21,7 +21,7 @@ task terminateAllServers(dependsOn: [describeInstances, disableTerminationProtec
 
 task deleteAllKeypairs(dependsOn: [describeKeypairs], group: 'Infrastructure shutdown') {
   doLast {
-    def instances = new JsonSlurper().parse(file('keypairs.json'))
+    def instances = new JsonSlurper().parse(file("${buildDir}/keypairs.json"))
     instances.KeyPairs.each { keyPair ->
       exec {
         commandLine "aws", "ec2", "delete-key-pair", "--key-name", keyPair.KeyName
