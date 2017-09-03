@@ -88,6 +88,17 @@ resource "aws_security_group" "devops_security" {
   }
 
   #
+  # kubernetes
+  #
+
+  ingress {
+    from_port = 6443
+    to_port = 6443
+    protocol = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  #
   # vault
   #
 

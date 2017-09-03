@@ -44,3 +44,7 @@ resource "dnsimple_record" "dns_record" {
   value    = "${aws_instance.devops_server.public_ip}"
   ttl      = 60
 }
+
+output "ip" {
+  value = "${aws_instance.devops_server.public_ip}"
+}
