@@ -1,13 +1,16 @@
 node {
-  stage("Create") {
+  stage("Checkout") {
     checkout scm
   }
-  stage("Provision") {
+  stage("Create infrastructure") {
 
   }
-  stage("Test") {
+  stage("Provision infrastructure") {
 
   }
-  stage("Destroy") {
+  stage("Test infrastructure") {
+
+  }
+  stage("Destroy infrastructure") {
   }
 }

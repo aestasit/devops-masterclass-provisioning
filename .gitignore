@@ -15,3 +15,4 @@ build/gitlab.users.json
 build/gitlab.projects.json
 build/gitlab.token
 .terraform/
+*.out

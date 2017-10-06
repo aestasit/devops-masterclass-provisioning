@@ -1,6 +1,6 @@
 
 class setup::jenkins(
-  $jenkins_version = '2.72'
+  $jenkins_version = '2.82'
 ) {
 
   contain '::setup::java'
@@ -174,7 +174,13 @@ class setup::jenkins(
     'pipeline-build-step': ;
     'pipeline-graph-analysis': ;
     'pipeline-input-step': ;
-    'pipeline-maven': ;
+    'blueocean-bitbucket-pipeline': ;
+    'blueocean-jira': ;
+    'apache-httpcomponents-client-4-api': ;
+    'jsch': ;
+    'antisamy-markup-formatter': ;
+    'cloudbees-bitbucket-branch-source': ;
+    'jira': ;
     'pipeline-milestone-step': ;
     'pipeline-model-definition': ;
     'pipeline-model-api': ;
@@ -216,6 +222,7 @@ class setup::jenkins(
     'blueocean-jwt': ;
     'blueocean-personalization': ;
     'blueocean-pipeline-scm-api': ;
+    'mercurial': ;
     'metrics': ;
     'variant': ;
     'blueocean-events': ;

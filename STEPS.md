@@ -9,7 +9,7 @@ Setup steps:
 - `gradlew setHostname`
 - `gradlew updateApt`
 
-- `gradlew provisionPuppet` or `gradlew provisionAnsible`  
+- `gradlew provisionPuppet` or `gradlew provisionAnsible`
 
 - wait 5 minutes for all services to fully initialize 
 - manually access rancher UI from browser
