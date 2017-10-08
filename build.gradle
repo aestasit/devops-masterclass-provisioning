@@ -31,11 +31,25 @@ ext {
   }
 
   getServerIp = { 
-    project.getTerraformState()?.modules[0]?.resources?.findAll { it.key.startsWith 'aws_instance.devops_server' }?.collect { it.value.primary.attributes.public_ip }?.find() ?: '127.0.0.1'
+    project.
+      getTerraformState()?.
+      modules?.
+      get(0)?.
+      resources?.
+      findAll { it.key.startsWith 'aws_instance.devops_server' }?.
+      collect { it.value.primary.attributes.public_ip }?.
+      find() ?: '127.0.0.1'
   }
 
   getServerInstanceId = {
-    project.getTerraformState()?.modules[0]?.resources?.findAll { it.key.startsWith 'aws_instance.devops_server' }?.collect { it.value.primary.id }?.find() ?: 'i-unknown'
+    project.
+      getTerraformState()?.
+      modules?.
+      get(0)?.
+      resources?.
+      findAll { it.key.startsWith 'aws_instance.devops_server' }?.
+      collect { it.value.primary.id }?.
+      find() ?: 'i-unknown'
   }
 
 }
