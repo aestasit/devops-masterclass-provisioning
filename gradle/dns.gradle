@@ -20,3 +20,13 @@ task generateSSLCertificates(group: 'Infrastructure preparation') { doLast {
   }
 }}
 
+task copySSLCertificates(group: 'Infrastructure preparation') { doLast {
+  remoteSession {
+    exec "sudo zip -r /tmp/letsencrypt.zip /etc/letsencrypt"
+    scp {
+      from { remoteFile "/tmp/letsencrypt.zip" }
+      into { localDir "secrets"}
+    }
+  }
+}}
+
