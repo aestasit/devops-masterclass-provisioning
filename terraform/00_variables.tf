@@ -1,10 +1,6 @@
 
 variable "student_count" {
-  default = "17"
-}
-
-variable "admin_password" {
-  default = "BGOMEUC8EP"
+  default = "0"
 }
 
 variable "host_name" {

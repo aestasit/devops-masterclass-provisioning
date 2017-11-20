@@ -1,5 +1,14 @@
 
-task zipPuppet(type: Zip, group: 'Infrastructure preparation') {
+task generatePuppetVariables(group: 'Infrastructure preparation') {
+  doLast {
+    file('puppet/environments/deploy/hieradata/common.yml').text = """
+---
+setup::gitlab::gitlabPassword: ${gitlabPassword}
+"""
+  }
+}
+
+task zipPuppet(type: Zip, dependsOn: generatePuppetVariables, group: 'Infrastructure preparation') {
   from 'puppet'
   archiveName = 'puppet.zip'
   destinationDir = buildDir

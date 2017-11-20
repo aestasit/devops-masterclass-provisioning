@@ -16,3 +16,5 @@ build/gitlab.projects.json
 build/gitlab.token
 .terraform/
 *.out
+*.auto.tfvars
+/puppet/environments/deploy/hieradata/common.yml

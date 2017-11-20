@@ -1,8 +1,8 @@
 
 Setup steps:
 
-- update student count in `gradle.propeties` and `00_variables.tf`
-- update GitLab password in `gradle.propeties` and `gitlab.pp`
+- update student count in `gradle.propeties`
+- update GitLab password in `gradle.propeties`
 
 - `gradlew terraformApply`
 - `gradlew activateTerminationProtection`
@@ -17,6 +17,9 @@ Setup steps:
 - `gradlew initializeRancher`
 - `gradlew initializeKibana`
 - `gradlew initializeGitlab`
+
+- manually create admin user in Jenkins
+
 - `gradlew updateJenkinsItems`
 - `gradlew listIps`
 - `gradlew listKeys`

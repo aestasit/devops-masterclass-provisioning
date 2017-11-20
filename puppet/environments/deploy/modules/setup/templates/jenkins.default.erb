@@ -1,6 +1,6 @@
 NAME=jenkins
 JAVA=/usr/bin/java
-JAVA_ARGS="-Djava.awt.headless=true -Xmx2048m"
+JAVA_ARGS="-Djava.awt.headless=true -Dhudson.model.UpdateCenter.never=true -Xmx2048m"
 PIDFILE=/var/run/$NAME/$NAME.pid
 JENKINS_USER=$NAME
 JENKINS_GROUP=$NAME

@@ -1,5 +1,13 @@
 
-task terraformApply(type: Exec, group: 'Infrastructure preparation') {
+task generateTerraformVariables(group: 'Infrastructure preparation') {
+  doLast {
+    file('terraform/input.auto.tfvars').text = """
+student_count = ${studentCount}
+"""
+  }
+}
+
+task terraformApply(type: Exec, group: 'Infrastructure preparation', dependsOn: [ generateTerraformVariables ]) {
   commandLine 'terraform', 'apply'
   workingDir 'terraform'
 }
@@ -9,7 +17,7 @@ task terraformDestroy(type: Exec, group: 'Infrastructure shutdown') {
   workingDir 'terraform'
 }
 
-task listIps(group: 'Infrastructure support') {
+task listIps(group: 'Infrastructure support', dependsOn: [ generateTerraformVariables ]) {
   doLast {
 
     println "\nLinux Machines:"

@@ -142,6 +142,7 @@ task pushCodeToGitLabProjects(dependsOn: [getGitLabApiToken, getGitLabProjects],
 }}
 
 pushCodeToGitLabProjects.mustRunAfter createGitLabProjects
+pushCodeToGitLabProjects.mustRunAfter assignGitLabProjectPermissions
 
 task addSlackNotiferToGitLabProjects(dependsOn: [getGitLabApiToken, getGitLabProjects], group: 'Infrastructure preparation') { doLast {
   remoteSession {

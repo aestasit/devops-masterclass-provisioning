@@ -1,6 +1,6 @@
 
 class setup::jenkins(
-  $jenkins_version = '2.82'
+  $jenkins_version = '2.90'
 ) {
 
   contain '::setup::java'
@@ -46,6 +46,14 @@ class setup::jenkins(
 
   file { '/var/lib/jenkins/config.xml':
     content => template('setup/config.xml.erb'),
+    require => Exec['jenkins'],
+    notify  => Service['jenkins']
+  }
+
+  file { '/var/lib/jenkins/secrets':
+    ensure  => directory,
+    owner   => 'jenkins',
+    group   => 'jenkins',
     require => Exec['jenkins'],
     notify  => Service['jenkins']
   }
