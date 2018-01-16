@@ -130,8 +130,6 @@ class setup::jenkins(
     'dashboard-view': ;
     'analysis-core': ;
     'maven-plugin': ;
-    'ruby': ;
-    'ruby-runtime': ;
     'cobertura': ;
     'tasks': ;
     'htmlpublisher': ;

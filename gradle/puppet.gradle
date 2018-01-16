@@ -3,7 +3,7 @@ task generatePuppetVariables(group: 'Infrastructure preparation') {
   doLast {
     file('puppet/environments/deploy/hieradata/common.yml').text = """
 ---
-setup::gitlab::gitlabPassword: ${gitlabPassword}
+setup::gitlab::gitlab_password: ${gitlabPassword}
 """
   }
 }

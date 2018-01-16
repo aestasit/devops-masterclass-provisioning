@@ -7,6 +7,7 @@ hierarchy:
   - name: "YAML hierarchy levels"
     paths:
       - "/tmp/deploy-puppet/environments/%{environment}/hieradata/common.yml"
+      - "/tmp/deploy-puppet/environments/%{environment}/hieradata/input.yml"
       - "groups/%{facts.group}.yaml"
       - "os/%{facts.os.family}.yaml"
       - "common.yaml"
