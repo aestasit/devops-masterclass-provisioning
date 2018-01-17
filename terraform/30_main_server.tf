@@ -33,6 +33,8 @@ variable "hostnames" {
     "vault",
     "prometheus",
     "logs",
+    "bamboo",
+    "concourse",
   ]
 }
 

@@ -22,6 +22,9 @@ mod "richardc-datacat", "0.6.2"
 mod "jsok-vault", "1.2.1"
 mod "stahnma-epel", "1.2.2"
 
+mod "joshbeard-bamboo", "3.4.1"
+mod "puppet-staging", "2.2.0"
+
 mod "elasticsearch",
     :git => "https://github.com/elastic/puppet-elasticsearch.git",
     :tag => "5.1.1"
