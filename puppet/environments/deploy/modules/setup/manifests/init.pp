@@ -13,6 +13,7 @@ class setup {
   include setup::jenkins
   include setup::gitlab
   include setup::bamboo
+  include setup::bitbucket
   include setup::concourse
 
   include setup::elasticsearch

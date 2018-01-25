@@ -48,7 +48,7 @@ resource "aws_security_group" "devops_security" {
   #
 
   ingress {
-    from_port = 8001
+    from_port = 7999
     to_port = 8099
     protocol = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
@@ -133,6 +133,12 @@ resource "aws_security_group" "devops_security" {
   ingress {
     from_port = 2375
     to_port = 2375
+    protocol = "tcp"
+    cidr_blocks = ["10.0.0.0/16"]
+  }
+  ingress {
+    from_port = 3306
+    to_port = 3306
     protocol = "tcp"
     cidr_blocks = ["10.0.0.0/16"]
   }
