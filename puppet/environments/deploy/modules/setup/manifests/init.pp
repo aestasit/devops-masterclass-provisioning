@@ -15,6 +15,7 @@ class setup {
   include setup::bamboo
   include setup::bitbucket
   include setup::concourse
+  include setup::rundeck
 
   include setup::elasticsearch
   include setup::logstash

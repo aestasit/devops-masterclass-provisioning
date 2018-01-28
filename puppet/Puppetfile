@@ -25,6 +25,7 @@ mod "camptocamp-systemd", "1.1.1"
 mod "mkrakowitzer-deploy", "0.0.3"
 mod "nanliu-staging", "1.0.3"
 
+mod "puppet-rundeck", "5.0.0"
 mod "joshbeard-bamboo", "3.4.1"
 mod "thewired-bitbucket", "2.2.3"
 mod "puppetlabs-inifile", "2.1.1"

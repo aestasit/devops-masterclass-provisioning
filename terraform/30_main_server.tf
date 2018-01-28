@@ -36,7 +36,8 @@ variable "hostnames" {
     "bamboo",
     "concourse",
     "bitbucket",
-    "consul"
+    "consul",
+    "rundeck"
   ]
 }
 
