@@ -5,7 +5,7 @@ class setup::grafana (
 
   docker::run { 'grafana':
     image            => "grafana/grafana:${grafana_version}",
-    ports            => [ '8300:3000' ],
+    ports            => [ '18300:3000' ],
     restart_service  => true,
     extra_parameters => [
       '--restart=always',
@@ -14,7 +14,7 @@ class setup::grafana (
 
   nginx::resource::server { 'grafana.extremeautomation.io':
     listen_port => 80,
-    proxy       => 'http://localhost:8300',
+    proxy       => 'http://localhost:18300',
   }
 
 }

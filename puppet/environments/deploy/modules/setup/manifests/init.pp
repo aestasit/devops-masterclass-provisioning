@@ -22,6 +22,7 @@ class setup {
   include setup::beats
 
   include setup::vault
+  include setup::consul
 
   include setup::sysdig
   include setup::grafana
