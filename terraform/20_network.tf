@@ -6,9 +6,13 @@ resource "aws_vpc" "devops_vpc" {
 }
 
 resource "aws_subnet" "devops_subnet" {
-  cidr_block = "${aws_vpc.devops_vpc.cidr_block}"
+  cidr_block = "10.0.0.0/16"
   map_public_ip_on_launch = "true"
+  availability_zone = "eu-west-1b"
   vpc_id = "${aws_vpc.devops_vpc.id}"
+  tags {
+    Name = "devops_subnet_primary"
+  }
 }
 
 resource "aws_default_security_group" "default" {

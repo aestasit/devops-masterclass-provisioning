@@ -12,6 +12,11 @@ task terraformApply(type: Exec, group: 'Infrastructure preparation', dependsOn: 
   workingDir 'terraform'
 }
 
+task terraformPlan(type: Exec, group: 'Infrastructure preparation', dependsOn: [ generateTerraformVariables ]) {
+  commandLine 'terraform', 'plan'
+  workingDir 'terraform'
+}
+
 task terraformDestroy(type: Exec, group: 'Infrastructure shutdown') {
   commandLine 'terraform', 'destroy', '-force'
   workingDir 'terraform'

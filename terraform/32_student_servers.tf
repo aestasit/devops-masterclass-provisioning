@@ -4,28 +4,28 @@ resource "aws_key_pair" "student_test_key" {
   public_key = "${file("../secrets/student.pub")}"
 }
 
-resource "aws_instance" "test_machine_linux" {
-  ami = "${data.aws_ami.devops_ubuntu_trusty.id}"
-  instance_type = "t2.medium"
-  tags {
-    Name = "test_machine_linux_${format("%02d", count.index + 1)}"
-  }
-  root_block_device {
-    volume_size = "${var.student_server_disk_gb}"
-  }
-  count = "${var.student_count}"
-  key_name = "${aws_key_pair.student_test_key.key_name}"
-  subnet_id = "${aws_subnet.devops_subnet.id}"
-  vpc_security_group_ids = [ "${aws_security_group.devops_security.id}" ]
-  connection {
-    user = "ubuntu"
-    private_key = "${file("../secrets/student.pem")}"
-  }
-  provisioner "remote-exec" {
-    // TODO: add server to monitoring
-    // TODO: fix any issues with puppet
-  }
-}
+//resource "aws_instance" "test_machine_linux" {
+//  ami = "${data.aws_ami.devops_ubuntu_trusty.id}"
+//  instance_type = "t2.medium"
+//  tags {
+//    Name = "test_machine_linux_${format("%02d", count.index + 1)}"
+//  }
+//  root_block_device {
+//    volume_size = "${var.student_server_disk_gb}"
+//  }
+//  count = "${var.student_count}"
+//  key_name = "${aws_key_pair.student_test_key.key_name}"
+//  subnet_id = "${aws_subnet.devops_subnet.id}"
+//  vpc_security_group_ids = [ "${aws_security_group.devops_security.id}" ]
+//  connection {
+//    user = "ubuntu"
+//    private_key = "${file("../secrets/student.pem")}"
+//  }
+//  provisioner "remote-exec" {
+//    // TODO: add server to monitoring
+//    // TODO: fix any issues with puppet
+//  }
+//}
 
 # 
 # resource "aws_instance" "test_machine_windows" {
