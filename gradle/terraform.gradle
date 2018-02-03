@@ -8,7 +8,7 @@ student_count = ${studentCount}
 }
 
 task terraformApply(type: Exec, group: 'Infrastructure preparation', dependsOn: [ generateTerraformVariables ]) {
-  commandLine 'terraform', 'apply'
+  commandLine 'terraform', 'apply', '-auto-approve'
   workingDir 'terraform'
 }
 
