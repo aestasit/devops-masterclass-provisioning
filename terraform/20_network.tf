@@ -201,3 +201,11 @@ resource "aws_main_route_table_association" "devops_routing_a" {
   route_table_id = "${aws_route_table.devops_routing.id}"
 }
 
+data "aws_eip" "public_ip" {
+  public_ip = "34.251.72.13"
+}
+
+resource "aws_eip_association" "proxy_eip" {
+  instance_id   = "${aws_instance.devops_server.id}"
+  allocation_id = "${data.aws_eip.public_ip.id}"
+}

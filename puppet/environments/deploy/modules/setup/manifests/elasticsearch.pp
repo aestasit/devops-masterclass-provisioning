@@ -1,61 +1,36 @@
 
 class setup::elasticsearch(
-  $elasticsearch_version = '5.3.1'
+  $elasticsearch_version = '6.2.4'
 ) {
 
-  contain '::setup::java'
-
-  if (!defined(Package['wget'])) {
-    package { 'wget':
-      ensure => latest
-    }
+  docker_network { 'elastic-net':
+    ensure   => present,
   }
 
-  apt::source { 'elasticsearch':
-    location => 'https://artifacts.elastic.co/packages/5.x/apt',
-    release  => 'stable',
-    repos    => 'main',
-    key      => {
-      'id'     => '46095ACC8548582C1A2699A9D27D666CD88E42B4',
-      'source' => 'https://artifacts.elastic.co/GPG-KEY-elasticsearch',
-    },
-    include  => {
-      'src' => false,
-      'deb' => true,
-    }
+  sysctl { 'vm.max_map_count':
+    value => '65536'
   }
 
-  class { 'elasticsearch':
-    java_install      => false,
-    repo_version      => '5.x',
-    version           => $elasticsearch_version,
-    restart_on_change => true,
-    manage_repo       => false,
-    autoupgrade       => true,
-    purge_package_dir => true,
-    require           => [
-      Package['wget'],
-      Apt::Source['elasticsearch'],
-      Class['::setup::java'],
-      Exec['apt_update']
+  docker::run { 'elasticsearch':
+    image            => "docker.elastic.co/elasticsearch/elasticsearch-oss:${elasticsearch_version}",
+    net              => 'elastic-net',
+    ports            => [
+      '9200:9200',
+      '9300:9300',
     ],
-  }
-
-  elasticsearch::instance { "es-01":
-    config            => {
-      'cluster.name'                         => 'ExtremeCluster',
-      'transport.host'                       => 'localhost',
-      'transport.tcp.port'                   => 9300,
-      'http.port'                            => 9200,
-      'network.host'                         => '0.0.0.0'
-    },
-    init_defaults     => {
-      'JAVA_HOME'                            => '/usr/lib/jvm/jdk1.8.0_111/',
-      'ES_JAVA_OPTS'                         => '"-Xmx4096m -XX:+UseTLAB -XX:+CMSClassUnloadingEnabled"',
-    },
-    require           => [
-      Class['::setup::java']
-    ]
+    restart_service  => true,
+    env              => [
+      "cluster.name=docker-cluster",
+      "bootstrap.memory_lock=false",
+      "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+    ],
+    volumes          => [
+      'esdata1:/usr/share/elasticsearch/data'
+    ],
+    extra_parameters => [
+       '--restart=always',
+       '--ulimit memlock=-1:-1'
+    ],
   }
 
 }

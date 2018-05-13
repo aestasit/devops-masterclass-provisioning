@@ -14,6 +14,12 @@ task zipPuppet(type: Zip, dependsOn: generatePuppetVariables, group: 'Infrastruc
   destinationDir = buildDir
 }
 
+task listPuppetModules(group: 'Infrastructure preparation') doLast {
+  remoteSession {
+    exec '/opt/puppetlabs/bin/puppet module list --environmentpath /tmp/deploy-puppet/environments/ --environment deploy --tree'
+  }
+}
+
 task provisionPuppet(dependsOn: zipPuppet, group: 'Infrastructure preparation') { doLast {
   remoteSession {
     if (project.hasProperty('puppetClean')) {

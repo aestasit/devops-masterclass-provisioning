@@ -12,23 +12,29 @@ class setup {
 
   include setup::jenkins
   include setup::gitlab
-  include setup::bamboo
-  include setup::bitbucket
-  include setup::concourse
-  include setup::rundeck
+
+  # include setup::bamboo
+  # include setup::bitbucket
+
+  include setup::consul
 
   include setup::elasticsearch
   include setup::logstash
   include setup::kibana
   include setup::beats
 
-  include setup::vault
-  include setup::consul
+  # include setup::rancher
 
-  include setup::sysdig
-  include setup::grafana
-  include setup::prometheus
+  # include setup::concourse
+  # include setup::rundeck
 
-  include setup::rancher
+  # include setup::sysdig
+  # include setup::grafana
+  # include setup::prometheus
+
+  # include setup::vault
+
+  # include setup::rundeck
+  # include setup::artifactory
 
 }

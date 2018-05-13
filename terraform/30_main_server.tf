@@ -5,7 +5,7 @@ resource "aws_key_pair" "devops_key" {
 }
 
 resource "aws_instance" "devops_server" {
-  ami = "${data.aws_ami.devops_ubuntu_trusty.id}"
+  ami = "${data.aws_ami.devops_ubuntu_xenial.id}"
   instance_type = "m4.2xlarge"
   tags {
     Name = "devops_server"
@@ -16,6 +16,13 @@ resource "aws_instance" "devops_server" {
   key_name = "${aws_key_pair.devops_key.key_name}"
   subnet_id = "${aws_subnet.devops_subnet.id}"
   vpc_security_group_ids = [ "${aws_security_group.devops_security.id}" ]
+  connection {
+    user = "ubuntu"
+    private_key = "${file("../secrets/devops-server.pem")}"
+  }
+  provisioner "remote-exec" {
+
+  }
 }
 
 variable "hostnames" {
@@ -46,10 +53,14 @@ resource "dnsimple_record" "dns_record" {
   type     = "A"
   count    = "${length(var.hostnames)}"
   name     = "${element(var.hostnames, count.index)}"
-  value    = "${aws_instance.devops_server.public_ip}"
+  value    = "${data.aws_eip.public_ip.public_ip}"
   ttl      = 60
 }
 
 output "ip" {
   value = "${aws_instance.devops_server.public_ip}"
+}
+
+output "eip" {
+  value = "${data.aws_eip.public_ip.public_ip}"
 }

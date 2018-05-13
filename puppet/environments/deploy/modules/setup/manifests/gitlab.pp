@@ -1,6 +1,6 @@
 
 class setup::gitlab(
-  $gitlab_version = '10.2.4-ce.0',
+  $gitlab_version = '10.7.3-ce.0',
   $gitlab_password = 'DevOps2018'
 ) {
 
@@ -21,7 +21,7 @@ class setup::gitlab(
       '8422:22'
     ],
     env              => [
-      "GITLAB_OMNIBUS_CONFIG=\"external_url 'http://gitlab.extremeautomation.io/'; gitlab_rails['initial_root_password'] = '${gitlab_password}'; gitlab_rails['rack_attack_git_basic_auth'] = { 'enabled' => false };\""
+      "GITLAB_OMNIBUS_CONFIG=\\\"external_url 'http://gitlab.extremeautomation.io/'; gitlab_rails['initial_root_password'] = '${gitlab_password}'; gitlab_rails['rack_attack_git_basic_auth'] = { 'enabled' => false };\\\""
     ],
     restart_service  => true,
     volumes          => [

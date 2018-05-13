@@ -1,9 +1,9 @@
 
 class setup::kibana(
-  $kibana_version = '5.3.1'
+  $kibana_version = '6.2.4'
 ) {
 
-  docker::image { 'docker.elastic.co/kibana/kibana':
+  docker::image { 'docker.elastic.co/kibana/kibana-oss':
     image_tag        => $kibana_version
   }
 
@@ -17,36 +17,17 @@ class setup::kibana(
     notify           => Docker::Run['kibana']
   }
 
-  $dockerfile = @("EOT")
-     FROM docker.elastic.co/kibana/kibana:${kibana_version}
-     RUN kibana-plugin remove x-pack
-     | EOT
-
-  file { '/tmp/kibana':
-    ensure => directory
-  }
-
-  file { "/tmp/kibana/Dockerfile":
-    content => $dockerfile,
-    notify  => Docker::Image['kibana'],
-  }
-
-  docker::image { 'kibana':
-    image_tag   => 'local',
-    docker_file => '/tmp/kibana/Dockerfile',
-    notify      => Docker::Run['kibana']
-  }
-
   docker::run { 'kibana':
-    image            => "kibana:local",
-    net              => 'host',
-    ports            => [ '5601:5601' ],
+    image            => "docker.elastic.co/kibana/kibana-oss:${kibana_version}",
+    net              => 'elastic-net',
+    ports            => [
+      '5601:5601'
+    ],
     restart_service  => true,
     volumes          => [ '/etc/kibana:/opt/kibana/config' ],
-    command          => "/usr/local/bin/kibana-docker",
+    links            => [ 'elasticsearch' ],
     extra_parameters => [
-      '--restart=always',
-      '--add-host elasticsearch:127.0.0.1'
+      '--restart=always'
     ],
   }
 

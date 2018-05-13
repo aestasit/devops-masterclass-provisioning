@@ -1,10 +1,9 @@
 
-
 class setup::logstash(
-  $logstash_version = '5.4.0'
+  $logstash_version = '6.2.4'
 ) {
 
-  docker::image { 'docker.elastic.co/logstash/logstash':
+  docker::image { 'docker.elastic.co/logstash/logstash-oss':
     image_tag        => $logstash_version
   }
 
@@ -23,16 +22,16 @@ class setup::logstash(
   }
 
   docker::run { 'logstash':
-    image            => "docker.elastic.co/logstash/logstash:$logstash_version",
-    net              => 'host',
+    image            => "docker.elastic.co/logstash/logstash-oss:${logstash_version}",
+    net              => 'elastic-net',
     restart_service  => true,
     volumes          => [
       '/etc/logstash/logstash.conf:/usr/share/logstash/pipeline/logstash.conf',
       '/etc/logstash/logstash.yml:/usr/share/logstash/config/logstash.yml',
     ],
+    links            => [ 'elasticsearch' ],
     extra_parameters => [
-      '--restart=always',
-      '--add-host elasticsearch:127.0.0.1'
+      '--restart=always'
     ],
   }
 
