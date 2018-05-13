@@ -13,8 +13,8 @@ class setup {
   include setup::jenkins
   include setup::gitlab
 
-  # include setup::bamboo
-  # include setup::bitbucket
+  include setup::bamboo
+  include setup::bitbucket
 
   include setup::consul
 
@@ -34,7 +34,6 @@ class setup {
 
   # include setup::vault
 
-  # include setup::rundeck
   # include setup::artifactory
 
 }

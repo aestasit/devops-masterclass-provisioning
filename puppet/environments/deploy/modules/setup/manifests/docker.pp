@@ -52,10 +52,19 @@ class setup::docker {
     ]
   }
 
-  nginx::resource::server { 'registry.extremeautomation.io':
-    listen_port          => 80,
+  nginx::resource::server { "registry.extremeautomation.io":
+    listen_port         => 80,
+    location_cfg_append => { 'rewrite' => '^ https://$server_name$request_uri? permanent' },
+  }
+
+  nginx::resource::server { 'registry.extremeautomation.io registry':
+    listen_port          => 443,
+    ssl                  => true,
+    ssl_cert             => '/etc/letsencrypt/live/extremeautomation.io/fullchain.pem',
+    ssl_key              => '/etc/letsencrypt/live/extremeautomation.io/privkey.pem',
+    ssl_port             => 443,
     client_max_body_size => "1024M",
-    proxy                => 'http://localhost:5000',
+    proxy                => 'http://localhost:8800',
   }
 
 }

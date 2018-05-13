@@ -8,15 +8,17 @@ Setup steps:
 - `gradlew activateTerminationProtection`
 - `gradlew setHostname`
 - `gradlew updateApt`
+- `generateSSLCertificates`
 
 - `gradlew provisionPuppet` or `gradlew provisionAnsible`
 
 - wait 5 minutes for all services to fully initialize 
 - manually access rancher UI from browser
 
-- `gradlew initializeRancher`
 - `gradlew initializeKibana`
 - `gradlew initializeGitlab`
+
+- `gradlew initializeRancher`
 
 - manually create admin user in Jenkins
 

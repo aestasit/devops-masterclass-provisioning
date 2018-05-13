@@ -31,8 +31,17 @@ class setup::kibana(
     ],
   }
 
-  nginx::resource::server { 'kibana.extremeautomation.io':
-    listen_port => 80,
+  nginx::resource::server { "kibana.extremeautomation.io":
+    listen_port         => 80,
+    location_cfg_append => { 'rewrite' => '^ https://$server_name$request_uri? permanent' },
+  }
+
+  nginx::resource::server { 'kibana.extremeautomation.io kibana':
+    listen_port => 443,
+    ssl         => true,
+    ssl_cert    => '/etc/letsencrypt/live/extremeautomation.io/fullchain.pem',
+    ssl_key     => '/etc/letsencrypt/live/extremeautomation.io/privkey.pem',
+    ssl_port    => 443,
     proxy       => 'http://localhost:5601',
   }
 
