@@ -64,7 +64,10 @@ class setup::docker {
     ssl_key              => '/etc/letsencrypt/live/extremeautomation.io/privkey.pem',
     ssl_port             => 443,
     client_max_body_size => "1024M",
-    proxy                => 'http://localhost:8800',
+    proxy                => 'http://localhost:5000',
+    location_raw_append    => [
+      'proxy_set_header X-Forwarded-Proto https;',
+    ],
   }
 
 }

@@ -4,6 +4,7 @@ task generatePuppetVariables(group: 'Infrastructure preparation') {
     file('puppet/environments/deploy/hieradata/common.yml').text = """
 ---
 setup::gitlab::gitlab_password: ${gitlabPassword}
+setup::kibana::kibana_version: ${kibanaVersion}
 """
   }
 }

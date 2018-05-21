@@ -13,7 +13,7 @@ ext {
 
 task getGitLabApiToken(group: 'Infrastructure preparation') { doLast {
   remoteSession {
-    project.gitLabTokenFile.text = exec("curl -s http://localhost:8480/api/v4/session --data 'login=root&password=${gitlabPassword}' | jq -r .private_token").output.trim()
+    project.gitLabTokenFile.text = project.gitlabToken
   }
 }}
 

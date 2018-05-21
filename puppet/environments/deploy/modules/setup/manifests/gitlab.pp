@@ -31,7 +31,7 @@ class setup::gitlab(
     ],
     extra_parameters => [
       '--restart=always',
-      '--hostname gitlab.extremeaution.io'
+      '--hostname gitlab.extremeautomation.io'
     ],
   }
 

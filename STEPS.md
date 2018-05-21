@@ -10,22 +10,26 @@ Setup steps:
 - `gradlew updateApt`
 - `generateSSLCertificates`
 
-- `gradlew provisionPuppet` or `gradlew provisionAnsible`
+- `gradlew provisionPuppet` 
 
 - wait 5 minutes for all services to fully initialize 
-- manually access rancher UI from browser
 
-- `gradlew initializeKibana`
+- go to GitLab, set new password for root, create api token for root with all permissions and change gradle.properties to contain that token
 - `gradlew initializeGitlab`
 
-- `gradlew initializeRancher`
-
-- manually create admin user in Jenkins
+- TODO: manually create admin user in Jenkins
 
 - `gradlew updateJenkinsItems`
+
 - `gradlew listIps`
 - `gradlew listKeys`
 - `gradlew listNetwork`
+
+- TODO: `gradlew initializeKibana`
+
+- TODO: manually access rancher UI from browser
+- TODO: `gradlew initializeRancher`
+
 
 Tear-down steps:
 
