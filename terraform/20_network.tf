@@ -131,6 +131,18 @@ resource "aws_security_group" "devops_security" {
   }
 
   #
+  # puppet master
+  #
+
+  ingress {
+    from_port = 8140
+    to_port = 8140
+    protocol = "tcp"
+    cidr_blocks = ["10.0.0.0/16"]
+  }
+
+
+  #
   # docker api & swarm
   #
 
@@ -202,7 +214,7 @@ resource "aws_main_route_table_association" "devops_routing_a" {
 }
 
 data "aws_eip" "public_ip" {
-  public_ip = "34.251.72.13"
+  public_ip = "34.247.204.76"
 }
 
 resource "aws_eip_association" "proxy_eip" {

@@ -1,6 +1,12 @@
 
 class setup::jenkins(
-  $jenkins_version = '2.102'
+  $jenkins_version = '2.124',
+  $jenkins_admin_user = 'root',
+  $jenkins_admin_password = 'DevOps2018',
+  $jenkins_dir = "/var/lib/jenkins",
+  $jenkins_plugins_dir = "${jenkins_dir}/plugins",
+  $jenkins_jobs_dir = "${jenkins_dir}/jobs",
+  $jenkins_scripts_dir = "${jenkins_dir}/scripts",
 ) {
 
   contain '::setup::java'
@@ -24,7 +30,7 @@ class setup::jenkins(
       Exec['apt_update']
     ]
   }
-  
+
   exec { 'jenkins':
     unless          => "dpkg -s jenkins | grep 'Version: ${jenkins_version}'",
     command         => "/usr/bin/dpkg --force-all -i /tmp/jenkins_${jenkins_version}_all.deb",
@@ -38,14 +44,16 @@ class setup::jenkins(
     ]
   }
 
+  $jenkins_cli_jar = "${jenkins_lib_dir}/jenkins-cli.jar"
+
+  $jenkins_script_environment = [
+    "JENKINS_HOST=http://127.0.0.1:8800",
+    "JENKINS_USER=${jenkins_admin_user}",
+    "JENKINS_PASSWORD=${jenkins_admin_password}",
+  ]
+
   file { '/etc/default/jenkins':
     content => template('setup/jenkins.default.erb'),
-    require => Exec['jenkins'],
-    notify  => Service['jenkins']
-  }
-
-  file { '/var/lib/jenkins/config.xml':
-    content => template('setup/config.xml.erb'),
     require => Exec['jenkins'],
     notify  => Service['jenkins']
   }
@@ -93,166 +101,162 @@ class setup::jenkins(
 
   group { 'jenkins':
     ensure  => present,
-    require => Exec['jenkins'],
+    # require => Exec['jenkins'],
   }
 
   user { 'jenkins':
     ensure     => present,
-    require    => Exec['jenkins'],
+    # require    => Exec['jenkins'],
   }
 
-  setup::jenkins::plugin {
-    'git-client': ;
-    'gitlab-hook': ;
-    'git': ;
-    'plain-credentials': ;
-    'tap': ;
-    'scm-api': ;
-    'structs': ;
-    'multiple-scms': ;    
-    'github-api': ;
-    'github': ;
-    'matrix-project': ;
-    'jobConfigHistory': ;
-    'token-macro': ;
-    'timestamper': ;
-    'javadoc': ;
-    'slack': ;
-    'jquery': ;
-    'junit': ;
-    'mailer': ;
-    'script-security': ;
-    'cloudbees-folder': ;
-    'greenballs': ;
-    'gradle': ;
-    'groovy': ;
-    'groovy-postbuild': ;
-    'dashboard-view': ;
-    'analysis-core': ;
-    'maven-plugin': ;
-    'cobertura': ;
-    'tasks': ;
-    'htmlpublisher': ;
-    'build-pipeline-plugin': ;
-    'build-timeout': ;
-    'clone-workspace-scm': ;
-    'join': ;
-    'throttle-concurrents': ;
-    'parameterized-trigger': ;
-    'violations': ;
-    'warnings': ;
-    'build-name-setter': ;
-    'nodelabelparameter': ;
-    'ansicolor': ;
-    'log-parser': ;
-    'disk-usage': ;
-    'next-executions': ;
-    'global-build-stats': ;
-    'project-stats-plugin': ;
-    'show-build-parameters': ;
-    'downstream-buildview': ;
-    'envinject': ;
-    'sectioned-view': ;
-    'nested-view': ;
-    'rebuild': ;
-    'shelve-project-plugin': ;
-    'extended-choice-parameter': ;
-    'extensible-choice-parameter': ;
-    'configurationslicing': ;
-    'ssh-credentials': ;
-    'credentials': ;
-    'promoted-builds': ;    
-    'conditional-buildstep': ;
-    'display-url-api': ;
-    'run-condition': ;
-    'workflow-aggregator': ;
-    'workflow-api': ;
-    'workflow-basic-steps': ;
-    'workflow-cps': ;
-    'workflow-cps-global-lib': ;
-    'workflow-durable-task-step': ;
-    'workflow-job': ;
-    'workflow-multibranch': ;
-    'workflow-remote-loader': ;
-    'workflow-scm-step': ;
-    'workflow-step-api': ;
-    'workflow-support': ;
-    'pipeline-build-step': ;
-    'pipeline-graph-analysis': ;
-    'pipeline-input-step': ;
-    'blueocean-bitbucket-pipeline': ;
-    'blueocean-jira': ;
-    'apache-httpcomponents-client-4-api': ;
-    'jsch': ;
-    'antisamy-markup-formatter': ;
-    'cloudbees-bitbucket-branch-source': ;
-    'jira': ;
-    'pipeline-milestone-step': ;
-    'pipeline-model-definition': ;
-    'pipeline-model-api': ;
-    'pipeline-model-extensions': ;
-    'blueocean-pipeline-editor': ;
-    'pipeline-model-declarative-agent': ;
-    'pipeline-rest-api': ;
-    'pipeline-stage-step': ;
-    'pipeline-stage-view': ;
-    'pipeline-utility-steps': ;
-    'handlebars': ;
-    'jquery-detached': ; 
-    'momentjs': ;
-    'durable-task': ;
-    'docker-workflow': ;
-    'ace-editor': ;
-    'config-file-provider': ;
-    'docker-commons': ;
-    'credentials-binding': ;
-    'pipeline-stage-tags-metadata': ;
-    'git-server': ;
-    'branch-api': ;
-    'icon-shim': ;
-    'authentication-tokens': ;
-    'blueocean': ;
-    'blueocean-rest': ;
-    'blueocean-display-url': ;
-    'blueocean-autofavorite': ;
-    'blueocean-github-pipeline': ;
-    'blueocean-pipeline-api-impl': ;
-    'blueocean-i18n': ;
-    'blueocean-rest-impl': ;
-    'blueocean-git-pipeline': ;
-    'blueocean-dashboard': ;
-    'blueocean-config': ;
-    'blueocean-web': ;
-    'envinject-api': ;
-    'blueocean-commons': ;
-    'blueocean-jwt': ;
-    'blueocean-personalization': ;
-    'blueocean-pipeline-scm-api': ;
-    'mercurial': ;
-    'metrics': ;
-    'variant': ;
-    'blueocean-events': ;
-    'favorite': ;
-    'jackson2-api': ;
-    'github-branch-source': ;
-    'github-organization-folder': ;
-    'sse-gateway': ;
-    'gitlab-plugin': ;
-    'pipeline-github-lib': ;
-    'pubsub-light': ;
+  setup::jenkins::plugin { [
+    'credentials',
+    'active-directory',
+    'blueocean',
+    'timestamper',
+    'ansicolor',
+    'ldap',
+    'git',
+    'matrix-auth',
+    'workflow-aggregator',
+    'docker-workflow',
+    'greenballs',
+    'ssh-slaves',
+    'bitbucket',
+    'email-ext',
+    'naginator',
+    'groovy-postbuild',
+    'mask-passwords',
+    'view-job-filters',
+    'dashboard-view',
+    'sectioned-view',
+    'categorized-view',
+    'rebuild',
+    'envinject',
+    'build-timeout',
+    'next-executions',
+    'warnings',
+    'tasks',
+    'dependency-check-jenkins-plugin',
+    'extensible-choice-parameter',
+    'PrioritySorter',
+    'throttle-concurrents',
+    'project-stats-plugin',
+    'subversion',
+    'ws-cleanup',
+    'purge-build-queue-plugin',
+    'cucumber-reports',
+    'cucumber-testresult-plugin',
+    'disk-usage',
+    'shelve-project-plugin',
+    'simple-theme-plugin'
+  ]:
   }
 
   file { [
-    '/var/lib/jenkins',
-    "/var/lib/jenkins/plugins"
+    $jenkins_dir,
+    $jenkins_plugins_dir,
+    $jenkins_jobs_dir
   ]:
+    ensure => directory,
+    owner  => 'jenkins',
+    group  => 'jenkins',
+    mode   => '0755',
+    # before => Exec['jenkins'],
+    # require => [
+    #   Group['jenkins'],
+    #   User['jenkins']
+    # ],
+  }
+
+  file { [ $jenkins_scripts_dir ]:
     ensure  => directory,
+    recurse => true,
+    purge   => true,
     owner   => 'jenkins',
     group   => 'jenkins',
-    require => [
-      Group['jenkins'],
-      User['jenkins']
+    mode    => '0755',
+    before  => Exec['jenkins']
+  }
+
+  file { "${jenkins_scripts_dir}/jenkins_plugin.sh":
+    ensure => file,
+    owner  => 'jenkins',
+    group  => 'jenkins',
+    mode   => '0744',
+    source => "puppet:///modules/${module_name}/scripts/jenkins_plugin.sh"
+  }
+
+  file { "${jenkins_scripts_dir}/jenkins_script.sh":
+    ensure => file,
+    owner  => 'jenkins',
+    group  => 'jenkins',
+    mode   => '0744',
+    source => "puppet:///modules/${module_name}/scripts/jenkins_script.sh"
+  }
+
+  exec { 'wait-for-start':
+    command   => "curl -o /dev/null --silent --head --max-time 30 --write-out '%{http_code}\\n' http://127.0.0.1:8800/cli/ | egrep '200|403'",
+    unless    => "curl -o /dev/null --silent --head --max-time 30 --write-out '%{http_code}\\n' http://127.0.0.1:8800/cli/ | egrep '200|403'",
+    tries     => 10,
+    try_sleep => 10,
+    subscribe => Service['jenkins']
+  }
+
+  exec { 'force-restart':
+    command     => "service jenkins restart",
+    refreshonly => true
+  }
+
+  augeas { 'configure-security':
+    incl    => "${jenkins_dir}/config.xml",
+    context => "/files/var/lib/jenkins/config.xml/hudson",
+    lens    => 'Xml.lns',
+    changes => [
+      'set useSecurity/#text true',
+#     'set disabledAdministrativeMonitors/string[#text="jenkins.security.s2m.MasterKillSwitchWarning"]/#text jenkins.security.s2m.MasterKillSwitchWarning',
     ],
+    require => Exec['wait-for-start'],
+    notify  => Setup::Jenkins::Script['reload_configuration']
+  }
+
+  setup::jenkins::script { 'configure_base_security':
+    script_template => 'basic_security.groovy',
+    args            => {
+      jenkins_admin_username => "${jenkins_admin_user}",
+      jenkins_admin_password => "${jenkins_admin_password}",
+    }
+  }
+
+  setup::jenkins::script { 'reload_configuration':
+    script_template => 'reload.groovy',
+    require         => Setup::Jenkins::Script['configure_base_security'],
+    refreshonly     => true
+  }
+
+  Setup::Jenkins::Script { 'configure_csrf':
+    script_template => 'configure_csrf.groovy',
+    require         => Setup::Jenkins::Script['configure_base_security'],
+  }
+
+  Setup::Jenkins::Script { 'configure_jlnp_protocols':
+    script_template => 'configure_jlnp_protocols.groovy',
+    require         => Setup::Jenkins::Script['configure_base_security'],
+  }
+
+  Setup::Jenkins::Script { 'disable_usage_stats':
+    script_template => 'disable_usage_stats.groovy',
+    require         => Setup::Jenkins::Script['configure_base_security'],
+  }
+
+  Setup::Jenkins::Script { 'configure_executors':
+    script_template => 'configure_executors.groovy',
+    require         => Setup::Jenkins::Script['configure_base_security'],
+  }
+
+  Setup::Jenkins::Script { 'set_master_labels':
+    script_template => 'set_master_labels.groovy',
+    require         => Setup::Jenkins::Script['configure_base_security'],
   }
 
   nginx::resource::server { "jenkins.extremeautomation.io":
@@ -271,22 +275,52 @@ class setup::jenkins(
 
 }
 
-define setup::jenkins::plugin($version=0) {
 
-  if ($version != 0) {
-    $base_url = "http://updates.jenkins-ci.org/download/plugins/${name}/${version}/"
-  } else {
-    $base_url = 'http://updates.jenkins-ci.org/latest/'
+define setup::jenkins::plugin {
+
+  exec { "Install Jenkins plugin ${name}":
+    environment => $::setup::jenkins::jenkins_script_environment,
+    command     => "/bin/bash -x ${::setup::jenkins::jenkins_scripts_dir}/jenkins_plugin.sh ${name}",
+    unless      => "test -f ${::setup::jenkins::jenkins_plugins_dir}/${name}.jpi -o -f ${::setup::jenkins::jenkins_plugins_dir}/${name}.hpi",
+    logoutput   => on_failure,
+    require     => [
+      Exec['wait-for-start'],
+      File["${::setup::jenkins::jenkins_scripts_dir}/jenkins_plugin.sh"],
+    ],
+    notify      => Exec['force-restart']
   }
 
-  exec { "download jenkins plugin ${name}":
-    command  => "wget --no-check-certificate ${base_url}${name}.hpi",
-    cwd      => "/var/lib/jenkins/plugins",
-    require  => File["/var/lib/jenkins/plugins"],
-    path     => ['/usr/bin', '/usr/sbin',],
-    user     => 'jenkins',
-    unless   => "test -f /var/lib/jenkins/plugins/${name}.hpi -o -f /var/lib/jenkins/plugins/${name}.jpi",
-    notify   => Service['jenkins'],
+}
+
+define setup::jenkins::script(
+  $script_template,
+  $args        = {},
+  $unless      = undef,
+  $logoutput   = true,
+  $refreshonly = undef
+) {
+
+  $script_name = base64('encode', $name, 'urlsafe')
+  $script = "${::setup::jenkins::jenkins_scripts_dir}/${script_name}.groovy"
+
+  file { $script:
+    content => template("${module_name}/${script_template}.erb"),
+    owner   => 'jenkins',
+    group   => 'jenkins',
+    mode    => '0600'
+  }
+
+  exec { "Execute script ${name}":
+    environment => $::setup::jenkins::jenkins_script_environment,
+    command     => "/bin/bash ${::setup::jenkins::jenkins_scripts_dir}/jenkins_script.sh ${script}",
+    logoutput   => $logoutput,
+    refreshonly => $refreshonly,
+    unless      => $unless,
+    require     => [
+      Exec['wait-for-start'],
+      File["${::setup::jenkins::jenkins_scripts_dir}/jenkins_script.sh"],
+      File[$script],
+    ]
   }
 
 }

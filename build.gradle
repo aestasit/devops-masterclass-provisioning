@@ -35,10 +35,9 @@ ext {
       getTerraformState()?.
       modules?.
       get(0)?.
-      resources?.
-      findAll { it.key.startsWith 'aws_instance.devops_server' }?.
-      collect { it.value.primary.attributes.public_ip }?.
-      find() ?: '127.0.0.1'
+      outputs?.
+      eip?.
+      value ?: '127.0.0.1'
   }
 
   getServerInstanceId = {

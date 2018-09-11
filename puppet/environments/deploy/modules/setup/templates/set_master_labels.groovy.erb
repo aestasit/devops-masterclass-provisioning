@@ -1,0 +1,9 @@
+
+def instance = jenkins.model.Jenkins.instance
+
+instance.computers.each { c ->
+  if (c instanceof jenkins.model.Jenkins.MasterComputer) {
+    c.node.labelString = 'docker linux'
+    instance.save()
+  }
+}

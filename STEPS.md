@@ -8,7 +8,7 @@ Setup steps:
 - `gradlew activateTerminationProtection`
 - `gradlew setHostname`
 - `gradlew updateApt`
-- `generateSSLCertificates`
+- `gradlew generateSSLCertificates`
 
 - `gradlew provisionPuppet` 
 

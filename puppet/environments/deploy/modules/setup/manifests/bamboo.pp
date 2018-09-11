@@ -1,7 +1,7 @@
 class setup::bamboo {
 
   class { '::bamboo':
-    version      => '6.3.1',
+    version      => '6.5.0',
     tomcat_port  => '9697',
     installdir   => '/opt/bamboo',
     homedir      => '/var/local/bamboo',

@@ -16,9 +16,13 @@ resource "aws_instance" "devops_server" {
   key_name = "${aws_key_pair.devops_key.key_name}"
   subnet_id = "${aws_subnet.devops_subnet.id}"
   vpc_security_group_ids = [ "${aws_security_group.devops_security.id}" ]
+  timeouts {
+    create = "60m"
+  }
   connection {
     user = "ubuntu"
     private_key = "${file("../secrets/devops-server.pem")}"
+    timeout = "30m"
   }
   provisioner "remote-exec" {
 
