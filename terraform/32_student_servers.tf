@@ -5,8 +5,8 @@ resource "aws_key_pair" "student_test_key" {
 }
 
 resource "aws_instance" "test_machine_linux" {
-  ami = "${data.aws_ami.devops_oel7.id}"
-  instance_type = "t2.medium"
+  ami = "${data.aws_ami.ubuntu_xenial.id}"
+  instance_type = "t2.small"
   tags {
     Name = "test_machine_linux_${format("%02d", count.index + 1)}"
   }
@@ -18,7 +18,7 @@ resource "aws_instance" "test_machine_linux" {
   subnet_id = "${aws_subnet.devops_subnet.id}"
   vpc_security_group_ids = [ "${aws_security_group.devops_security.id}" ]
   connection {
-    user = "oracle"
+    user = "ubuntu"
     private_key = "${file("../secrets/student.pem")}"
     timeout = "30m"
   }

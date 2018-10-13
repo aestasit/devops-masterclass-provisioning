@@ -4,8 +4,9 @@ jenkins {
   servers {
     build_server {                                   
       url      "http://${project.getServerIp()}:8800"
-      username "admin"
-      password "admin"
+      secure true
+      username jenkinsUser
+      password jenkinsPassword
     }
   }             
 

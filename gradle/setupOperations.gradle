@@ -19,12 +19,15 @@ task activateTerminationProtection(type: Exec, group: 'Infrastructure preparatio
 
 task initializeKibana(group: 'Infrastructure preparation') { doLast {
   remoteSession {
-    exec "curl --header 'content-type: application/json' -XPUT 'http://127.0.0.1:9200/.kibana/index-pattern/metricbeat-*' -d '{\"title\" : \"metricbeat-*\",  \"timeFieldName\": \"@timestamp\"}'"
-    exec "curl --header 'content-type: application/json' -XPUT 'http://127.0.0.1:9200/.kibana/index-pattern/packetbeat-*' -d '{\"title\" : \"packetbeat-*\",  \"timeFieldName\": \"@timestamp\"}'"
-    exec "curl --header 'content-type: application/json' -XPUT 'http://127.0.0.1:9200/.kibana/index-pattern/filebeat-*' -d '{\"title\" : \"filebeat-*\",  \"timeFieldName\": \"@timestamp\"}'"
-    exec "curl --header 'content-type: application/json' -XPUT 'http://127.0.0.1:9200/.kibana/index-pattern/logstash-*' -d '{\"title\" : \"logstash-*\",  \"timeFieldName\": \"@timestamp\"}'"
-    exec "curl --header 'content-type: application/json' -XPUT 'http://127.0.0.1:9200/.kibana/index-pattern/auditbeat-*' -d '{\"title\" : \"auditbeat-*\",  \"timeFieldName\": \"@timestamp\"}'"
-    exec "curl --header 'content-type: application/json' -XPUT http://127.0.0.1:9200/.kibana/config -d '{\"defaultIndex\" : \"metricbeat-*\"}'"
+    exec "curl -XGET http://localhost:9200/.kibana/doc/_search?q=type:index-pattern"
+    // exec "curl --header 'content-type: application/json' -XDELETE http://127.0.0.1:9200/.kibana"
+    // exec "curl --header 'content-type: application/json' -XPUT 'http://127.0.0.1:9200/.kibana/index-pattern/metricbeat-*' -d '{\"title\" : \"metricbeat-*\",  \"timeFieldName\": \"@timestamp\"}'"
+    // exec "curl --header 'content-type: application/json' -XPUT 'http://127.0.0.1:9200/.kibana/index-pattern/packetbeat-*' -d '{\"title\" : \"packetbeat-*\",  \"timeFieldName\": \"@timestamp\"}'"
+    //exec "curl --header 'content-type: application/json' -XPUT 'http://127.0.0.1:9200/.kibana/index-pattern/filebeat-*' -d '{\"title\" : \"filebeat-*\",  \"timeFieldName\": \"@timestamp\"}'"
+    //exec "curl --header 'content-type: application/json' -XPUT 'http://127.0.0.1:9200/.kibana/index-pattern/logstash-*' -d '{\"title\" : \"logstash-*\",  \"timeFieldName\": \"@timestamp\"}'"
+    //exec "curl --header 'content-type: application/json' -XPUT 'http://127.0.0.1:9200/.kibana/index-pattern/auditbeat-*' -d '{\"title\" : \"auditbeat-*\",  \"timeFieldName\": \"@timestamp\"}'"
+    // exec "curl --header 'content-type: application/json' -XDELETE http://127.0.0.1:9200/.kibana"
+    //exec "curl --header 'content-type: application/json' -XPOST http://127.0.0.1:9200/.kibana/config -d '{\"defaultIndex\" : \"metricbeat-*\"}'"
     exec "sudo curl -Lso /usr/share/metricbeat/beats-dashboards.zip https://artifacts.elastic.co/downloads/beats/beats-dashboards/beats-dashboards-${kibanaVersion}.zip"
     exec "/usr/share/metricbeat/scripts/import_dashboards -beat \"\" -file /usr/share/metricbeat/beats-dashboards.zip -es http://localhost:9200"
   }

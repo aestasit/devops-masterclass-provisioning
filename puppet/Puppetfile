@@ -20,8 +20,8 @@ mod "camptocamp-systemd", "1.1.1"
 mod 'thias-sysctl', '1.0.6'
 
 mod 'KyleAnderson-consul', '3.3.0'
-mod "joshbeard-bamboo", "3.4.1"
-mod "thewired-bitbucket", "2.2.5"
+# mod "joshbeard-bamboo", "3.4.1"
+# mod "thewired-bitbucket", "2.2.5"
 
 # mod "puppet-rundeck", "5.1.0"
 

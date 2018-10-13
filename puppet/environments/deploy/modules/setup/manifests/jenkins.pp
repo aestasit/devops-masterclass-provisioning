@@ -1,6 +1,6 @@
 
 class setup::jenkins(
-  $jenkins_version = '2.124',
+  $jenkins_version = '2.146',
   $jenkins_admin_user = 'root',
   $jenkins_admin_password = 'DevOps2018',
   $jenkins_dir = "/var/lib/jenkins",
@@ -44,7 +44,7 @@ class setup::jenkins(
     ]
   }
 
-  $jenkins_cli_jar = "${jenkins_lib_dir}/jenkins-cli.jar"
+  $jenkins_cli_jar = "${jenkins_dir}/jenkins-cli.jar"
 
   $jenkins_script_environment = [
     "JENKINS_HOST=http://127.0.0.1:8800",
