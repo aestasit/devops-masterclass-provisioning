@@ -101,12 +101,16 @@ class setup::jenkins(
 
   group { 'jenkins':
     ensure  => present,
-    # require => Exec['jenkins'],
+    require => Exec['jenkins'],
   }
 
   user { 'jenkins':
     ensure     => present,
-    # require    => Exec['jenkins'],
+    groups     => [ 'docker' ]
+    require    => [
+      Exec['jenkins'],
+      Class['::docker']
+    ]
   }
 
   setup::jenkins::plugin { [
