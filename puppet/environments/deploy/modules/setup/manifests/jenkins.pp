@@ -106,7 +106,7 @@ class setup::jenkins(
 
   user { 'jenkins':
     ensure     => present,
-    groups     => [ 'docker' ]
+    groups     => [ 'docker' ],
     require    => [
       Exec['jenkins'],
       Class['::docker']
@@ -162,11 +162,11 @@ class setup::jenkins(
     $jenkins_plugins_dir,
     $jenkins_jobs_dir
   ]:
-    ensure => directory,
-    owner  => 'jenkins',
-    group  => 'jenkins',
-    mode   => '0755',
-    # before => Exec['jenkins'],
+    ensure  => directory,
+    owner   => 'jenkins',
+    group   => 'jenkins',
+    mode    => '0755',
+    require => Exec['jenkins'],
     # require => [
     #   Group['jenkins'],
     #   User['jenkins']
@@ -180,7 +180,7 @@ class setup::jenkins(
     owner   => 'jenkins',
     group   => 'jenkins',
     mode    => '0755',
-    before  => Exec['jenkins']
+    require => Exec['jenkins']
   }
 
   file { "${jenkins_scripts_dir}/jenkins_plugin.sh":

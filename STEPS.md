@@ -14,6 +14,8 @@ Setup steps:
 
 - wait 5 minutes for all services to fully initialize 
 
+- TODO: first provisioning fails, need to login to Jenkins and update the list of the plugins and then run `gradlew provisionPuppet` again 
+
 - go to GitLab, set new password for root, create api token for root with all permissions and change gradle.properties to contain that token
 - `gradlew initializeGitlab`
 

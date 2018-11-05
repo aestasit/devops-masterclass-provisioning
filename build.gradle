@@ -16,7 +16,8 @@ buildscript {
 
 plugins {
   id "idea"
-  id "com.terrafolio.jenkins" version "1.3.4"
+  // id "com.terrafolio.jenkins" version "1.3.4"
+  id "com.sbelei.jenkins" version "1.4.9"
 }
 
 apply plugin: 'base'

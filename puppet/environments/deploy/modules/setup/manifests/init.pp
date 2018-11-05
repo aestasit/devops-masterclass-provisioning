@@ -9,6 +9,7 @@ class setup {
 
   include setup::docker
   include setup::java
+  include setup::python
 
   include setup::jenkins
   include setup::gitlab
