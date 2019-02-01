@@ -2,15 +2,15 @@
 task generateSSLCertificates(group: 'Infrastructure preparation') { doLast {
   remoteSession {
     exec "mkdir -p /home/ubuntu/.secrets/certbot"
-    exec "touch /home/ubuntu/.secrets/certbot/dnsimple.ini"
-    remoteFile('/home/ubuntu/.secrets/certbot/dnsimple.ini').text = "dns_dnsimple_token = ${file('secrets/dnsimple.token').text}"
-    exec "chmod 600 /home/ubuntu/.secrets/certbot/dnsimple.ini"
+    exec "touch /home/ubuntu/.secrets/certbot/cloudflare.ini"
+    remoteFile('/home/ubuntu/.secrets/certbot/cloudflare.ini').text = "dns_cloudflare_email = andrey@aestasit.com\ndns_cloudflare_api_key = ${file('secrets/cloudflare.token').text}"
+    exec "chmod 600 /home/ubuntu/.secrets/certbot/cloudflare.ini"
     exec "sudo docker run --rm --name certbot -it -p 80:80 -p 443:443 " +
            "-v /etc/letsencrypt:/etc/letsencrypt/ " +
            "-v /var/log/letsencrypt:/var/log/letsencrypt " +
            "-v /home/ubuntu/.secrets/certbot:/secrets " +
-           "certbot/dns-dnsimple certonly --dns-dnsimple " +
-           "--dns-dnsimple-credentials /secrets/dnsimple.ini --dns-dnsimple-propagation-seconds 60 " +
+           "certbot/dns-cloudflare certonly --dns-cloudflare " +
+           "--dns-cloudflare-credentials /secrets/cloudflare.ini --dns-cloudflare-propagation-seconds 60 " +
            "-n --agree-tos -m andrey@aestasit.com -d *.extremeautomation.io --server https://acme-v02.api.letsencrypt.org/directory"
   }
 }}

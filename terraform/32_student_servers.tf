@@ -13,7 +13,7 @@ resource "aws_instance" "test_machine_linux" {
   root_block_device {
     volume_size = "${var.student_server_disk_gb}"
   }
-  count = "${var.student_count}"
+  count = 0 // "${var.student_count}"
   key_name = "${aws_key_pair.student_test_key.key_name}"
   subnet_id = "${aws_subnet.devops_subnet.id}"
   vpc_security_group_ids = [ "${aws_security_group.devops_security.id}" ]

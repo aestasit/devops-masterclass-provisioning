@@ -5,7 +5,7 @@ resource "aws_key_pair" "devops_key" {
 }
 
 resource "aws_instance" "devops_server" {
-  ami = "${data.aws_ami.devops_ubuntu_xenial.id}"
+  ami = "ami-00dac3cb2f60821a0" // "${data.aws_ami.devops_ubuntu_xenial.id}"
   instance_type = "m4.2xlarge"
   tags {
     Name = "devops_server"
@@ -52,13 +52,13 @@ variable "hostnames" {
   ]
 }
 
-resource "dnsimple_record" "dns_record" {
-  domain   = "${var.dnsimple_domain}"
+resource "cloudflare_record" "dns_record" {
+  domain   = "${var.cloudflare_zone}"
   type     = "A"
   count    = "${length(var.hostnames)}"
   name     = "${element(var.hostnames, count.index)}"
   value    = "${data.aws_eip.public_ip.public_ip}"
-  ttl      = 60
+  ttl      = 120
 }
 
 output "ip" {

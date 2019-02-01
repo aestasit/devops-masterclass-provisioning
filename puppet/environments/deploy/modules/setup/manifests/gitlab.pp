@@ -1,7 +1,7 @@
 
 class setup::gitlab(
   $gitlab_version = '10.7.3-ce.0',
-  $gitlab_password = 'DevOps2018'
+  $gitlab_password = 'DevOps2019'
 ) {
 
   file { [

@@ -24,6 +24,15 @@ provider "dnsimple" {
   account  = "${file("../secrets/dnsimple.account.id")}"
 }
 
+provider "cloudflare" {
+  email = "andrey@aestasit.com"
+  token = "${file("../secrets/cloudflare.token")}"
+}
+
+variable "cloudflare_zone" {
+  default  = "extremeautomation.io"
+}
+
 variable "dnsimple_domain" {
   default  = "extremeautomation.io"
 }

@@ -6,7 +6,7 @@ jenkins {
       url      "http://${project.getServerIp()}:8800"
       secure true
       username jenkinsUser
-      password jenkinsPassword
+      password jenkinsApiToken
     }
   }             
 
@@ -29,7 +29,7 @@ jenkins {
           name "${jobNamePrefix}_BUILD"
           xml templates.student_build.override { job ->
             job.description = "Build for '${studentUser}' infrastructure."
-            job.sources.data."jenkins.branch.BranchSource".source.remote = "http://gitlab.extremeautomation.io/${studentUser}/${studentUser}-code.git"
+            job.definition.scm.userRemoteConfigs."hudson.plugins.git.UserRemoteConfig".url = "http://gitlab.extremeautomation.io/${studentUser}/${studentUser}-code.git"
           }
         }
       }
