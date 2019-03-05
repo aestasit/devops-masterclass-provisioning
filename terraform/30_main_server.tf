@@ -5,7 +5,7 @@ resource "aws_key_pair" "devops_key" {
 }
 
 resource "aws_instance" "devops_server" {
-  ami = "ami-00dac3cb2f60821a0" // "${data.aws_ami.devops_ubuntu_xenial.id}"
+  ami = "${data.aws_ami.devops_ubuntu_xenial.id}"
   instance_type = "m4.2xlarge"
   tags {
     Name = "devops_server"

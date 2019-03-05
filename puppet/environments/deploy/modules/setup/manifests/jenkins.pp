@@ -1,6 +1,6 @@
 
 class setup::jenkins(
-  $jenkins_version = '2.162',
+  $jenkins_version = '2.166',
   $jenkins_admin_user = 'root',
   $jenkins_admin_password = 'DevOps2019',
   $jenkins_dir = "/var/lib/jenkins",
