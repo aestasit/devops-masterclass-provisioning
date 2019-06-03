@@ -1,23 +1,28 @@
 
 # Kubernetes
-k8s<-https://storage.googleapis.com/kubernetes-release/release/v1.13.0/bin/windows/amd64/kubectl.exe
-k8s<-https://storage.googleapis.com/kubernetes-release/release/v1.13.0/bin/linux/amd64/kubectl->kubectl-linux
-k8s<-https://storage.googleapis.com/kubernetes-release/release/v1.13.0/bin/darwin/amd64/kubectl->kubectl-darwin
-k8s<-https://github.com/kubernetes/minikube/releases/download/v0.31.0/minikube-linux-amd64
-k8s<-https://github.com/kubernetes/minikube/releases/download/v0.31.0/minikube-darwin-amd64
-k8s<-https://github.com/kubernetes/minikube/releases/download/v0.31.0/minikube-windows-amd64
-k8s<-https://github.com/kubernetes/minikube/releases/download/v0.31.0/minikube_0.31-0.deb
-k8s<-https://github.com/kubernetes/minikube/releases/download/v0.31.0/docker-machine-driver-kvm2
-k8s<-https://github.com/kubernetes/minikube/releases/download/v0.31.0/docker-machine-driver-hyperkit
+k8s<-https://storage.googleapis.com/kubernetes-release/release/v1.14.0/bin/windows/amd64/kubectl-windows-amd64.exe
+k8s<-https://storage.googleapis.com/kubernetes-release/release/v1.14.0/bin/linux/amd64/kubectl->kubectl-linux-amd64
+k8s<-https://storage.googleapis.com/kubernetes-release/release/v1.14.0/bin/darwin/amd64/kubectl->kubectl-darwin-amd64
+k8s<-https://github.com/kubernetes/minikube/releases/download/v1.1.0/minikube-linux-amd64
+k8s<-https://github.com/kubernetes/minikube/releases/download/v1.1.0/minikube-darwin-amd64
+k8s<-https://github.com/kubernetes/minikube/releases/download/v1.1.0/minikube-windows-amd64
+k8s<-https://github.com/kubernetes/minikube/releases/download/v1.1.0/minikube_0.31-0.deb
+k8s<-https://github.com/kubernetes/minikube/releases/download/v1.1.0/docker-machine-driver-kvm2
+k8s<-https://github.com/kubernetes/minikube/releases/download/v1.1.0/docker-machine-driver-hyperkit
+
+# Helm
+helm<-https://storage.googleapis.com/kubernetes-helm/helm-v2.14.0-darwin-amd64.tar.gz
+helm<-https://storage.googleapis.com/kubernetes-helm/helm-v2.14.0-windows-amd64.zip
+helm<-https://storage.googleapis.com/kubernetes-helm/helm-v2.14.0-linux-amd64.tar.gz
 
 # Docker Compose
-docker<-https://github.com/docker/compose/releases/download/1.23.2/docker-compose-Darwin-x86_64
-docker<-https://github.com/docker/compose/releases/download/1.23.2/docker-compose-Linux-x86_64
-docker<-https://github.com/docker/compose/releases/download/1.23.2/docker-compose-Windows-x86_64.exe
+docker<-https://github.com/docker/compose/releases/download/1.24.0/docker-compose-Darwin-x86_64
+docker<-https://github.com/docker/compose/releases/download/1.24.0/docker-compose-Linux-x86_64
+docker<-https://github.com/docker/compose/releases/download/1.24.0/docker-compose-Windows-x86_64.exe
 
 # Docker
 docker<-https://download.docker.com/mac/stable/Docker.dmg
-docker<-https://download.docker.com/win/stable/Docker%20for%20Windows%20Installer.exe
+docker<-https://download.docker.com/win/stable/Docker%20for%20Windows%20Installer.exe->DockerWindowsInstaller.exe
 
 # JQ
 jq<-https://github.com/stedolan/jq/releases/download/jq-1.6/jq-linux64
@@ -25,31 +30,25 @@ jq<-https://github.com/stedolan/jq/releases/download/jq-1.6/jq-osx-amd64
 jq<-https://github.com/stedolan/jq/releases/download/jq-1.6/jq-win64.exe
 
 # ChefDK
-chef<-https://packages.chef.io/files/stable/chefdk/3.5.13/debian/9/chefdk_3.5.13-1_amd64.deb
-chef<-https://packages.chef.io/files/stable/chefdk/3.5.13/mac_os_x/10.14/chefdk-3.5.13-1.dmg
-chef<-https://packages.chef.io/files/stable/chefdk/3.5.13/windows/2016/chefdk-3.5.13-1-x64.msi
+chef<-https://packages.chef.io/files/stable/chef-workstation/0.3.2/ubuntu/18.04/chef-workstation_0.3.2-1_amd64.deb
+chef<-https://packages.chef.io/files/stable/chef-workstation/0.3.2/mac_os_x/10.14/chef-workstation-0.3.2-1.dmg
+chef<-https://packages.chef.io/files/stable/chef-workstation/0.3.2/windows/2016/chef-workstation-0.3.2-1-x64.msi
+chef<-https://packages.chef.io/files/stable/chef-workstation/0.3.2/windows/2012/chef-workstation-0.3.2-1-x64.msi
+chef<-https://packages.chef.io/files/stable/chef-workstation/0.3.2/windows/2012r2/chef-workstation-0.3.2-1-x64.msi
 
 # Puppet
-puppet<-https://downloads.puppet.com/windows/pdk-1.8.0.0-x64.msi
-puppet<-https://downloads.puppet.com/windows/puppet-bolt-1.6.0-x64.msi
+puppet<-https://downloads.puppet.com/windows/pdk-1.9.1.0-x64.msi
+puppet<-https://downloads.puppet.com/windows/puppet-bolt-1.9.0-x64.msi
 puppet<-https://downloads.puppet.com/windows/puppet-agent-1.9.3-x86.msi
+puppet<-https://downloads.puppet.com/mac/puppet6/10.14/x86_64/puppet-agent-6.4.2-1.osx10.14.dmg
+puppet<-https://downloads.puppet.com/mac/puppet6/10.14/x86_64/pdk-1.9.1.0-1.osx10.14.dmg
+puppet<-https://downloads.puppet.com/mac/puppet6/10.14/x86_64/puppet-bolt-1.21.0-1.osx10.14.dmg
 
 # Git
-git<-https://download.tortoisegit.org/tgit/2.6.0.0/TortoiseGit-2.6.0.0-32bit.msi
-git<-https://download.tortoisegit.org/tgit/2.6.0.0/TortoiseGit-2.6.0.0-64bit.msi
-git<-https://github.com/git-for-windows/git/releases/download/v2.17.0.windows.1/Git-2.17.0-64-bit.exe
-git<-https://github.com/git-for-windows/git/releases/download/v2.17.0.windows.1/Git-2.17.0-32-bit.exe
-
-# Boxes
-boxes<-https://vagrantcloud.com/aestasit/boxes/devops-ubuntu-16.04/versions/1.3/providers/hyperv.box->devops-ubuntu-16-04-x64-hyperv-2018-05-12.box
-boxes<-https://vagrantcloud.com/aestasit/boxes/devops-ubuntu-16.04/versions/1.3/providers/virtualbox.box->devops-ubuntu-16-04-x64-virtualbox-2018-05-12.box
-
-# Ubuntu
-ubuntu<-http://old-releases.ubuntu.com/releases/16.04.3/ubuntu-16.04.3-server-amd64.iso
-ubuntu<-http://old-releases.ubuntu.com/releases/16.04.3/ubuntu-16.04.3-server-i386.iso
-ubuntu<-http://releases.ubuntu.com/16.04/ubuntu-16.04.4-server-amd64.iso
-ubuntu<-http://releases.ubuntu.com/16.04/ubuntu-16.04.4-server-i386.iso
-ubuntu<-http://releases.ubuntu.com/18.04/ubuntu-18.04-live-server-amd64.iso
+git<-https://download.tortoisegit.org/tgit/2.8.0.0/TortoiseGit-2.8.0.0-32bit.msi
+git<-https://download.tortoisegit.org/tgit/2.8.0.0/TortoiseGit-2.8.0.0-64bit.msi
+git<-https://github.com/git-for-windows/git/releases/download/v2.21.0.windows.1/Git-2.21.0-64-bit.exe
+git<-https://github.com/git-for-windows/git/releases/download/v2.21.0.windows.1/Git-2.21.0-32-bit.exe
 
 # Virtual Box
 # 5.1.24
@@ -58,11 +57,18 @@ virtualbox<-http://download.virtualbox.org/virtualbox/5.1.24/VirtualBox-5.1.24-1
 virtualbox<-http://download.virtualbox.org/virtualbox/5.1.24/VBoxGuestAdditions_5.1.24.iso
 virtualbox<-http://download.virtualbox.org/virtualbox/5.1.24/Oracle_VM_VirtualBox_Extension_Pack-5.1.24-117012.vbox-extpack
 
-# 5.2.12
-virtualbox<-http://download.virtualbox.org/virtualbox/5.2.12/VirtualBox-5.2.12-122591-Win.exe
-virtualbox<-http://download.virtualbox.org/virtualbox/5.2.12/VirtualBox-5.2.12-122591-OSX.dmg
-virtualbox<-http://download.virtualbox.org/virtualbox/5.2.12/VBoxGuestAdditions_5.2.12.iso
-virtualbox<-http://download.virtualbox.org/virtualbox/5.2.12/Oracle_VM_VirtualBox_Extension_Pack-5.2.12-122591.vbox-extpack
+# 5.2.30
+virtualbox<-https://download.virtualbox.org/virtualbox/5.2.30/VirtualBox-5.2.30-130521-Win.exe
+virtualbox<-https://download.virtualbox.org/virtualbox/5.2.30/VirtualBox-5.2.30-130521-OSX.dmg
+virtualbox<-https://download.virtualbox.org/virtualbox/5.2.30/VBoxGuestAdditions_5.2.30.iso
+virtualbox<-https://download.virtualbox.org/virtualbox/5.2.30/Oracle_VM_VirtualBox_Extension_Pack-5.2.30.vbox-extpack
+
+# 6.0.8
+virtualbox<-https://download.virtualbox.org/virtualbox/6.0.8/VirtualBox-6.0.8-130520-Win.exe
+virtualbox<-https://download.virtualbox.org/virtualbox/6.0.8/VirtualBox-6.0.8-130520-OSX.dmg
+virtualbox<-https://download.virtualbox.org/virtualbox/6.0.8/VBoxGuestAdditions_6.0.8.iso
+virtualbox<-https://download.virtualbox.org/virtualbox/6.0.8/Oracle_VM_VirtualBox_Extension_Pack-6.0.8.vbox-extpack
+
 
 # Vagrant
 # 1.9.8
@@ -72,100 +78,53 @@ vagrant<-https://releases.hashicorp.com/vagrant/1.9.8/vagrant_1.9.8_x86_64.deb
 vagrant<-https://releases.hashicorp.com/vagrant/1.9.8/vagrant_1.9.8_i686.rpm
 vagrant<-https://releases.hashicorp.com/vagrant/1.9.8/vagrant_1.9.8_x86_64.rpm
 vagrant<-https://releases.hashicorp.com/vagrant/1.9.8/vagrant_1.9.8_x86_64.dmg
-# 2.2.2
-vagrant<-https://releases.hashicorp.com/vagrant/2.2.2/vagrant_2.2.2_x86_64.msi
-vagrant<-https://releases.hashicorp.com/vagrant/2.2.2/vagrant_2.2.2_i686.deb
-vagrant<-https://releases.hashicorp.com/vagrant/2.2.2/vagrant_2.2.2_x86_64.deb
-vagrant<-https://releases.hashicorp.com/vagrant/2.2.2/vagrant_2.2.2_i686.rpm
-vagrant<-https://releases.hashicorp.com/vagrant/2.2.2/vagrant_2.2.2_x86_64.rpm
-vagrant<-https://releases.hashicorp.com/vagrant/2.2.2/vagrant_2.2.2_x86_64.dmg
+# 2.2.4
+vagrant<-https://releases.hashicorp.com/vagrant/2.2.4/vagrant_2.2.4_x86_64.msi
+vagrant<-https://releases.hashicorp.com/vagrant/2.2.4/vagrant_2.2.4_i686.deb
+vagrant<-https://releases.hashicorp.com/vagrant/2.2.4/vagrant_2.2.4_x86_64.deb
+vagrant<-https://releases.hashicorp.com/vagrant/2.2.4/vagrant_2.2.4_i686.rpm
+vagrant<-https://releases.hashicorp.com/vagrant/2.2.4/vagrant_2.2.4_x86_64.rpm
+vagrant<-https://releases.hashicorp.com/vagrant/2.2.4/vagrant_2.2.4_x86_64.dmg
 
 # AWS CLI
 aws<-https://s3.amazonaws.com/aws-cli/AWSCLI64.msi
 aws<-https://s3.amazonaws.com/aws-cli/AWSCLI32.msi
 
 # Packer
-packer<-https://releases.hashicorp.com/packer/1.3.3/packer_1.3.3_darwin_386.zip
-packer<-https://releases.hashicorp.com/packer/1.3.3/packer_1.3.3_darwin_amd64.zip
-packer<-https://releases.hashicorp.com/packer/1.3.3/packer_1.3.3_linux_386.zip
-packer<-https://releases.hashicorp.com/packer/1.3.3/packer_1.3.3_linux_amd64.zip
-packer<-https://releases.hashicorp.com/packer/1.3.3/packer_1.3.3_linux_arm.zip
-packer<-https://releases.hashicorp.com/packer/1.3.3/packer_1.3.3_windows_386.zip
-packer<-https://releases.hashicorp.com/packer/1.3.3/packer_1.3.3_windows_amd64.zip
+packer<-https://releases.hashicorp.com/packer/1.4.1/packer_1.4.1_darwin_386.zip
+packer<-https://releases.hashicorp.com/packer/1.4.1/packer_1.4.1_darwin_amd64.zip
+packer<-https://releases.hashicorp.com/packer/1.4.1/packer_1.4.1_linux_386.zip
+packer<-https://releases.hashicorp.com/packer/1.4.1/packer_1.4.1_linux_amd64.zip
+packer<-https://releases.hashicorp.com/packer/1.4.1/packer_1.4.1_linux_arm.zip
+packer<-https://releases.hashicorp.com/packer/1.4.1/packer_1.4.1_windows_386.zip
+packer<-https://releases.hashicorp.com/packer/1.4.1/packer_1.4.1_windows_amd64.zip
 
 # Terraform
-terraform<-https://releases.hashicorp.com/terraform/0.11.11/terraform_0.11.11_darwin_amd64.zip
-terraform<-https://releases.hashicorp.com/terraform/0.11.11/terraform_0.11.11_linux_386.zip
-terraform<-https://releases.hashicorp.com/terraform/0.11.11/terraform_0.11.11_linux_amd64.zip
-terraform<-https://releases.hashicorp.com/terraform/0.11.11/terraform_0.11.11_linux_arm.zip
-terraform<-https://releases.hashicorp.com/terraform/0.11.11/terraform_0.11.11_windows_386.zip
-terraform<-https://releases.hashicorp.com/terraform/0.11.11/terraform_0.11.11_windows_amd64.zip
+terraform<-https://releases.hashicorp.com/terraform/0.12.0/terraform_0.12.0_darwin_amd64.zip
+terraform<-https://releases.hashicorp.com/terraform/0.12.0/terraform_0.12.0_linux_386.zip
+terraform<-https://releases.hashicorp.com/terraform/0.12.0/terraform_0.12.0_linux_amd64.zip
+terraform<-https://releases.hashicorp.com/terraform/0.12.0/terraform_0.12.0_linux_arm.zip
+terraform<-https://releases.hashicorp.com/terraform/0.12.0/terraform_0.12.0_windows_386.zip
+terraform<-https://releases.hashicorp.com/terraform/0.12.0/terraform_0.12.0_windows_amd64.zip
 
 # Python
-python<-https://www.python.org/ftp/python/3.7.0/python-3.7.0-amd64.exe
-python<-https://www.python.org/ftp/python/3.7.0/python-3.7.0.exe
-python<-https://www.python.org/ftp/python/3.7.0/python-3.7.0-macosx10.6.pkg
-python<-https://www.python.org/ftp/python/2.7.15/python-2.7.15-macosx10.5.pkg
-python<-https://www.python.org/ftp/python/2.7.15/python-2.7.15-macosx10.6.pkg
-python<-https://www.python.org/ftp/python/2.7.15/python-2.7.15.amd64.msi
-python<-https://www.python.org/ftp/python/2.7.15/python-2.7.15.msi
+python<-https://www.python.org/ftp/python/3.7.3/python-3.7.3-amd64.exe
+python<-https://www.python.org/ftp/python/3.7.3/python-3.7.3.exe
+python<-https://www.python.org/ftp/python/3.7.3/python-3.7.3-macosx10.6.pkg
+python<-https://www.python.org/ftp/python/2.7.16/python-2.7.16-macosx10.5.pkg
+python<-https://www.python.org/ftp/python/2.7.16/python-2.7.16-macosx10.6.pkg
+python<-https://www.python.org/ftp/python/2.7.16/python-2.7.16.amd64.msi
+python<-https://www.python.org/ftp/python/2.7.16/python-2.7.16.msi
 python<-https://download.microsoft.com/download/7/9/6/796EF2E4-801B-4FC4-AB28-B59FBF6D907B/VCForPython27.msi
 
-# Java
-# 10
-java<-https://cdn.azul.com/zulu/bin/zulu10.2+3-jdk10.0.1-win_i686.zip
-java<-https://cdn.azul.com/zulu/bin/zulu10.2+3-jdk10.0.1-win_i686.msi
-java<-https://cdn.azul.com/zulu/bin/zulu10.2+3-jdk10.0.1-linux_i686.tar.gz
-java<-https://cdn.azul.com/zulu/bin/zulu10.2+3-jdk10.0.1-linux_x64.tar.gz
-java<-https://cdn.azul.com/zulu/bin/zulu10.2+3-jdk10.0.1-linux.x86_64.rpm
-java<-https://cdn.azul.com/zulu/bin/zulu10.2+3-jdk10.0.1-linux_amd64.deb
-java<-https://cdn.azul.com/zulu/bin/zulu10.2+3-jdk10.0.1-macosx_x64.zip
-java<-https://cdn.azul.com/zulu/bin/zulu10.2+3-jdk10.0.1-macosx_x64.dmg
-java<-https://cdn.azul.com/zulu/bin/zulu10.2+3-jdk10.0.1-macosx_x64.tar.gz
-# 9
-java<-https://cdn.azul.com/zulu/bin/zulu9.0.7.1-jdk9.0.7-win_x64.zip
-java<-https://cdn.azul.com/zulu/bin/zulu9.0.7.1-jdk9.0.7-win_x64.msi
-java<-https://cdn.azul.com/zulu/bin/zulu9.0.7.1-jdk9.0.7-linux_i686.tar.gz
-java<-https://cdn.azul.com/zulu/bin/zulu9.0.7.1-jdk9.0.7-linux_x64.tar.gz
-java<-https://cdn.azul.com/zulu/bin/zulu9.0.7.1-jdk9.0.7-linux.x86_64.rpm
-java<-https://cdn.azul.com/zulu/bin/zulu9.0.7.1-jdk9.0.7-linux_amd64.deb
-java<-https://cdn.azul.com/zulu/bin/zulu9.0.7.1-jdk9.0.7-macosx_x64.zip
-java<-https://cdn.azul.com/zulu/bin/zulu9.0.7.1-jdk9.0.7-macosx_x64.dmg
-java<-https://cdn.azul.com/zulu/bin/zulu9.0.7.1-jdk9.0.7-macosx_x64.tar.gz
-# 8
-java<-https://cdn.azul.com/zulu/bin/zulu8.30.0.1-jdk8.0.172-win_i686.zip
-java<-https://cdn.azul.com/zulu/bin/zulu8.30.0.1-jdk8.0.172-win_x64.zip
-java<-https://cdn.azul.com/zulu/bin/zulu8.30.0.1-jdk8.0.172-win_x64.msi
-java<-https://cdn.azul.com/zulu/bin/zulu8.30.0.1-jdk8.0.172-linux_i686.tar.gz
-java<-https://cdn.azul.com/zulu/bin/zulu8.30.0.1-jdk8.0.172-linux_x64.tar.gz
-java<-https://cdn.azul.com/zulu/bin/zulu8.30.0.1-jdk8.0.172-linux.x86_64.rpm
-java<-https://cdn.azul.com/zulu/bin/zulu8.30.0.1-jdk8.0.172-linux_amd64.deb
-java<-https://cdn.azul.com/zulu/bin/zulu8.30.0.1-jdk8.0.172-macosx_x64.zip
-java<-https://cdn.azul.com/zulu/bin/zulu8.30.0.1-jdk8.0.172-macosx_x64.dmg
-java<-https://cdn.azul.com/zulu/bin/zulu8.30.0.1-jdk8.0.172-macosx_x64.tar.gz
-
-# Gradle
-gradle<-https://services.gradle.org/distributions/gradle-1.12-all.zip
-gradle<-https://services.gradle.org/distributions/gradle-2.14.1-all.zip
-gradle<-https://services.gradle.org/distributions/gradle-3.5.1-all.zip
-gradle<-https://services.gradle.org/distributions/gradle-4.7-all.zip
-
-# Groovy
-groovy<-http://dl.bintray.com/groovy/Distributions/groovy-2.4.15-installer.exe
-groovy<-http://dl.bintray.com/groovy/maven/apache-groovy-binary-2.4.15.zip
-
 # NodeJS
-nodejs<-https://nodejs.org/dist/v8.11.1/node-v8.11.1-x64.msi
-nodejs<-https://nodejs.org/dist/v8.11.1/node-v8.11.1.pkg
-nodejs<-https://nodejs.org/dist/v8.11.1/node-v8.11.1-linux-x86.tar.xz
-nodejs<-https://nodejs.org/dist/v8.11.1/node-v8.11.1-linux-x64.tar.xz
-nodejs<-https://nodejs.org/dist/v10.1.0/node-v10.1.0-x64.msi
-nodejs<-https://nodejs.org/dist/v10.1.0/node-v10.1.0-x86.msi
-nodejs<-https://nodejs.org/dist/v10.1.0/node-v10.1.0.pkg
-nodejs<-https://nodejs.org/dist/v10.1.0/node-v10.1.0-linux-x64.tar.xz
+nodejs<-https://nodejs.org/dist/v10.16.0/node-v10.16.0-x64.msi
+nodejs<-https://nodejs.org/dist/v10.16.0/node-v10.16.0-x86.msi
+nodejs<-https://nodejs.org/dist/v10.16.0/node-v10.16.0.pkg
+nodejs<-https://nodejs.org/dist/v10.16.0/node-v10.16.0-linux-x64.tar.xz
 
 # Yarn
-nodejs<-https://github.com/yarnpkg/yarn/releases/download/v1.12.3/yarn-1.12.3.msi
+nodejs<-https://github.com/yarnpkg/yarn/releases/download/v1.16.0/yarn-1.16.0.msi
 
 # Ruby
 ruby<-https://github.com/oneclick/rubyinstaller2/releases/download/rubyinstaller-2.4.4-1/rubyinstaller-devkit-2.4.4-1-x64.exe
@@ -189,26 +148,17 @@ ruby<-https://dl.bintray.com/oneclick/rubyinstaller/DevKit-mingw64-32-4.7.2-2013
 ruby<-https://dl.bintray.com/oneclick/rubyinstaller/DevKit-mingw64-64-4.7.2-20130224-1432-sfx.exe
 
 # Vault
-vault<-https://releases.hashicorp.com/vault/1.0.1/vault_1.0.1_darwin_amd64.zip
-vault<-https://releases.hashicorp.com/vault/1.0.1/vault_1.0.1_linux_amd64.zip
-vault<-https://releases.hashicorp.com/vault/1.0.1/vault_1.0.1_windows_amd64.zip
-vault<-https://releases.hashicorp.com/vault/1.0.1/vault_1.0.1_windows_386.zip
+vault<-https://releases.hashicorp.com/vault/1.1.2/vault_1.1.2_darwin_amd64.zip
+vault<-https://releases.hashicorp.com/vault/1.1.2/vault_1.1.2_linux_amd64.zip
+vault<-https://releases.hashicorp.com/vault/1.1.2/vault_1.1.2_windows_amd64.zip
+vault<-https://releases.hashicorp.com/vault/1.1.2/vault_1.1.2_windows_386.zip
 
 # Consul
-consul<-https://releases.hashicorp.com/consul/1.4.0/consul_1.4.0_darwin_amd64.zip
-consul<-https://releases.hashicorp.com/consul/1.4.0/consul_1.4.0_windows_amd64.zip
-consul<-https://releases.hashicorp.com/consul/1.4.0/consul_1.4.0_linux_amd64.zip
+consul<-https://releases.hashicorp.com/consul/1.5.1/consul_1.5.1_darwin_amd64.zip
+consul<-https://releases.hashicorp.com/consul/1.5.1/consul_1.5.1_windows_amd64.zip
+consul<-https://releases.hashicorp.com/consul/1.5.1/consul_1.5.1_linux_amd64.zip
 
 # Cmder
-cmder<-https://github.com/cmderdev/cmder/releases/download/v1.3.10/cmder.zip
-cmder<-https://github.com/cmderdev/cmder/releases/download/v1.3.10/cmder.7z
-cmder<-https://github.com/cmderdev/cmder/releases/download/v1.3.10/cmder_mini.zip
-
-# Keybase
-keybase<-https://prerelease.keybase.io/Keybase.dmg
-keybase<-https://prerelease.keybase.io/keybase_amd64.deb
-keybase<-https://prerelease.keybase.io/keybase_i386.deb
-keybase<-https://prerelease.keybase.io/keybase_amd64.rpm
-keybase<-https://prerelease.keybase.io/keybase_i386.rpm
-keybase<-https://prerelease.keybase.io/keybase_setup_386.exe
-
+cmder<-https://github.com/cmderdev/cmder/releases/download/v1.3.11/cmder.zip
+cmder<-https://github.com/cmderdev/cmder/releases/download/v1.3.11/cmder.7z
+cmder<-https://github.com/cmderdev/cmder/releases/download/v1.3.11/cmder_mini.zip

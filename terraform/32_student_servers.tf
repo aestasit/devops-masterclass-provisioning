@@ -5,7 +5,7 @@ resource "aws_key_pair" "student_test_key" {
 }
 
 resource "aws_instance" "test_machine_linux" {
-  ami = "${data.aws_ami.ubuntu_xenial.id}"
+  ami = "${data.aws_ami.devops_ubuntu_xenial.id}"
   instance_type = "t2.small"
   tags {
     Name = "test_machine_linux_${format("%02d", count.index + 1)}"
@@ -27,7 +27,6 @@ resource "aws_instance" "test_machine_linux" {
   }
   provisioner "remote-exec" {
     // TODO: add server to monitoring
-    // TODO: fix any issues with puppet
   }
 }
 

@@ -24,14 +24,12 @@ class setup {
   include setup::kibana
   include setup::beats
 
-  # include setup::rancher
-
   # include setup::concourse
   # include setup::rundeck
 
-  # include setup::sysdig
-  # include setup::grafana
-  # include setup::prometheus
+  include setup::sysdig
+  include setup::grafana
+  include setup::prometheus
 
   # include setup::vault
 
