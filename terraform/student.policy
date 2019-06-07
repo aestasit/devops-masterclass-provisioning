@@ -7,6 +7,21 @@
       "Resource": "*"
     },
     {
+      "Action": "eks:*",
+      "Effect": "Allow",
+      "Resource": "*"
+    },
+    {
+      "Action": "ecs:*",
+      "Effect": "Allow",
+      "Resource": "*"
+    },
+    {
+      "Action": "s3:*",
+      "Effect": "Allow",
+      "Resource": "*"
+    },
+    {
       "Action": "rds:*",
       "Effect": "Allow",
       "Resource": "*"

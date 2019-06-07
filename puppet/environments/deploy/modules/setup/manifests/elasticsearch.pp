@@ -7,9 +7,9 @@ class setup::elasticsearch(
     ensure   => present,
   }
 
-  # sysctl { 'vm.max_map_count':
-  #   value => '262144'
-  # }
+  sysctl::configuration { 'vm.max_map_count':
+    value => '262144'
+  }
 
   docker::run { 'elasticsearch':
     image            => "docker.elastic.co/elasticsearch/elasticsearch-oss:${elasticsearch_version}",

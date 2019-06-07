@@ -22,6 +22,10 @@ class setup::docker {
     ensure => directory
   }
 
+  file { '/var/lib/portainer':
+    ensure => directory
+  }
+
   file { [
     '/etc/docker/registry',
     '/etc/docker/registry/certs'
@@ -65,6 +69,39 @@ class setup::docker {
     ssl_port             => 443,
     client_max_body_size => "1024M",
     proxy                => 'http://localhost:5000',
+    location_raw_append    => [
+      'proxy_set_header X-Forwarded-Proto https;',
+    ],
+  }
+
+  docker::run { 'portainer':
+    image            => "portainer/portainer",
+    ports            => [
+      '9000:9000'
+    ],
+    restart_service  => true,
+    volumes          => [
+      '/var/run/docker.sock:/var/run/docker.sock',
+      '/var/lib/portainer:/data'
+    ],
+    extra_parameters => [
+      '--restart=always'
+    ],
+  }
+
+  nginx::resource::server { "portainer.extremeautomation.io":
+    listen_port         => 80,
+    location_cfg_append => { 'rewrite' => '^ https://$server_name$request_uri? permanent' },
+  }
+
+  nginx::resource::server { 'portainer.extremeautomation.io portainer':
+    listen_port          => 443,
+    ssl                  => true,
+    ssl_cert             => '/etc/letsencrypt/live/extremeautomation.io/fullchain.pem',
+    ssl_key              => '/etc/letsencrypt/live/extremeautomation.io/privkey.pem',
+    ssl_port             => 443,
+    client_max_body_size => "1024M",
+    proxy                => 'http://localhost:9000',
     location_raw_append    => [
       'proxy_set_header X-Forwarded-Proto https;',
     ],

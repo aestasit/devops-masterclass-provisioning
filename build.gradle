@@ -34,8 +34,6 @@ ext {
   getServerIp = { 
     project.
       getTerraformState()?.
-      modules?.
-      get(0)?.
       outputs?.
       eip?.
       value ?: '127.0.0.1'
@@ -44,11 +42,9 @@ ext {
   getServerInstanceId = {
     project.
       getTerraformState()?.
-      modules?.
-      get(0)?.
       resources?.
-      findAll { it.key.startsWith 'aws_instance.devops_server' }?.
-      collect { it.value.primary.id }?.
+      findAll { it.name.startsWith 'devops_server' }?.
+      collect { it.instances?.find()?.attributes?.id }?.
       find() ?: 'i-unknown'
   }
 

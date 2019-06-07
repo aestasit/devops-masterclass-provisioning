@@ -7,7 +7,12 @@ student_count = ${studentCount}
   }
 }
 
-task terraformApply(type: Exec, group: 'Infrastructure preparation', dependsOn: [ generateTerraformVariables ]) {
+task terraformInit(type: Exec, group: 'Infrastructure preparation') {
+  commandLine 'terraform', 'init'
+  workingDir 'terraform'
+}
+
+task terraformApply(type: Exec, group: 'Infrastructure preparation', dependsOn: [ generateTerraformVariables, terraformInit ]) {
   commandLine 'terraform', 'apply', '-auto-approve'
   workingDir 'terraform'
 }

@@ -1,4 +1,3 @@
-
 variable "student_count" {
   default = "0"
 }
@@ -19,24 +18,27 @@ provider "aws" {
   region = "eu-west-1"
 }
 
-provider "dnsimple" {
-  token    = "${file("../secrets/dnsimple.token")}"
-  account  = "${file("../secrets/dnsimple.account.id")}"
-}
-
 provider "cloudflare" {
   email = "andrey@aestasit.com"
-  token = "${file("../secrets/cloudflare.token")}"
+  token = file("../secrets/cloudflare.token")
 }
 
 variable "cloudflare_zone" {
-  default  = "extremeautomation.io"
+  default = "extremeautomation.io"
 }
 
 variable "dnsimple_domain" {
-  default  = "extremeautomation.io"
+  default = "extremeautomation.io"
+}
+
+data "aws_region" "current" {
 }
 
 data "aws_availability_zones" "available" {
-
 }
+
+variable "cluster-name" {
+  default = "devops-cluster"
+  type    = string
+}
+

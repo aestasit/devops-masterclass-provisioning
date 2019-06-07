@@ -1,26 +1,27 @@
-
 resource "aws_key_pair" "student_test_key" {
-  key_name = "student_test_key" 
-  public_key = "${file("../secrets/student.pub")}"
+  key_name   = "student_test_key"
+  public_key = file("../secrets/student.pub")
 }
 
 resource "aws_instance" "test_machine_linux" {
-  ami = "${data.aws_ami.devops_ubuntu_xenial.id}"
+  ami           = data.aws_ami.devops_ubuntu_xenial.id
   instance_type = "t2.small"
-  tags {
+  tags = {
     Name = "test_machine_linux_${format("%02d", count.index + 1)}"
   }
   root_block_device {
-    volume_size = "${var.student_server_disk_gb}"
+    volume_size = var.student_server_disk_gb
   }
-  count = "${var.student_count}"
-  key_name = "${aws_key_pair.student_test_key.key_name}"
-  subnet_id = "${aws_subnet.devops_subnet.id}"
-  vpc_security_group_ids = [ "${aws_security_group.devops_security.id}" ]
+  count                  = 0 // var.student_count
+  key_name               = aws_key_pair.student_test_key.key_name
+  subnet_id              = aws_subnet.devops_subnet.id
+  vpc_security_group_ids = [aws_security_group.devops_security.id]
   connection {
-    user = "ubuntu"
-    private_key = "${file("../secrets/student.pem")}"
-    timeout = "30m"
+    host        = coalesce(self.public_ip, self.private_ip)
+    type        = "ssh"
+    user        = "ubuntu"
+    private_key = file("../secrets/student.pem")
+    timeout     = "30m"
   }
   timeouts {
     create = "60m"
